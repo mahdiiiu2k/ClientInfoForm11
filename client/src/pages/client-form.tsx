@@ -805,129 +805,129 @@ export default function ClientForm() {
                   Previous Projects
                 </h2>
                 
-                {/* Rectangle Add Project Button */}
-                <Dialog open={showProjectModal} onOpenChange={setShowProjectModal}>
-                  <DialogTrigger asChild>
-                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors">
-                      <div className="flex flex-col items-center text-center">
-                        <span className="text-slate-600 font-medium mb-2">Add Project</span>
-                        <Plus className="h-6 w-6 text-slate-400" />
-                      </div>
-                    </div>
-                  </DialogTrigger>
-                  
-                  {/* Project Modal */}
-                  <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
-                    <DialogHeader>
-                      <DialogTitle>
-                        {editingProjectIndex !== null 
-                          ? `Project #${editingProjectIndex + 1}` 
-                          : `Project #${projects.length + 1}`
-                        }
-                      </DialogTitle>
-                    </DialogHeader>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="projectTitle">Project Title *</Label>
-                        <Input
-                          id="projectTitle"
-                          placeholder="e.g., Kitchen Renovation"
-                          value={newProject.title}
-                          onChange={(e) => setNewProject({...newProject, title: e.target.value})}
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="projectDescription">Project Description *</Label>
-                        <Textarea
-                          id="projectDescription"
-                          rows={3}
-                          placeholder="Describe the project..."
-                          value={newProject.description}
-                          onChange={(e) => setNewProject({...newProject, description: e.target.value})}
-                        />
-                      </div>
-                      
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="beforeAfter"
-                            checked={newProject.beforeAfter}
-                            onCheckedChange={(checked) => setNewProject({...newProject, beforeAfter: checked as boolean})}
-                          />
-                          <Label htmlFor="beforeAfter">Before/After Photos</Label>
+                {/* Projects Slider Layout */}
+                <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
+                  {/* Rectangle Add Project Button */}
+                  <Dialog open={showProjectModal} onOpenChange={setShowProjectModal}>
+                    <DialogTrigger asChild>
+                      <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[280px] flex-shrink-0">
+                        <div className="flex flex-col items-center text-center">
+                          <span className="text-slate-600 font-medium mb-2">Add Project</span>
+                          <Plus className="h-6 w-6 text-slate-400" />
                         </div>
                       </div>
+                    </DialogTrigger>
+                  
+                    {/* Project Modal */}
+                    <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle>
+                          {editingProjectIndex !== null 
+                            ? `Project #${editingProjectIndex + 1}` 
+                            : `Project #${projects.length + 1}`
+                          }
+                        </DialogTitle>
+                      </DialogHeader>
                       
-                      <div>
-                        {newProject.beforeAfter ? (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                              <Label htmlFor="beforePictures">Before Pictures</Label>
-                              <Input
-                                id="beforePictures"
-                                type="file"
-                                multiple
-                                accept="image/*"
-                                onChange={(e) => setNewProject({...newProject, beforePictures: e.target.files || undefined})}
-                              />
-                            </div>
-                            <div>
-                              <Label htmlFor="afterPictures">After Pictures</Label>
-                              <Input
-                                id="afterPictures"
-                                type="file"
-                                multiple
-                                accept="image/*"
-                                onChange={(e) => setNewProject({...newProject, afterPictures: e.target.files || undefined})}
-                              />
-                            </div>
-                          </div>
-                        ) : (
-                          <div>
-                            <Label htmlFor="projectPictures">Project Pictures</Label>
-                            <Input
-                              id="projectPictures"
-                              type="file"
-                              multiple
-                              accept="image/*"
-                              onChange={(e) => setNewProject({...newProject, pictures: e.target.files || undefined})}
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="projectTitle">Project Title *</Label>
+                          <Input
+                            id="projectTitle"
+                            placeholder="e.g., Kitchen Renovation"
+                            value={newProject.title}
+                            onChange={(e) => setNewProject({...newProject, title: e.target.value})}
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="projectDescription">Project Description *</Label>
+                          <Textarea
+                            id="projectDescription"
+                            rows={3}
+                            placeholder="Describe the project..."
+                            value={newProject.description}
+                            onChange={(e) => setNewProject({...newProject, description: e.target.value})}
+                          />
+                        </div>
+                        
+                        <div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox
+                              id="beforeAfter"
+                              checked={newProject.beforeAfter}
+                              onCheckedChange={(checked) => setNewProject({...newProject, beforeAfter: checked as boolean})}
                             />
+                            <Label htmlFor="beforeAfter">Before/After Photos</Label>
                           </div>
-                        )}
+                        </div>
+                        
+                        <div>
+                          {newProject.beforeAfter ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <Label htmlFor="beforePictures">Before Pictures</Label>
+                                <Input
+                                  id="beforePictures"
+                                  type="file"
+                                  multiple
+                                  accept="image/*"
+                                  onChange={(e) => setNewProject({...newProject, beforePictures: e.target.files || undefined})}
+                                />
+                              </div>
+                              <div>
+                                <Label htmlFor="afterPictures">After Pictures</Label>
+                                <Input
+                                  id="afterPictures"
+                                  type="file"
+                                  multiple
+                                  accept="image/*"
+                                  onChange={(e) => setNewProject({...newProject, afterPictures: e.target.files || undefined})}
+                                />
+                              </div>
+                            </div>
+                          ) : (
+                            <div>
+                              <Label htmlFor="projectPictures">Project Pictures</Label>
+                              <Input
+                                id="projectPictures"
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={(e) => setNewProject({...newProject, pictures: e.target.files || undefined})}
+                              />
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="clientFeedback">Client Feedback (Optional)</Label>
+                          <Textarea
+                            id="clientFeedback"
+                            rows={3}
+                            placeholder="Client testimonial or feedback..."
+                            value={newProject.clientFeedback || ""}
+                            onChange={(e) => setNewProject({...newProject, clientFeedback: e.target.value})}
+                          />
+                        </div>
+                        
+                        <Button 
+                          onClick={addProjectFromModal}
+                          className="w-full bg-primary hover:bg-blue-700"
+                          disabled={!newProject.title || !newProject.description}
+                        >
+                          {editingProjectIndex !== null ? 'Save' : 'Add Project'}
+                        </Button>
                       </div>
-                      
-                      <div>
-                        <Label htmlFor="clientFeedback">Client Feedback (Optional)</Label>
-                        <Textarea
-                          id="clientFeedback"
-                          rows={3}
-                          placeholder="Client testimonial or feedback..."
-                          value={newProject.clientFeedback || ""}
-                          onChange={(e) => setNewProject({...newProject, clientFeedback: e.target.value})}
-                        />
-                      </div>
-                      
-                      <Button 
-                        onClick={addProjectFromModal}
-                        className="w-full bg-primary hover:bg-blue-700"
-                        disabled={!newProject.title || !newProject.description}
-                      >
-                        {editingProjectIndex !== null ? 'Save' : 'Add Project'}
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-              {/* Display Added Projects */}
-              {projects.length > 0 && (
-                <div className="space-y-4 mt-6">
+                    </DialogContent>
+                  </Dialog>
+
+                  {/* Display Added Projects in Horizontal Slider */}
                   {projects.map((project, index) => (
                     <motion.div
                       key={index}
                       {...fadeInUp}
-                      className="border border-slate-200 rounded-lg p-4 bg-white"
+                      className="border border-slate-200 rounded-lg p-4 bg-white min-w-[280px] flex-shrink-0"
                     >
                       <div className="flex justify-between items-center">
                         <div>
@@ -938,20 +938,31 @@ export default function ClientForm() {
                             {project.title || "Untitled Project"}
                           </p>
                         </div>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => editProject(index)}
-                          className="text-primary border-primary hover:bg-primary hover:text-white"
-                        >
-                          Edit
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeProject(index)}
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => editProject(index)}
+                            className="text-primary border-primary hover:bg-primary hover:text-white"
+                          >
+                            Edit
+                          </Button>
+                        </div>
                       </div>
                     </motion.div>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Warranty Section */}
