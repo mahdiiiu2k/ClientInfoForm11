@@ -502,7 +502,7 @@ export default function ClientForm() {
               >
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                   <CircleOff className="text-primary mr-3 h-5 w-5" />
-                  About Section Customization
+                  About Us Section Customization
                   {showAboutSection ? (
                     <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
                   ) : (
