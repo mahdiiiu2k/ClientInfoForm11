@@ -787,7 +787,7 @@ export default function ClientForm() {
               >
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                   <Shield className="text-primary mr-3 h-5 w-5" />
-                  Warranty
+                  Warranty (optional)
                   {showWarrantySection ? (
                     <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
                   ) : (
@@ -833,7 +833,7 @@ export default function ClientForm() {
               >
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                   <Shield className="text-primary mr-3 h-5 w-5" />
-                  Insurance
+                  Insurance (optional)
                   {showInsuranceSection ? (
                     <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
                   ) : (
