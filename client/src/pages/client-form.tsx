@@ -89,6 +89,8 @@ export default function ClientForm() {
   const [isTypingExperience, setIsTypingExperience] = useState(false);
   const experienceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [showAboutSection, setShowAboutSection] = useState(false);
+  const [showWarrantySection, setShowWarrantySection] = useState(false);
+  const [showInsuranceSection, setShowInsuranceSection] = useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -212,8 +214,6 @@ export default function ClientForm() {
   const hasLicense = form.watch("hasLicense");
   const hasEmergencyServices = form.watch("hasEmergencyServices");
   const hasEmergencyPhone = form.watch("hasEmergencyPhone");
-  const hasWarranty = form.watch("hasWarranty");
-  const hasInsurance = form.watch("hasInsurance");
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 bg-slate-50">
@@ -778,145 +778,138 @@ export default function ClientForm() {
               </CardContent>
             </Card>
 
-            {/* Warranty and Insurance Section */}
+            {/* Warranty Section */}
             <Card className="shadow-sm border-slate-200">
-              <CardHeader>
+              <CardHeader 
+                className="cursor-pointer hover:bg-slate-50 transition-colors"
+                onClick={() => setShowWarrantySection(!showWarrantySection)}
+                data-testid="button-toggle-warranty-section"
+              >
                 <CardTitle className="flex items-center text-xl text-slate-800">
                   <Shield className="text-primary mr-3 h-5 w-5" />
-                  Warranty & Insurance
+                  We offer warranty on our services
+                  {showWarrantySection ? (
+                    <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
+                  )}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="hasWarranty"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="font-medium">
-                            We offer warranty on our services
-                          </FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
+              
+              <AnimatePresence>
+                {showWarrantySection && (
+                  <motion.div {...slideDown}>
+                    <CardContent className="space-y-6">
+                      <FormField
+                        control={form.control}
+                        name="warrantyDescription"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Warranty Description</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                rows={3}
+                                placeholder="Describe your warranty terms and coverage..."
+                                {...field}
+                                value={field.value || ""}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </CardContent>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Card>
 
-                  <AnimatePresence>
-                    {hasWarranty && (
-                      <motion.div {...fadeInUp}>
+            {/* Insurance Section */}
+            <Card className="shadow-sm border-slate-200">
+              <CardHeader 
+                className="cursor-pointer hover:bg-slate-50 transition-colors"
+                onClick={() => setShowInsuranceSection(!showInsuranceSection)}
+                data-testid="button-toggle-insurance-section"
+              >
+                <CardTitle className="flex items-center text-xl text-slate-800">
+                  <Shield className="text-primary mr-3 h-5 w-5" />
+                  Provide insurance details
+                  {showInsuranceSection ? (
+                    <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
+                  )}
+                </CardTitle>
+              </CardHeader>
+              
+              <AnimatePresence>
+                {showInsuranceSection && (
+                  <motion.div {...slideDown}>
+                    <CardContent className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <FormField
                           control={form.control}
-                          name="warrantyDescription"
+                          name="generalLiability"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Warranty Description</FormLabel>
+                              <FormLabel>General Liability Amount</FormLabel>
                               <FormControl>
-                                <Textarea
-                                  rows={3}
-                                  placeholder="Describe your warranty terms and coverage..."
-                                  {...field}
-                                  value={field.value || ""}
-                                />
+                                <Input placeholder="$1,000,000" {...field} value={field.value || ""} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="hasInsurance"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="font-medium">
-                            Provide insurance details
-                          </FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-
-                  <AnimatePresence>
-                    {hasInsurance && (
-                      <motion.div {...slideDown} className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <FormField
-                            control={form.control}
-                            name="generalLiability"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>General Liability Amount</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="$1,000,000" {...field} value={field.value || ""} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-
-                          <FormField
-                            control={form.control}
-                            name="bondedAmount"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Bonded Amount</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="$50,000" {...field} value={field.value || ""} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
 
                         <FormField
                           control={form.control}
-                          name="workersCompensation"
-                          render={({ field }) => (
-                            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                              <FormControl>
-                                <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
-                              </FormControl>
-                              <div className="space-y-1 leading-none">
-                                <FormLabel>Workers Compensation Coverage</FormLabel>
-                              </div>
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="additionalCoverage"
+                          name="bondedAmount"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>
-                                Additional Coverage <span className="text-slate-500">(Optional)</span>
-                              </FormLabel>
+                              <FormLabel>Bonded Amount</FormLabel>
                               <FormControl>
-                                <Input placeholder="Additional insurance details..." {...field} value={field.value || ""} />
+                                <Input placeholder="$50,000" {...field} value={field.value || ""} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </CardContent>
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="workersCompensation"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel>Workers Compensation Coverage</FormLabel>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="additionalCoverage"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              Additional Coverage <span className="text-slate-500">(Optional)</span>
+                            </FormLabel>
+                            <FormControl>
+                              <Input placeholder="Additional insurance details..." {...field} value={field.value || ""} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </CardContent>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </Card>
 
             {/* Service Areas Section */}
