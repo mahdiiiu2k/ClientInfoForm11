@@ -91,14 +91,8 @@ input[type="file"] {
   @apply file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary file:text-primary-foreground;
 }
 
-/* Radio group square styling */
+/* Radio group styling with soft rounded corners */
 [data-radix-collection-item] {
-  border-radius: 0.125rem !important;
+  border-radius: 0.375rem !important;
   border-width: 2px !important;
-}
-
-/* Ensure radio buttons appear as squares */
-.radio-square {
-  border-radius: 0.125rem;
-  border-width: 2px;
 }
