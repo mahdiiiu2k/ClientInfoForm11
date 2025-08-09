@@ -94,6 +94,7 @@ export default function ClientForm() {
   const [showInsuranceSection, setShowInsuranceSection] = useState(false);
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [newService, setNewService] = useState<Service>({ name: "", description: "", steps: "" });
+  const [editingServiceIndex, setEditingServiceIndex] = useState<number | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -178,10 +179,25 @@ export default function ClientForm() {
 
   const addServiceFromModal = () => {
     if (newService.name && newService.description) {
-      setServices([...services, { ...newService }]);
+      if (editingServiceIndex !== null) {
+        // Update existing service
+        const updatedServices = [...services];
+        updatedServices[editingServiceIndex] = { ...newService };
+        setServices(updatedServices);
+        setEditingServiceIndex(null);
+      } else {
+        // Add new service
+        setServices([...services, { ...newService }]);
+      }
       setNewService({ name: "", description: "", steps: "" });
       setShowServiceModal(false);
     }
+  };
+
+  const editService = (index: number) => {
+    setNewService({ ...services[index] });
+    setEditingServiceIndex(index);
+    setShowServiceModal(true);
   };
 
   const removeService = (index: number) => {
@@ -618,7 +634,12 @@ export default function ClientForm() {
                   {/* Service Modal */}
                   <DialogContent className="sm:max-w-[500px]">
                     <DialogHeader>
-                      <DialogTitle>Service #{services.length + 1}</DialogTitle>
+                      <DialogTitle>
+                        {editingServiceIndex !== null 
+                          ? `Service #${editingServiceIndex + 1}` 
+                          : `Service #${services.length + 1}`
+                        }
+                      </DialogTitle>
                     </DialogHeader>
                     
                     <div className="space-y-4">
@@ -670,79 +691,44 @@ export default function ClientForm() {
                         className="w-full bg-primary hover:bg-blue-700"
                         disabled={!newService.name || !newService.description}
                       >
-                        Add Service
+                        {editingServiceIndex !== null ? 'Update Service' : 'Add Service'}
                       </Button>
                     </div>
                   </DialogContent>
                 </Dialog>
               </div>
-              <div>
-                <div className="space-y-6">
-                  {services.length === 0 ? (
-                    <div className="text-center py-8 text-slate-500">
-                      <ServerCog className="mx-auto h-16 w-16 mb-4" />
-                      <p>No services added yet. Click "Add Service" to get started.</p>
-                    </div>
-                  ) : (
-                    services.map((service, index) => (
-                      <motion.div
-                        key={index}
-                        {...fadeInUp}
-                        className="border border-slate-200 rounded-lg p-6"
-                      >
-                        <div className="flex justify-between items-start mb-4">
-                          <h3 className="text-lg font-medium text-slate-800">Service #{index + 1}</h3>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeService(index)}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+              {/* Display Added Services */}
+              {services.length > 0 && (
+                <div className="space-y-4 mt-6">
+                  {services.map((service, index) => (
+                    <motion.div
+                      key={index}
+                      {...fadeInUp}
+                      className="border border-slate-200 rounded-lg p-4 bg-white"
+                    >
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h3 className="text-lg font-medium text-slate-800">
+                            Service #{index + 1}
+                          </h3>
+                          <p className="text-sm text-slate-600 mt-1">
+                            {service.name || "Untitled Service"}
+                          </p>
                         </div>
-                        <div className="space-y-4">
-                          <div>
-                            <Label>Service Name *</Label>
-                            <Input
-                              placeholder="e.g., Plumbing Repair"
-                              value={service.name}
-                              onChange={(e) => updateService(index, "name", e.target.value)}
-                            />
-                          </div>
-                          <div>
-                            <Label>Service Description *</Label>
-                            <Textarea
-                              rows={3}
-                              placeholder="Describe this service..."
-                              value={service.description}
-                              onChange={(e) => updateService(index, "description", e.target.value)}
-                            />
-                          </div>
-                          <div>
-                            <Label>Executing Steps <span className="text-slate-500">(Optional)</span></Label>
-                            <Textarea
-                              rows={3}
-                              placeholder="Describe the process or steps..."
-                              value={service.steps || ""}
-                              onChange={(e) => updateService(index, "steps", e.target.value)}
-                            />
-                          </div>
-                          <div>
-                            <Label>Add Picture</Label>
-                            <Input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => updateService(index, "picture", e.target.files)}
-                            />
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))
-                  )}
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => editService(index)}
+                          className="text-primary border-primary hover:bg-primary hover:text-white"
+                        >
+                          Edit
+                        </Button>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Previous Projects Section */}
