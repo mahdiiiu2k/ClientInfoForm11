@@ -92,12 +92,12 @@ export default function ClientForm() {
     defaultValues: {
       yearsOfExperience: 0,
       businessEmail: "",
-      hasLicense: false,
+      hasLicense: undefined,
       licenseNumber: "",
       businessAddress: "",
       businessHours: "",
-      hasEmergencyServices: false,
-      hasEmergencyPhone: false,
+      hasEmergencyServices: undefined,
+      hasEmergencyPhone: undefined,
       emergencyPhone: "",
       enableAboutModifications: false,
       companyStory: "",
@@ -294,7 +294,7 @@ export default function ClientForm() {
                       <FormLabel>Do you have a license number? *</FormLabel>
                       <FormControl>
                         <RadioGroup
-                          value={field.value ? "yes" : "no"}
+                          value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
                           onValueChange={(value) => field.onChange(value === "yes")}
                           className="flex space-x-6"
                         >
@@ -400,7 +400,7 @@ export default function ClientForm() {
                       <FormLabel>Do you offer emergency services? *</FormLabel>
                       <FormControl>
                         <RadioGroup
-                          value={field.value ? "yes" : "no"}
+                          value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
                           onValueChange={(value) => field.onChange(value === "yes")}
                           className="flex space-x-6"
                         >
@@ -430,7 +430,7 @@ export default function ClientForm() {
                             <FormLabel>Do you have a specific phone number for emergencies?</FormLabel>
                             <FormControl>
                               <RadioGroup
-                                value={field.value ? "yes" : "no"}
+                                value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
                                 onValueChange={(value) => field.onChange(value === "yes")}
                                 className="flex space-x-6"
                               >
