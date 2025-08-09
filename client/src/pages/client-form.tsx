@@ -266,7 +266,7 @@ export default function ClientForm() {
                       <FormItem>
                         <FormLabel>Business Email Address *</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="business@example.com" {...field} />
+                          <Input type="email" placeholder="Use personal email if no business email available" {...field} />
                         </FormControl>
                         <p className="text-xs text-slate-500">Use personal email if no business email available</p>
                         <FormMessage />
