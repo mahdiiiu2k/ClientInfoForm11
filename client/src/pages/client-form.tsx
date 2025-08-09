@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -91,6 +92,8 @@ export default function ClientForm() {
   const [showAboutSection, setShowAboutSection] = useState(false);
   const [showWarrantySection, setShowWarrantySection] = useState(false);
   const [showInsuranceSection, setShowInsuranceSection] = useState(false);
+  const [showServiceModal, setShowServiceModal] = useState(false);
+  const [newService, setNewService] = useState<Service>({ name: "", description: "", steps: "" });
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -171,6 +174,14 @@ export default function ClientForm() {
 
   const addService = () => {
     setServices([...services, { name: "", description: "", steps: "" }]);
+  };
+
+  const addServiceFromModal = () => {
+    if (newService.name && newService.description) {
+      setServices([...services, { ...newService }]);
+      setNewService({ name: "", description: "", steps: "" });
+      setShowServiceModal(false);
+    }
   };
 
   const removeService = (index: number) => {
@@ -588,16 +599,82 @@ export default function ClientForm() {
             {/* Services Customization Section */}
             <div className="space-y-6">
               <div>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
-                    <ServerCog className="text-primary mr-3 h-5 w-5" />
-                    Services Customization
-                  </h2>
-                  <Button type="button" onClick={addService} className="bg-primary hover:bg-blue-700">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Service
-                  </Button>
-                </div>
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
+                  <ServerCog className="text-primary mr-3 h-5 w-5" />
+                  Services Customization
+                </h2>
+                
+                {/* Rectangle Add Service Button */}
+                <Dialog open={showServiceModal} onOpenChange={setShowServiceModal}>
+                  <DialogTrigger asChild>
+                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors">
+                      <div className="flex flex-col items-center text-center">
+                        <span className="text-slate-600 font-medium mb-2">Add Service</span>
+                        <Plus className="h-6 w-6 text-slate-400" />
+                      </div>
+                    </div>
+                  </DialogTrigger>
+                  
+                  {/* Service Modal */}
+                  <DialogContent className="sm:max-w-[500px]">
+                    <DialogHeader>
+                      <DialogTitle>Service #{services.length + 1}</DialogTitle>
+                    </DialogHeader>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <Label htmlFor="serviceName">Service Name *</Label>
+                        <Input
+                          id="serviceName"
+                          placeholder="e.g., Plumbing Repair"
+                          value={newService.name}
+                          onChange={(e) => setNewService({...newService, name: e.target.value})}
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="serviceDescription">Service Description *</Label>
+                        <Textarea
+                          id="serviceDescription"
+                          rows={3}
+                          placeholder="Describe this service..."
+                          value={newService.description}
+                          onChange={(e) => setNewService({...newService, description: e.target.value})}
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="serviceSteps">Executing Steps (Optional)</Label>
+                        <Textarea
+                          id="serviceSteps"
+                          rows={3}
+                          placeholder="Describe the process or steps..."
+                          value={newService.steps || ""}
+                          onChange={(e) => setNewService({...newService, steps: e.target.value})}
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="servicePicture">Add Picture</Label>
+                        <Input
+                          id="servicePicture"
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => setNewService({...newService, picture: e.target.files || undefined})}
+                        />
+                        <span className="text-sm text-slate-500 mt-1">Aucun fichier choisi</span>
+                      </div>
+                      
+                      <Button 
+                        onClick={addServiceFromModal}
+                        className="w-full bg-primary hover:bg-blue-700"
+                        disabled={!newService.name || !newService.description}
+                      >
+                        Add Service
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
               <div>
                 <div className="space-y-6">
