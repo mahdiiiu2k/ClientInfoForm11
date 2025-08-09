@@ -675,86 +675,86 @@ export default function ClientForm() {
                   Services Customization
                 </h2>
                 
-                {/* Rectangle Add Service Button */}
-                <Dialog open={showServiceModal} onOpenChange={setShowServiceModal}>
-                  <DialogTrigger asChild>
-                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors">
-                      <div className="flex flex-col items-center text-center">
-                        <span className="text-slate-600 font-medium mb-2">Add Service</span>
-                        <Plus className="h-6 w-6 text-slate-400" />
+                {/* Services Grid Layout */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Rectangle Add Service Button */}
+                  <Dialog open={showServiceModal} onOpenChange={setShowServiceModal}>
+                    <DialogTrigger asChild>
+                      <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors">
+                        <div className="flex flex-col items-center text-center">
+                          <span className="text-slate-600 font-medium mb-2">Add Service</span>
+                          <Plus className="h-6 w-6 text-slate-400" />
+                        </div>
                       </div>
-                    </div>
-                  </DialogTrigger>
-                  
-                  {/* Service Modal */}
-                  <DialogContent className="sm:max-w-[500px]">
-                    <DialogHeader>
-                      <DialogTitle>
-                        {editingServiceIndex !== null 
-                          ? `Service #${editingServiceIndex + 1}` 
-                          : `Service #${services.length + 1}`
-                        }
-                      </DialogTitle>
-                    </DialogHeader>
+                    </DialogTrigger>
                     
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="serviceName">Service Name *</Label>
-                        <Input
-                          id="serviceName"
-                          placeholder="e.g., Plumbing Repair"
-                          value={newService.name}
-                          onChange={(e) => setNewService({...newService, name: e.target.value})}
-                        />
-                      </div>
+                    {/* Service Modal */}
+                    <DialogContent className="sm:max-w-[500px]">
+                      <DialogHeader>
+                        <DialogTitle>
+                          {editingServiceIndex !== null 
+                            ? `Service #${editingServiceIndex + 1}` 
+                            : `Service #${services.length + 1}`
+                          }
+                        </DialogTitle>
+                      </DialogHeader>
                       
-                      <div>
-                        <Label htmlFor="serviceDescription">Service Description *</Label>
-                        <Textarea
-                          id="serviceDescription"
-                          rows={3}
-                          placeholder="Describe this service..."
-                          value={newService.description}
-                          onChange={(e) => setNewService({...newService, description: e.target.value})}
-                        />
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="serviceName">Service Name *</Label>
+                          <Input
+                            id="serviceName"
+                            placeholder="e.g., Plumbing Repair"
+                            value={newService.name}
+                            onChange={(e) => setNewService({...newService, name: e.target.value})}
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="serviceDescription">Service Description *</Label>
+                          <Textarea
+                            id="serviceDescription"
+                            rows={3}
+                            placeholder="Describe this service..."
+                            value={newService.description}
+                            onChange={(e) => setNewService({...newService, description: e.target.value})}
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="serviceSteps">Executing Steps (Optional)</Label>
+                          <Textarea
+                            id="serviceSteps"
+                            rows={3}
+                            placeholder="Describe the process or steps..."
+                            value={newService.steps || ""}
+                            onChange={(e) => setNewService({...newService, steps: e.target.value})}
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="servicePicture">Add Picture</Label>
+                          <Input
+                            id="servicePicture"
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setNewService({...newService, picture: e.target.files || undefined})}
+                          />
+                          <span className="text-sm text-slate-500 mt-1">Aucun fichier choisi</span>
+                        </div>
+                        
+                        <Button 
+                          onClick={addServiceFromModal}
+                          className="w-full bg-primary hover:bg-blue-700"
+                          disabled={!newService.name || !newService.description}
+                        >
+                          {editingServiceIndex !== null ? 'Save' : 'Add Service'}
+                        </Button>
                       </div>
-                      
-                      <div>
-                        <Label htmlFor="serviceSteps">Executing Steps (Optional)</Label>
-                        <Textarea
-                          id="serviceSteps"
-                          rows={3}
-                          placeholder="Describe the process or steps..."
-                          value={newService.steps || ""}
-                          onChange={(e) => setNewService({...newService, steps: e.target.value})}
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="servicePicture">Add Picture</Label>
-                        <Input
-                          id="servicePicture"
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => setNewService({...newService, picture: e.target.files || undefined})}
-                        />
-                        <span className="text-sm text-slate-500 mt-1">Aucun fichier choisi</span>
-                      </div>
-                      
-                      <Button 
-                        onClick={addServiceFromModal}
-                        className="w-full bg-primary hover:bg-blue-700"
-                        disabled={!newService.name || !newService.description}
-                      >
-                        {editingServiceIndex !== null ? 'Save' : 'Add Service'}
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-              {/* Display Added Services */}
-              {services.length > 0 && (
-                <div className="space-y-4 mt-6">
+                    </DialogContent>
+                  </Dialog>
+
+                  {/* Display Added Services */}
                   {services.map((service, index) => (
                     <motion.div
                       key={index}
@@ -783,7 +783,7 @@ export default function ClientForm() {
                     </motion.div>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Previous Projects Section */}
