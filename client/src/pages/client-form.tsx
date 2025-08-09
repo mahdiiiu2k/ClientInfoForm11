@@ -296,13 +296,13 @@ export default function ClientForm() {
                         <RadioGroup
                           value={field.value ? "yes" : "no"}
                           onValueChange={(value) => field.onChange(value === "yes")}
-                          className="flex space-x-6"
+                          className="flex gap-6"
                         >
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center gap-3">
                             <RadioGroupItem value="yes" id="license-yes" />
                             <Label htmlFor="license-yes">Yes</Label>
                           </div>
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center gap-3">
                             <RadioGroupItem value="no" id="license-no" />
                             <Label htmlFor="license-no">No</Label>
                           </div>
@@ -402,13 +402,13 @@ export default function ClientForm() {
                         <RadioGroup
                           value={field.value ? "yes" : "no"}
                           onValueChange={(value) => field.onChange(value === "yes")}
-                          className="flex space-x-6"
+                          className="flex gap-6"
                         >
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center gap-3">
                             <RadioGroupItem value="yes" id="emergency-yes" />
                             <Label htmlFor="emergency-yes">Yes</Label>
                           </div>
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center gap-3">
                             <RadioGroupItem value="no" id="emergency-no" />
                             <Label htmlFor="emergency-no">No</Label>
                           </div>
@@ -432,13 +432,13 @@ export default function ClientForm() {
                               <RadioGroup
                                 value={field.value ? "yes" : "no"}
                                 onValueChange={(value) => field.onChange(value === "yes")}
-                                className="flex space-x-6"
+                                className="flex gap-6"
                               >
-                                <div className="flex items-center space-x-2">
+                                <div className="flex items-center gap-3">
                                   <RadioGroupItem value="yes" id="emergency-phone-yes" />
                                   <Label htmlFor="emergency-phone-yes">Yes</Label>
                                 </div>
-                                <div className="flex items-center space-x-2">
+                                <div className="flex items-center gap-3">
                                   <RadioGroupItem value="no" id="emergency-phone-no" />
                                   <Label htmlFor="emergency-phone-no">No</Label>
                                 </div>
