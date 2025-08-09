@@ -496,25 +496,32 @@ export default function ClientForm() {
             {/* About Section Modifications */}
             <div className="space-y-6">
               <div 
-                className="cursor-pointer hover:bg-slate-100 transition-colors p-4 rounded-lg bg-slate-50 border border-slate-200"
-                onClick={() => setShowAboutSection(!showAboutSection)}
-                data-testid="button-toggle-about-section"
+                className={`transition-colors p-4 rounded-lg border border-slate-200 ${
+                  showAboutSection 
+                    ? 'bg-slate-50' 
+                    : 'cursor-pointer hover:bg-slate-100 bg-slate-50'
+                }`}
               >
-                <h2 className="flex items-center text-xl text-slate-800 font-semibold">
-                  <CircleOff className="text-primary mr-3 h-5 w-5" />
-                  About Us Section Customization (optional)
-                  {showAboutSection ? (
-                    <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
-                  )}
-                </h2>
-              </div>
+                <div
+                  className={showAboutSection ? '' : 'cursor-pointer'}
+                  onClick={() => setShowAboutSection(!showAboutSection)}
+                  data-testid="button-toggle-about-section"
+                >
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
+                    <CircleOff className="text-primary mr-3 h-5 w-5" />
+                    About Us Section Customization (optional)
+                    {showAboutSection ? (
+                      <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
+                    )}
+                  </h2>
+                </div>
               
-              <AnimatePresence>
-                {showAboutSection && (
-                  <motion.div {...slideDown}>
-                    <div className="space-y-6">
+                <AnimatePresence>
+                  {showAboutSection && (
+                    <motion.div {...slideDown} className="mt-6">
+                      <div className="space-y-6">
                       <FormField
                         control={form.control}
                         name="companyStory"
@@ -571,10 +578,11 @@ export default function ClientForm() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Services Customization Section */}
@@ -781,25 +789,32 @@ export default function ClientForm() {
             {/* Warranty Section */}
             <div className="space-y-6">
               <div 
-                className="cursor-pointer hover:bg-slate-100 transition-colors p-4 rounded-lg bg-slate-50 border border-slate-200"
-                onClick={() => setShowWarrantySection(!showWarrantySection)}
-                data-testid="button-toggle-warranty-section"
+                className={`transition-colors p-4 rounded-lg border border-slate-200 ${
+                  showWarrantySection 
+                    ? 'bg-slate-50' 
+                    : 'cursor-pointer hover:bg-slate-100 bg-slate-50'
+                }`}
               >
-                <h2 className="flex items-center text-xl text-slate-800 font-semibold">
-                  <Shield className="text-primary mr-3 h-5 w-5" />
-                  Warranty (optional)
-                  {showWarrantySection ? (
-                    <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
-                  )}
-                </h2>
-              </div>
+                <div
+                  className={showWarrantySection ? '' : 'cursor-pointer'}
+                  onClick={() => setShowWarrantySection(!showWarrantySection)}
+                  data-testid="button-toggle-warranty-section"
+                >
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
+                    <Shield className="text-primary mr-3 h-5 w-5" />
+                    Warranty (optional)
+                    {showWarrantySection ? (
+                      <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
+                    )}
+                  </h2>
+                </div>
               
-              <AnimatePresence>
-                {showWarrantySection && (
-                  <motion.div {...slideDown}>
-                    <div className="space-y-6">
+                <AnimatePresence>
+                  {showWarrantySection && (
+                    <motion.div {...slideDown} className="mt-6">
+                      <div className="space-y-6">
                       <FormField
                         control={form.control}
                         name="warrantyDescription"
@@ -818,34 +833,42 @@ export default function ClientForm() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Insurance Section */}
             <div className="space-y-6">
               <div 
-                className="cursor-pointer hover:bg-slate-100 transition-colors p-4 rounded-lg bg-slate-50 border border-slate-200"
-                onClick={() => setShowInsuranceSection(!showInsuranceSection)}
-                data-testid="button-toggle-insurance-section"
+                className={`transition-colors p-4 rounded-lg border border-slate-200 ${
+                  showInsuranceSection 
+                    ? 'bg-slate-50' 
+                    : 'cursor-pointer hover:bg-slate-100 bg-slate-50'
+                }`}
               >
-                <h2 className="flex items-center text-xl text-slate-800 font-semibold">
-                  <Shield className="text-primary mr-3 h-5 w-5" />
-                  Insurance (optional)
-                  {showInsuranceSection ? (
-                    <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
-                  )}
-                </h2>
-              </div>
+                <div
+                  className={showInsuranceSection ? '' : 'cursor-pointer'}
+                  onClick={() => setShowInsuranceSection(!showInsuranceSection)}
+                  data-testid="button-toggle-insurance-section"
+                >
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
+                    <Shield className="text-primary mr-3 h-5 w-5" />
+                    Insurance (optional)
+                    {showInsuranceSection ? (
+                      <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
+                    )}
+                  </h2>
+                </div>
               
-              <AnimatePresence>
-                {showInsuranceSection && (
-                  <motion.div {...slideDown}>
-                    <div className="space-y-6">
+                <AnimatePresence>
+                  {showInsuranceSection && (
+                    <motion.div {...slideDown} className="mt-6">
+                      <div className="space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <FormField
                           control={form.control}
@@ -908,10 +931,11 @@ export default function ClientForm() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Service Areas Section */}
