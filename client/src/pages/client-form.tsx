@@ -675,12 +675,12 @@ export default function ClientForm() {
                   Services Customization
                 </h2>
                 
-                {/* Services Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* Services Slider Layout */}
+                <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
                   {/* Rectangle Add Service Button */}
                   <Dialog open={showServiceModal} onOpenChange={setShowServiceModal}>
                     <DialogTrigger asChild>
-                      <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors">
+                      <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[280px] flex-shrink-0">
                         <div className="flex flex-col items-center text-center">
                           <span className="text-slate-600 font-medium mb-2">Add Service</span>
                           <Plus className="h-6 w-6 text-slate-400" />
@@ -759,7 +759,7 @@ export default function ClientForm() {
                     <motion.div
                       key={index}
                       {...fadeInUp}
-                      className="border border-slate-200 rounded-lg p-4 bg-white"
+                      className="border border-slate-200 rounded-lg p-4 bg-white min-w-[280px] flex-shrink-0"
                     >
                       <div className="flex justify-between items-center">
                         <div>
