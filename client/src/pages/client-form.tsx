@@ -506,15 +506,25 @@ export default function ClientForm() {
                   control={form.control}
                   name="enableAboutModifications"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                    <FormItem>
+                      <FormLabel>Optional: Customize your about section</FormLabel>
                       <FormControl>
-                        <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
+                        <RadioGroup
+                          value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
+                          onValueChange={(value) => field.onChange(value === "yes")}
+                          className="flex space-x-6"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="yes" id="about-yes" />
+                            <Label htmlFor="about-yes">Yes</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="no" id="about-no" />
+                            <Label htmlFor="about-no">No</Label>
+                          </div>
+                        </RadioGroup>
                       </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel className="font-medium">
-                          Optional: Customize your about section
-                        </FormLabel>
-                      </div>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
