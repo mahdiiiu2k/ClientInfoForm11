@@ -691,7 +691,7 @@ export default function ClientForm() {
                         className="w-full bg-primary hover:bg-blue-700"
                         disabled={!newService.name || !newService.description}
                       >
-                        {editingServiceIndex !== null ? 'Update Service' : 'Add Service'}
+                        {editingServiceIndex !== null ? 'Save' : 'Add Service'}
                       </Button>
                     </div>
                   </DialogContent>
