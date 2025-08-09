@@ -880,25 +880,17 @@ export default function ClientForm() {
                         control={form.control}
                         name="workersCompensation"
                         render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Workers Compensation Coverage <span className="text-slate-500">(Optional)</span></FormLabel>
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                             <FormControl>
-                              <RadioGroup
-                                value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
-                                onValueChange={(value) => field.onChange(value === "yes")}
-                                className="flex space-x-6"
-                              >
-                                <div className="flex items-center space-x-2">
-                                  <RadioGroupItem value="yes" id="workers-comp-yes" />
-                                  <Label htmlFor="workers-comp-yes">Yes</Label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                  <RadioGroupItem value="no" id="workers-comp-no" />
-                                  <Label htmlFor="workers-comp-no">No</Label>
-                                </div>
-                              </RadioGroup>
+                              <Checkbox 
+                                checked={field.value || false} 
+                                onCheckedChange={field.onChange}
+                                className="rounded-full"
+                              />
                             </FormControl>
-                            <FormMessage />
+                            <div className="space-y-1 leading-none">
+                              <FormLabel>Workers Compensation Coverage <span className="text-slate-500">(Optional)</span></FormLabel>
+                            </div>
                           </FormItem>
                         )}
                       />
