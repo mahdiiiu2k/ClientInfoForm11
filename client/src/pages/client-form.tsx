@@ -231,14 +231,14 @@ export default function ClientForm() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {/* Basic Information Section */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl text-slate-800">
+            <div className="space-y-6">
+              <div>
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <UserCircle className="text-primary mr-3 h-5 w-5" />
                   Basic Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
+                </h2>
+              </div>
+              <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
@@ -293,18 +293,18 @@ export default function ClientForm() {
                     )}
                   />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* License Information Section */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl text-slate-800">
+            <div className="space-y-6">
+              <div>
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <Tag className="text-primary mr-3 h-5 w-5" />
                   License Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
+                </h2>
+              </div>
+              <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="hasLicense"
@@ -351,18 +351,18 @@ export default function ClientForm() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* Address and Business Hours */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl text-slate-800">
+            <div className="space-y-6">
+              <div>
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <Building className="text-primary mr-3 h-5 w-5" />
                   Business Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
+                </h2>
+              </div>
+              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="businessAddress"
@@ -399,18 +399,18 @@ export default function ClientForm() {
                     </FormItem>
                   )}
                 />
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* Emergency Services Section */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl text-slate-800">
+            <div className="space-y-6">
+              <div>
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <TriangleAlert className="text-primary mr-3 h-5 w-5" />
                   Emergency Services
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
+                </h2>
+              </div>
+              <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="hasEmergencyServices"
@@ -490,17 +490,17 @@ export default function ClientForm() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* About Section Modifications */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader 
-                className="cursor-pointer hover:bg-slate-50 transition-colors"
+            <div className="space-y-6">
+              <div 
+                className="cursor-pointer hover:bg-slate-50 transition-colors p-2 rounded-lg"
                 onClick={() => setShowAboutSection(!showAboutSection)}
                 data-testid="button-toggle-about-section"
               >
-                <CardTitle className="flex items-center text-xl text-slate-800">
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                   <CircleOff className="text-primary mr-3 h-5 w-5" />
                   About Section Customization
                   {showAboutSection ? (
@@ -508,13 +508,13 @@ export default function ClientForm() {
                   ) : (
                     <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
                   )}
-                </CardTitle>
-              </CardHeader>
+                </h2>
+              </div>
               
               <AnimatePresence>
                 {showAboutSection && (
                   <motion.div {...slideDown}>
-                    <CardContent className="space-y-6">
+                    <div className="space-y-6">
                       <FormField
                         control={form.control}
                         name="companyStory"
@@ -571,27 +571,27 @@ export default function ClientForm() {
                           </FormItem>
                         )}
                       />
-                    </CardContent>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </Card>
+            </div>
 
             {/* Services Customization Section */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle className="flex items-center text-xl text-slate-800">
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                     <ServerCog className="text-primary mr-3 h-5 w-5" />
                     Services Customization
-                  </CardTitle>
+                  </h2>
                   <Button type="button" onClick={addService} className="bg-primary hover:bg-blue-700">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Service
                   </Button>
                 </div>
-              </CardHeader>
-              <CardContent>
+              </div>
+              <div>
                 <div className="space-y-6">
                   {services.length === 0 ? (
                     <div className="text-center py-8 text-slate-500">
@@ -657,24 +657,24 @@ export default function ClientForm() {
                     ))
                   )}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* Previous Projects Section */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle className="flex items-center text-xl text-slate-800">
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                     <FolderOpen className="text-primary mr-3 h-5 w-5" />
                     Previous Projects
-                  </CardTitle>
+                  </h2>
                   <Button type="button" onClick={addProject} className="bg-primary hover:bg-blue-700">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Project
                   </Button>
                 </div>
-              </CardHeader>
-              <CardContent>
+              </div>
+              <div>
                 <div className="space-y-6">
                   {projects.length === 0 ? (
                     <div className="text-center py-8 text-slate-500">
@@ -775,17 +775,17 @@ export default function ClientForm() {
                     ))
                   )}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* Warranty Section */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader 
-                className="cursor-pointer hover:bg-slate-50 transition-colors"
+            <div className="space-y-6">
+              <div 
+                className="cursor-pointer hover:bg-slate-50 transition-colors p-2 rounded-lg"
                 onClick={() => setShowWarrantySection(!showWarrantySection)}
                 data-testid="button-toggle-warranty-section"
               >
-                <CardTitle className="flex items-center text-xl text-slate-800">
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                   <Shield className="text-primary mr-3 h-5 w-5" />
                   Warranty
                   {showWarrantySection ? (
@@ -793,13 +793,13 @@ export default function ClientForm() {
                   ) : (
                     <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
                   )}
-                </CardTitle>
-              </CardHeader>
+                </h2>
+              </div>
               
               <AnimatePresence>
                 {showWarrantySection && (
                   <motion.div {...slideDown}>
-                    <CardContent className="space-y-6">
+                    <div className="space-y-6">
                       <FormField
                         control={form.control}
                         name="warrantyDescription"
@@ -818,20 +818,20 @@ export default function ClientForm() {
                           </FormItem>
                         )}
                       />
-                    </CardContent>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </Card>
+            </div>
 
             {/* Insurance Section */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader 
-                className="cursor-pointer hover:bg-slate-50 transition-colors"
+            <div className="space-y-6">
+              <div 
+                className="cursor-pointer hover:bg-slate-50 transition-colors p-2 rounded-lg"
                 onClick={() => setShowInsuranceSection(!showInsuranceSection)}
                 data-testid="button-toggle-insurance-section"
               >
-                <CardTitle className="flex items-center text-xl text-slate-800">
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                   <Shield className="text-primary mr-3 h-5 w-5" />
                   Insurance
                   {showInsuranceSection ? (
@@ -839,13 +839,13 @@ export default function ClientForm() {
                   ) : (
                     <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
                   )}
-                </CardTitle>
-              </CardHeader>
+                </h2>
+              </div>
               
               <AnimatePresence>
                 {showInsuranceSection && (
                   <motion.div {...slideDown}>
-                    <CardContent className="space-y-6">
+                    <div className="space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <FormField
                           control={form.control}
@@ -906,27 +906,27 @@ export default function ClientForm() {
                           </FormItem>
                         )}
                       />
-                    </CardContent>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </Card>
+            </div>
 
             {/* Service Areas Section */}
-            <Card className="shadow-sm border-slate-200">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle className="flex items-center text-xl text-slate-800">
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                     <MapPin className="text-primary mr-3 h-5 w-5" />
                     Service Areas
-                  </CardTitle>
+                  </h2>
                   <Button type="button" onClick={addServiceArea} className="bg-primary hover:bg-blue-700">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Area
                   </Button>
                 </div>
-              </CardHeader>
-              <CardContent>
+              </div>
+              <div>
                 <div className="space-y-6">
                   {serviceAreas.length === 0 ? (
                     <div className="text-center py-8 text-slate-500">
@@ -991,8 +991,8 @@ export default function ClientForm() {
                     ))
                   )}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* Submit Button */}
             <div className="text-center pt-8">

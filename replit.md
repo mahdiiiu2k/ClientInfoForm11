@@ -7,6 +7,7 @@ This is a modern, responsive web application that provides a comprehensive clien
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Form styling preference: Avoid rectangular card designs for form sections - prefer clean, minimal appearance with subtle visual separation.
 
 ## System Architecture
 
