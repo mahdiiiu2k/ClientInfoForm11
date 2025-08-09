@@ -833,7 +833,7 @@ export default function ClientForm() {
               >
                 <CardTitle className="flex items-center text-xl text-slate-800">
                   <Shield className="text-primary mr-3 h-5 w-5" />
-                  Provide insurance details
+                  Insurance
                   {showInsuranceSection ? (
                     <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
                   ) : (
