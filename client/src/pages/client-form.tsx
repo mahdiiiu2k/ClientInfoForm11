@@ -92,7 +92,7 @@ export default function ClientForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      yearsOfExperience: "",
+      yearsOfExperience: undefined,
       businessEmail: "",
       hasLicense: undefined,
       licenseNumber: "",
@@ -239,47 +239,45 @@ export default function ClientForm() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="space-y-6">
-                  <div className="w-full max-w-xs">
-                    <FormField
-                      control={form.control}
-                      name="yearsOfExperience"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Years of Experience *</FormLabel>
-                          <FormControl>
-                            <Input
-                              type="number"
-                              min={0}
-                              max={50}
-                              placeholder="Enter years of experience"
-                              className={isTypingExperience ? "input-typing" : ""}
-                              data-testid="input-years-experience"
-                              {...field}
-                              onChange={(e) => {
-                                const value = e.target.value;
-                                field.onChange(value);
-                                
-                                // Start blinking effect
-                                setIsTypingExperience(true);
-                                
-                                // Clear existing timeout
-                                if (experienceTimeoutRef.current) {
-                                  clearTimeout(experienceTimeoutRef.current);
-                                }
-                                
-                                // Stop blinking after 2 seconds of no typing
-                                experienceTimeoutRef.current = setTimeout(() => {
-                                  setIsTypingExperience(false);
-                                }, 2000);
-                              }}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="yearsOfExperience"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Years of Experience *</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            min={0}
+                            max={50}
+                            placeholder="Enter years of experience"
+                            className={isTypingExperience ? "input-typing" : ""}
+                            data-testid="input-years-experience"
+                            {...field}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              field.onChange(value === '' ? undefined : parseInt(value) || 0);
+                              
+                              // Start blinking effect
+                              setIsTypingExperience(true);
+                              
+                              // Clear existing timeout
+                              if (experienceTimeoutRef.current) {
+                                clearTimeout(experienceTimeoutRef.current);
+                              }
+                              
+                              // Stop blinking after 2 seconds of no typing
+                              experienceTimeoutRef.current = setTimeout(() => {
+                                setIsTypingExperience(false);
+                              }, 2000);
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
                   <FormField
                     control={form.control}
