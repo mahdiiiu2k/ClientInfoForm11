@@ -487,14 +487,18 @@ export default function ClientForm() {
                   control={form.control}
                   name="enableAboutModifications"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel className="font-medium">
+                    <FormItem>
+                      <div className="flex items-center gap-3">
+                        <FormControl>
+                          <Checkbox 
+                            id="enableAboutModifications"
+                            checked={field.value || false} 
+                            onCheckedChange={field.onChange} 
+                          />
+                        </FormControl>
+                        <Label htmlFor="enableAboutModifications" className="font-medium">
                           Optional: Customize your about section
-                        </FormLabel>
+                        </Label>
                       </div>
                     </FormItem>
                   )}
@@ -707,12 +711,13 @@ export default function ClientForm() {
                             />
                           </div>
                           <div>
-                            <div className="flex items-center space-x-2">
+                            <div className="flex items-center gap-3">
                               <Checkbox
+                                id={`beforeAfter-${index}`}
                                 checked={project.beforeAfter}
                                 onCheckedChange={(checked) => updateProject(index, "beforeAfter", checked)}
                               />
-                              <Label>Before/After Photos</Label>
+                              <Label htmlFor={`beforeAfter-${index}`}>Before/After Photos</Label>
                             </div>
                           </div>
                           <div>
@@ -780,14 +785,18 @@ export default function ClientForm() {
                     control={form.control}
                     name="hasWarranty"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="font-medium">
+                      <FormItem>
+                        <div className="flex items-center gap-3">
+                          <FormControl>
+                            <Checkbox 
+                              id="hasWarranty"
+                              checked={field.value || false} 
+                              onCheckedChange={field.onChange} 
+                            />
+                          </FormControl>
+                          <Label htmlFor="hasWarranty" className="font-medium">
                             We offer warranty on our services
-                          </FormLabel>
+                          </Label>
                         </div>
                       </FormItem>
                     )}
@@ -824,14 +833,18 @@ export default function ClientForm() {
                     control={form.control}
                     name="hasInsurance"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="font-medium">
+                      <FormItem>
+                        <div className="flex items-center gap-3">
+                          <FormControl>
+                            <Checkbox 
+                              id="hasInsurance"
+                              checked={field.value || false} 
+                              onCheckedChange={field.onChange} 
+                            />
+                          </FormControl>
+                          <Label htmlFor="hasInsurance" className="font-medium">
                             Provide insurance details
-                          </FormLabel>
+                          </Label>
                         </div>
                       </FormItem>
                     )}
@@ -874,12 +887,18 @@ export default function ClientForm() {
                           control={form.control}
                           name="workersCompensation"
                           render={({ field }) => (
-                            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                              <FormControl>
-                                <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
-                              </FormControl>
-                              <div className="space-y-1 leading-none">
-                                <FormLabel>Workers Compensation Coverage</FormLabel>
+                            <FormItem>
+                              <div className="flex items-center gap-3">
+                                <FormControl>
+                                  <Checkbox 
+                                    id="workersCompensation"
+                                    checked={field.value || false} 
+                                    onCheckedChange={field.onChange} 
+                                  />
+                                </FormControl>
+                                <Label htmlFor="workersCompensation">
+                                  Workers Compensation Coverage
+                                </Label>
                               </div>
                             </FormItem>
                           )}
