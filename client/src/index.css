@@ -96,3 +96,13 @@ input[type="file"] {
   border-radius: 0.375rem !important;
   border-width: 2px !important;
 }
+
+/* Blinking effect for focused inputs */
+@keyframes blink-border {
+  0%, 50% { border-color: hsl(217.2 91.2% 59.8%); }
+  51%, 100% { border-color: hsl(142.1 76.2% 36.3%); }
+}
+
+.input-typing {
+  animation: blink-border 1s infinite;
+}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
@@ -86,11 +86,13 @@ export default function ClientForm() {
   const [services, setServices] = useState<Service[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [serviceAreas, setServiceAreas] = useState<ServiceArea[]>([]);
+  const [isTypingExperience, setIsTypingExperience] = useState(false);
+  const experienceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      yearsOfExperience: 0,
+      yearsOfExperience: undefined,
       businessEmail: "",
       hasLicense: undefined,
       licenseNumber: "",
@@ -250,8 +252,26 @@ export default function ClientForm() {
                             min={0}
                             max={50}
                             placeholder="Enter years of experience"
+                            className={isTypingExperience ? "input-typing" : ""}
+                            data-testid="input-years-experience"
                             {...field}
-                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              field.onChange(value === '' ? undefined : parseInt(value) || 0);
+                              
+                              // Start blinking effect
+                              setIsTypingExperience(true);
+                              
+                              // Clear existing timeout
+                              if (experienceTimeoutRef.current) {
+                                clearTimeout(experienceTimeoutRef.current);
+                              }
+                              
+                              // Stop blinking after 2 seconds of no typing
+                              experienceTimeoutRef.current = setTimeout(() => {
+                                setIsTypingExperience(false);
+                              }, 2000);
+                            }}
                           />
                         </FormControl>
                         <FormMessage />
@@ -322,7 +342,7 @@ export default function ClientForm() {
                           <FormItem>
                             <FormLabel>License Number *</FormLabel>
                             <FormControl>
-                              <Input placeholder="Enter license number" {...field} />
+                              <Input placeholder="Enter license number" {...field} value={field.value || ""} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -458,7 +478,7 @@ export default function ClientForm() {
                                 <FormItem>
                                   <FormLabel>Emergency Phone Number *</FormLabel>
                                   <FormControl>
-                                    <Input type="tel" placeholder="(555) 123-4567" {...field} />
+                                    <Input type="tel" placeholder="(555) 123-4567" {...field} value={field.value || ""} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
