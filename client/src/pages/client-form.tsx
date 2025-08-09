@@ -1106,7 +1106,7 @@ export default function ClientForm() {
                 {/* Add Area Input */}
                 <div className="flex gap-3 mb-4">
                   <Input
-                    placeholder="Enter area name (e.g., Downtown, Brooklyn, Manhattan)"
+                    placeholder="Enter area name"
                     value={newAreaName}
                     onChange={(e) => setNewAreaName(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && addAreaFromInput()}
