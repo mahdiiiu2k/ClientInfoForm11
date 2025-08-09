@@ -885,7 +885,7 @@ export default function ClientForm() {
                               <Checkbox checked={field.value || false} onCheckedChange={field.onChange} />
                             </FormControl>
                             <div className="space-y-1 leading-none">
-                              <FormLabel>Workers Compensation Coverage</FormLabel>
+                              <FormLabel>Workers Compensation Coverage <span className="text-slate-500">(Optional)</span></FormLabel>
                             </div>
                           </FormItem>
                         )}
