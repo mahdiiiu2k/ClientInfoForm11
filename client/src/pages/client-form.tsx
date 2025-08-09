@@ -296,7 +296,7 @@ export default function ClientForm() {
             {/* Basic Information Section */}
             <div className="space-y-6">
               <div>
-                <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold mb-6">
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <UserCircle className="text-primary mr-3 h-5 w-5" />
                   Basic Information
                 </h2>
@@ -362,7 +362,7 @@ export default function ClientForm() {
             {/* License Information Section */}
             <div className="space-y-6">
               <div>
-                <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold mb-6">
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <Tag className="text-primary mr-3 h-5 w-5" />
                   License Information
                 </h2>
@@ -420,7 +420,7 @@ export default function ClientForm() {
             {/* Address and Business Hours */}
             <div className="space-y-6">
               <div>
-                <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold mb-6">
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <Building className="text-primary mr-3 h-5 w-5" />
                   Business Details
                 </h2>
@@ -468,7 +468,7 @@ export default function ClientForm() {
             {/* Emergency Services Section */}
             <div className="space-y-6">
               <div>
-                <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold mb-6">
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <TriangleAlert className="text-primary mr-3 h-5 w-5" />
                   Emergency Services
                 </h2>
@@ -570,7 +570,7 @@ export default function ClientForm() {
                   onClick={() => setShowAboutSection(!showAboutSection)}
                   data-testid="button-toggle-about-section"
                 >
-                  <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold">
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                     <CircleOff className="text-primary mr-3 h-5 w-5" />
                     About Us Section Customization (optional)
                     {showAboutSection ? (
@@ -651,7 +651,7 @@ export default function ClientForm() {
             {/* Services Customization Section */}
             <div className="space-y-6">
               <div>
-                <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold mb-6">
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <ServerCog className="text-primary mr-3 h-5 w-5" />
                   Services Customization
                 </h2>
@@ -770,7 +770,7 @@ export default function ClientForm() {
             {/* Previous Projects Section */}
             <div className="space-y-6">
               <div>
-                <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold mb-6">
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <FolderOpen className="text-primary mr-3 h-5 w-5" />
                   Previous Projects
                 </h2>
@@ -938,7 +938,7 @@ export default function ClientForm() {
                   onClick={() => setShowWarrantySection(!showWarrantySection)}
                   data-testid="button-toggle-warranty-section"
                 >
-                  <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold">
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                     <Shield className="text-primary mr-3 h-5 w-5" />
                     Warranty (optional)
                     {showWarrantySection ? (
@@ -992,7 +992,7 @@ export default function ClientForm() {
                   onClick={() => setShowInsuranceSection(!showInsuranceSection)}
                   data-testid="button-toggle-insurance-section"
                 >
-                  <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold">
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                     <Shield className="text-primary mr-3 h-5 w-5" />
                     Insurance (optional)
                     {showInsuranceSection ? (
@@ -1080,7 +1080,7 @@ export default function ClientForm() {
             <div className="space-y-6">
               <div>
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="flex items-center justify-center text-xl text-slate-800 font-semibold">
+                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
                     <MapPin className="text-primary mr-3 h-5 w-5" />
                     Service Areas
                   </h2>
