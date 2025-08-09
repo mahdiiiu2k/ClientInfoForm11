@@ -773,21 +773,21 @@ export default function ClientForm() {
                         <div className="flex gap-2">
                           <Button
                             type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => editService(index)}
-                            className="text-primary border-primary hover:bg-primary hover:text-white"
-                          >
-                            Edit
-                          </Button>
-                          <Button
-                            type="button"
                             variant="ghost"
                             size="sm"
                             onClick={() => removeService(index)}
                             className="text-red-500 hover:text-red-700 hover:bg-red-50"
                           >
                             <Trash2 className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => editService(index)}
+                            className="text-primary border-primary hover:bg-primary hover:text-white"
+                          >
+                            Edit
                           </Button>
                         </div>
                       </div>
