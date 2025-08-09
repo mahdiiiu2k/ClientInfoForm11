@@ -500,15 +500,13 @@ export default function ClientForm() {
                 onClick={() => setShowAboutSection(!showAboutSection)}
                 data-testid="button-toggle-about-section"
               >
-                <CardTitle className="flex items-center justify-between text-xl text-slate-800">
-                  <div className="flex items-center">
-                    <CircleOff className="text-primary mr-3 h-5 w-5" />
-                    About Section Customization
-                  </div>
+                <CardTitle className="flex items-center text-xl text-slate-800">
+                  <CircleOff className="text-primary mr-3 h-5 w-5" />
+                  About Section Customization
                   {showAboutSection ? (
-                    <ChevronUp className="h-5 w-5 text-slate-600" />
+                    <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-600" />
+                    <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
                   )}
                 </CardTitle>
               </CardHeader>
