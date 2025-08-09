@@ -95,6 +95,14 @@ export default function ClientForm() {
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [newService, setNewService] = useState<Service>({ name: "", description: "", steps: "" });
   const [editingServiceIndex, setEditingServiceIndex] = useState<number | null>(null);
+  const [showProjectModal, setShowProjectModal] = useState(false);
+  const [newProject, setNewProject] = useState<Project>({ 
+    title: "", 
+    description: "", 
+    beforeAfter: false,
+    clientFeedback: ""
+  });
+  const [editingProjectIndex, setEditingProjectIndex] = useState<number | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -198,6 +206,34 @@ export default function ClientForm() {
     setNewService({ ...services[index] });
     setEditingServiceIndex(index);
     setShowServiceModal(true);
+  };
+
+  const addProjectFromModal = () => {
+    if (newProject.title && newProject.description) {
+      if (editingProjectIndex !== null) {
+        // Update existing project
+        const updatedProjects = [...projects];
+        updatedProjects[editingProjectIndex] = { ...newProject };
+        setProjects(updatedProjects);
+        setEditingProjectIndex(null);
+      } else {
+        // Add new project
+        setProjects([...projects, { ...newProject }]);
+      }
+      setNewProject({ 
+        title: "", 
+        description: "", 
+        beforeAfter: false,
+        clientFeedback: ""
+      });
+      setShowProjectModal(false);
+    }
+  };
+
+  const editProject = (index: number) => {
+    setNewProject({ ...projects[index] });
+    setEditingProjectIndex(index);
+    setShowProjectModal(true);
   };
 
   const removeService = (index: number) => {
@@ -734,119 +770,158 @@ export default function ClientForm() {
             {/* Previous Projects Section */}
             <div className="space-y-6">
               <div>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
-                    <FolderOpen className="text-primary mr-3 h-5 w-5" />
-                    Previous Projects
-                  </h2>
-                  <Button type="button" onClick={addProject} className="bg-primary hover:bg-blue-700">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Project
-                  </Button>
-                </div>
-              </div>
-              <div>
-                <div className="space-y-6">
-                  {projects.length === 0 ? (
-                    <div className="text-center py-8 text-slate-500">
-                      <FolderOpen className="mx-auto h-16 w-16 mb-4" />
-                      <p>No projects added yet. Click "Add Project" to showcase your work.</p>
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
+                  <FolderOpen className="text-primary mr-3 h-5 w-5" />
+                  Previous Projects
+                </h2>
+                
+                {/* Rectangle Add Project Button */}
+                <Dialog open={showProjectModal} onOpenChange={setShowProjectModal}>
+                  <DialogTrigger asChild>
+                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors">
+                      <div className="flex flex-col items-center text-center">
+                        <span className="text-slate-600 font-medium mb-2">Add Project</span>
+                        <Plus className="h-6 w-6 text-slate-400" />
+                      </div>
                     </div>
-                  ) : (
-                    projects.map((project, index) => (
-                      <motion.div
-                        key={index}
-                        {...fadeInUp}
-                        className="border border-slate-200 rounded-lg p-6"
-                      >
-                        <div className="flex justify-between items-start mb-4">
-                          <h3 className="text-lg font-medium text-slate-800">Project #{index + 1}</h3>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeProject(index)}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                  </DialogTrigger>
+                  
+                  {/* Project Modal */}
+                  <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>
+                        {editingProjectIndex !== null 
+                          ? `Project #${editingProjectIndex + 1}` 
+                          : `Project #${projects.length + 1}`
+                        }
+                      </DialogTitle>
+                    </DialogHeader>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <Label htmlFor="projectTitle">Project Title *</Label>
+                        <Input
+                          id="projectTitle"
+                          placeholder="e.g., Kitchen Renovation"
+                          value={newProject.title}
+                          onChange={(e) => setNewProject({...newProject, title: e.target.value})}
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="projectDescription">Project Description *</Label>
+                        <Textarea
+                          id="projectDescription"
+                          rows={3}
+                          placeholder="Describe the project..."
+                          value={newProject.description}
+                          onChange={(e) => setNewProject({...newProject, description: e.target.value})}
+                        />
+                      </div>
+                      
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="beforeAfter"
+                            checked={newProject.beforeAfter}
+                            onCheckedChange={(checked) => setNewProject({...newProject, beforeAfter: checked as boolean})}
+                          />
+                          <Label htmlFor="beforeAfter">Before/After Photos</Label>
                         </div>
-                        <div className="space-y-4">
-                          <div>
-                            <Label>Project Title *</Label>
-                            <Input
-                              placeholder="e.g., Kitchen Renovation"
-                              value={project.title}
-                              onChange={(e) => updateProject(index, "title", e.target.value)}
-                            />
-                          </div>
-                          <div>
-                            <Label>Project Description *</Label>
-                            <Textarea
-                              rows={3}
-                              placeholder="Describe the project..."
-                              value={project.description}
-                              onChange={(e) => updateProject(index, "description", e.target.value)}
-                            />
-                          </div>
-                          <div>
-                            <div className="flex items-center space-x-2">
-                              <Checkbox
-                                checked={project.beforeAfter}
-                                onCheckedChange={(checked) => updateProject(index, "beforeAfter", checked)}
+                      </div>
+                      
+                      <div>
+                        {newProject.beforeAfter ? (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <Label htmlFor="beforePictures">Before Pictures</Label>
+                              <Input
+                                id="beforePictures"
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={(e) => setNewProject({...newProject, beforePictures: e.target.files || undefined})}
                               />
-                              <Label>Before/After Photos</Label>
+                            </div>
+                            <div>
+                              <Label htmlFor="afterPictures">After Pictures</Label>
+                              <Input
+                                id="afterPictures"
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={(e) => setNewProject({...newProject, afterPictures: e.target.files || undefined})}
+                              />
                             </div>
                           </div>
+                        ) : (
                           <div>
-                            {project.beforeAfter ? (
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                  <Label>Before Pictures</Label>
-                                  <Input
-                                    type="file"
-                                    multiple
-                                    accept="image/*"
-                                    onChange={(e) => updateProject(index, "beforePictures", e.target.files)}
-                                  />
-                                </div>
-                                <div>
-                                  <Label>After Pictures</Label>
-                                  <Input
-                                    type="file"
-                                    multiple
-                                    accept="image/*"
-                                    onChange={(e) => updateProject(index, "afterPictures", e.target.files)}
-                                  />
-                                </div>
-                              </div>
-                            ) : (
-                              <div>
-                                <Label>Project Pictures</Label>
-                                <Input
-                                  type="file"
-                                  multiple
-                                  accept="image/*"
-                                  onChange={(e) => updateProject(index, "pictures", e.target.files)}
-                                />
-                              </div>
-                            )}
-                          </div>
-                          <div>
-                            <Label>Client Feedback <span className="text-slate-500">(Optional)</span></Label>
-                            <Textarea
-                              rows={3}
-                              placeholder="Client testimonial or feedback..."
-                              value={project.clientFeedback || ""}
-                              onChange={(e) => updateProject(index, "clientFeedback", e.target.value)}
+                            <Label htmlFor="projectPictures">Project Pictures</Label>
+                            <Input
+                              id="projectPictures"
+                              type="file"
+                              multiple
+                              accept="image/*"
+                              onChange={(e) => setNewProject({...newProject, pictures: e.target.files || undefined})}
                             />
                           </div>
-                        </div>
-                      </motion.div>
-                    ))
-                  )}
-                </div>
+                        )}
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="clientFeedback">Client Feedback (Optional)</Label>
+                        <Textarea
+                          id="clientFeedback"
+                          rows={3}
+                          placeholder="Client testimonial or feedback..."
+                          value={newProject.clientFeedback || ""}
+                          onChange={(e) => setNewProject({...newProject, clientFeedback: e.target.value})}
+                        />
+                      </div>
+                      
+                      <Button 
+                        onClick={addProjectFromModal}
+                        className="w-full bg-primary hover:bg-blue-700"
+                        disabled={!newProject.title || !newProject.description}
+                      >
+                        {editingProjectIndex !== null ? 'Save' : 'Add Project'}
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
+              {/* Display Added Projects */}
+              {projects.length > 0 && (
+                <div className="space-y-4 mt-6">
+                  {projects.map((project, index) => (
+                    <motion.div
+                      key={index}
+                      {...fadeInUp}
+                      className="border border-slate-200 rounded-lg p-4 bg-white"
+                    >
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h3 className="text-lg font-medium text-slate-800">
+                            Project #{index + 1}
+                          </h3>
+                          <p className="text-sm text-slate-600 mt-1">
+                            {project.title || "Untitled Project"}
+                          </p>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => editProject(index)}
+                          className="text-primary border-primary hover:bg-primary hover:text-white"
+                        >
+                          Edit
+                        </Button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Warranty Section */}
