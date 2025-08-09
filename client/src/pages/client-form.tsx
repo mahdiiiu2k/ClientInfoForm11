@@ -752,10 +752,9 @@ export default function ClientForm() {
                   </DialogContent>
                 </Dialog>
               </div>
-              
               {/* Display Added Services */}
               {services.length > 0 && (
-                <div className="space-y-4">
+                <div className="space-y-4 mt-6">
                   {services.map((service, index) => (
                     <motion.div
                       key={index}
