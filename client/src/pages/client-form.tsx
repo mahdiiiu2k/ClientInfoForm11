@@ -781,7 +781,7 @@ export default function ClientForm() {
             {/* Warranty Section */}
             <div className="space-y-6">
               <div 
-                className="cursor-pointer hover:bg-slate-50 transition-colors p-2 rounded-lg"
+                className="cursor-pointer hover:bg-slate-100 transition-colors p-4 rounded-lg bg-slate-50 border border-slate-200"
                 onClick={() => setShowWarrantySection(!showWarrantySection)}
                 data-testid="button-toggle-warranty-section"
               >
@@ -827,7 +827,7 @@ export default function ClientForm() {
             {/* Insurance Section */}
             <div className="space-y-6">
               <div 
-                className="cursor-pointer hover:bg-slate-50 transition-colors p-2 rounded-lg"
+                className="cursor-pointer hover:bg-slate-100 transition-colors p-4 rounded-lg bg-slate-50 border border-slate-200"
                 onClick={() => setShowInsuranceSection(!showInsuranceSection)}
                 data-testid="button-toggle-insurance-section"
               >
