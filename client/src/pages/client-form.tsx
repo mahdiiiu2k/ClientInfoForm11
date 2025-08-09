@@ -1104,22 +1104,26 @@ export default function ClientForm() {
                 </h2>
                 
                 {/* Add Area Input */}
-                <div className="flex gap-3 mb-4">
-                  <Input
-                    placeholder="Enter area name"
-                    value={newAreaName}
-                    onChange={(e) => setNewAreaName(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && addAreaFromInput()}
-                    className="flex-1"
-                  />
-                  <Button
-                    type="button"
-                    onClick={addAreaFromInput}
-                    disabled={!newAreaName.trim()}
-                    className="bg-primary hover:bg-blue-700 px-3"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </Button>
+                <div className="mb-4">
+                  <Label htmlFor="areaInput" className="mb-2 block">Add area</Label>
+                  <div className="flex gap-3">
+                    <Input
+                      id="areaInput"
+                      placeholder="Enter area name"
+                      value={newAreaName}
+                      onChange={(e) => setNewAreaName(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && addAreaFromInput()}
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      onClick={addAreaFromInput}
+                      disabled={!newAreaName.trim()}
+                      className="bg-primary hover:bg-blue-700 px-3"
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Display Added Areas */}
