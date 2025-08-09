@@ -885,7 +885,7 @@ export default function ClientForm() {
                               <Checkbox 
                                 checked={field.value || false} 
                                 onCheckedChange={field.onChange}
-                                className="aspect-square h-5 w-5 rounded-md border-2 border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                                className="h-5 w-5 rounded-sm border-2 border-primary"
                               />
                             </FormControl>
                             <div className="space-y-1 leading-none">
