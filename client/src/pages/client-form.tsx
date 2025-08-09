@@ -496,7 +496,7 @@ export default function ClientForm() {
             {/* About Section Modifications */}
             <div className="space-y-6">
               <div 
-                className="cursor-pointer hover:bg-slate-50 transition-colors p-2 rounded-lg"
+                className="cursor-pointer hover:bg-slate-100 transition-colors p-4 rounded-lg bg-slate-50 border border-slate-200"
                 onClick={() => setShowAboutSection(!showAboutSection)}
                 data-testid="button-toggle-about-section"
               >
