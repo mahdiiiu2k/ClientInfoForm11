@@ -292,30 +292,22 @@ export default function ClientForm() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Do you have a license number? *</FormLabel>
-                      <div className="flex flex-col gap-3">
-                        <Label 
-                          className="hover:bg-accent/50 flex items-center gap-3 rounded-lg border p-3 cursor-pointer has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
-                          onClick={() => field.onChange(true)}
+                      <FormControl>
+                        <RadioGroup
+                          value={field.value ? "yes" : "no"}
+                          onValueChange={(value) => field.onChange(value === "yes")}
+                          className="flex space-x-6"
                         >
-                          <Checkbox
-                            checked={field.value === true}
-                            className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
-                            readOnly
-                          />
-                          <span className="text-sm font-medium">Yes</span>
-                        </Label>
-                        <Label 
-                          className="hover:bg-accent/50 flex items-center gap-3 rounded-lg border p-3 cursor-pointer has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
-                          onClick={() => field.onChange(false)}
-                        >
-                          <Checkbox
-                            checked={field.value === false}
-                            className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
-                            readOnly
-                          />
-                          <span className="text-sm font-medium">No</span>
-                        </Label>
-                      </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="yes" id="license-yes" />
+                            <Label htmlFor="license-yes">Yes</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="no" id="license-no" />
+                            <Label htmlFor="license-no">No</Label>
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -406,30 +398,22 @@ export default function ClientForm() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Do you offer emergency services? *</FormLabel>
-                      <div className="flex flex-col gap-3">
-                        <Label 
-                          className="hover:bg-accent/50 flex items-center gap-3 rounded-lg border p-3 cursor-pointer has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
-                          onClick={() => field.onChange(true)}
+                      <FormControl>
+                        <RadioGroup
+                          value={field.value ? "yes" : "no"}
+                          onValueChange={(value) => field.onChange(value === "yes")}
+                          className="flex space-x-6"
                         >
-                          <Checkbox
-                            checked={field.value === true}
-                            className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
-                            readOnly
-                          />
-                          <span className="text-sm font-medium">Yes</span>
-                        </Label>
-                        <Label 
-                          className="hover:bg-accent/50 flex items-center gap-3 rounded-lg border p-3 cursor-pointer has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
-                          onClick={() => field.onChange(false)}
-                        >
-                          <Checkbox
-                            checked={field.value === false}
-                            className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
-                            readOnly
-                          />
-                          <span className="text-sm font-medium">No</span>
-                        </Label>
-                      </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="yes" id="emergency-yes" />
+                            <Label htmlFor="emergency-yes">Yes</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="no" id="emergency-no" />
+                            <Label htmlFor="emergency-no">No</Label>
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -444,30 +428,22 @@ export default function ClientForm() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Do you have a specific phone number for emergencies?</FormLabel>
-                            <div className="flex flex-col gap-3">
-                              <Label 
-                                className="hover:bg-accent/50 flex items-center gap-3 rounded-lg border p-3 cursor-pointer has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
-                                onClick={() => field.onChange(true)}
+                            <FormControl>
+                              <RadioGroup
+                                value={field.value ? "yes" : "no"}
+                                onValueChange={(value) => field.onChange(value === "yes")}
+                                className="flex space-x-6"
                               >
-                                <Checkbox
-                                  checked={field.value === true}
-                                  className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
-                                  readOnly
-                                />
-                                <span className="text-sm font-medium">Yes</span>
-                              </Label>
-                              <Label 
-                                className="hover:bg-accent/50 flex items-center gap-3 rounded-lg border p-3 cursor-pointer has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
-                                onClick={() => field.onChange(false)}
-                              >
-                                <Checkbox
-                                  checked={field.value === false}
-                                  className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
-                                  readOnly
-                                />
-                                <span className="text-sm font-medium">No</span>
-                              </Label>
-                            </div>
+                                <div className="flex items-center space-x-2">
+                                  <RadioGroupItem value="yes" id="emergency-phone-yes" />
+                                  <Label htmlFor="emergency-phone-yes">Yes</Label>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <RadioGroupItem value="no" id="emergency-phone-no" />
+                                  <Label htmlFor="emergency-phone-no">No</Label>
+                                </div>
+                              </RadioGroup>
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
