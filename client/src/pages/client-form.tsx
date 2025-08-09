@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle } from "lucide-react";
+import { Plus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -88,6 +88,7 @@ export default function ClientForm() {
   const [serviceAreas, setServiceAreas] = useState<ServiceArea[]>([]);
   const [isTypingExperience, setIsTypingExperience] = useState(false);
   const experienceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [showAboutSection, setShowAboutSection] = useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -211,7 +212,6 @@ export default function ClientForm() {
   const hasLicense = form.watch("hasLicense");
   const hasEmergencyServices = form.watch("hasEmergencyServices");
   const hasEmergencyPhone = form.watch("hasEmergencyPhone");
-  const enableAboutModifications = form.watch("enableAboutModifications");
   const hasWarranty = form.watch("hasWarranty");
   const hasInsurance = form.watch("hasInsurance");
 
@@ -495,43 +495,28 @@ export default function ClientForm() {
 
             {/* About Section Modifications */}
             <Card className="shadow-sm border-slate-200">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl text-slate-800">
-                  <CircleOff className="text-primary mr-3 h-5 w-5" />
-                  About Section Customization
+              <CardHeader 
+                className="cursor-pointer hover:bg-slate-50 transition-colors"
+                onClick={() => setShowAboutSection(!showAboutSection)}
+                data-testid="button-toggle-about-section"
+              >
+                <CardTitle className="flex items-center justify-between text-xl text-slate-800">
+                  <div className="flex items-center">
+                    <CircleOff className="text-primary mr-3 h-5 w-5" />
+                    About Section Customization
+                  </div>
+                  {showAboutSection ? (
+                    <ChevronUp className="h-5 w-5 text-slate-600" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5 text-slate-600" />
+                  )}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="enableAboutModifications"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Optional: Customize your about section</FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
-                          onValueChange={(value) => field.onChange(value === "yes")}
-                          className="flex space-x-6"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="yes" id="about-yes" />
-                            <Label htmlFor="about-yes">Yes</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="no" id="about-no" />
-                            <Label htmlFor="about-no">No</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <AnimatePresence>
-                  {enableAboutModifications && (
-                    <motion.div {...slideDown} className="space-y-6 mt-6">
+              
+              <AnimatePresence>
+                {showAboutSection && (
+                  <motion.div {...slideDown}>
+                    <CardContent className="space-y-6">
                       <FormField
                         control={form.control}
                         name="companyStory"
@@ -588,10 +573,10 @@ export default function ClientForm() {
                           </FormItem>
                         )}
                       />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </CardContent>
+                    </CardContent>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </Card>
 
             {/* Services Customization Section */}
