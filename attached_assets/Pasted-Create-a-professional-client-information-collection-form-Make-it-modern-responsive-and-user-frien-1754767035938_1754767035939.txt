@@ -1,0 +1,58 @@
+Create a professional client information collection form. Make it modern, responsive, and user-friendly with smooth animations for dynamic fields.
+Form Fields Required:
+
+Years of Experience - Simple number input
+License Number - Yes/No radio buttons. If "Yes" selected, show text input for license number
+Business Hours - Text area input (mark as "Optional")
+Emergency Services - Yes/No radio buttons. If "Yes", show another Yes/No for "Specific Phone Number". If that's also "Yes", show phone number text input
+Office/Business Address - Text input (mark as "Optional if not available")
+Business Email Address - Email input (note: "Use personal email if no business email")
+About Section Modifications - Checkbox labeled "Optional". When checked, show 3 text areas:
+
+Company story/background
+What sets them apart (unique selling points)
+Specific specialties to highlight
+
+
+Services Customization - Plus button. When clicked, adds a new service section with:
+
+Service name (text input)
+Service description (text area)
+Executing steps (text area, optional)
+Add picture (file input)
+
+
+Previous Projects - Plus button. When clicked, adds project section with:
+
+Project title (text input)
+Description (text area)
+Picture upload (multiple files allowed)
+"Before/After" checkbox - when checked, replace single upload with two separate uploads (Before pictures, After pictures)
+Client feedback (text area, optional)
+
+
+Warranty - Checkbox. When checked, show text area to describe warranty
+Insurance Details - Checkbox. When checked, show:
+
+General Liability Amount (text input)
+Workers Compensation (yes/no checkbox)
+Bonded Amount (text input)
+Additional Coverage (text input, optional)
+
+
+Service Areas - Plus button. When clicked, shows:
+
+Area Type (dropdown: Neighborhoods, Cities, Counties, Radius)
+Area Name (text input)
+Description (text input, optional)
+
+
+
+Design Requirements:
+
+Professional, clean design
+Smooth show/hide animations for conditional fields
+Plus buttons should allow multiple additions
+Submit button at the end
+Mobile responsive
+Modern styling with good spacing
