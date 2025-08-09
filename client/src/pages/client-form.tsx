@@ -103,6 +103,8 @@ export default function ClientForm() {
     clientFeedback: ""
   });
   const [editingProjectIndex, setEditingProjectIndex] = useState<number | null>(null);
+  const [newAreaName, setNewAreaName] = useState("");
+  const [areaDescription, setAreaDescription] = useState("");
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -234,6 +236,23 @@ export default function ClientForm() {
     setNewProject({ ...projects[index] });
     setEditingProjectIndex(index);
     setShowProjectModal(true);
+  };
+
+  const addAreaFromInput = () => {
+    if (newAreaName.trim()) {
+      const newArea: ServiceArea = {
+        type: 'neighborhoods',
+        name: newAreaName.trim(),
+        description: areaDescription.trim() || undefined
+      };
+      setServiceAreas([...serviceAreas, newArea]);
+      setNewAreaName("");
+    }
+  };
+
+  const removeArea = (index: number) => {
+    const updatedAreas = serviceAreas.filter((_, i) => i !== index);
+    setServiceAreas(updatedAreas);
   };
 
   const removeService = (index: number) => {
@@ -1079,81 +1098,67 @@ export default function ClientForm() {
             {/* Service Areas Section */}
             <div className="space-y-6">
               <div>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
-                    <MapPin className="text-primary mr-3 h-5 w-5" />
-                    Service Areas
-                  </h2>
-                  <Button type="button" onClick={addServiceArea} className="bg-primary hover:bg-blue-700">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Area
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
+                  <MapPin className="text-primary mr-3 h-5 w-5" />
+                  Service Areas
+                </h2>
+                
+                {/* Add Area Input */}
+                <div className="flex gap-3 mb-4">
+                  <Input
+                    placeholder="Enter area name (e.g., Downtown, Brooklyn, Manhattan)"
+                    value={newAreaName}
+                    onChange={(e) => setNewAreaName(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && addAreaFromInput()}
+                    className="flex-1"
+                  />
+                  <Button
+                    type="button"
+                    onClick={addAreaFromInput}
+                    disabled={!newAreaName.trim()}
+                    className="bg-primary hover:bg-blue-700 px-3"
+                  >
+                    <Plus className="h-4 w-4" />
                   </Button>
                 </div>
-              </div>
-              <div>
-                <div className="space-y-6">
-                  {serviceAreas.length === 0 ? (
-                    <div className="text-center py-8 text-slate-500">
-                      <MapPin className="mx-auto h-16 w-16 mb-4" />
-                      <p>No service areas added yet. Click "Add Area" to define your coverage.</p>
-                    </div>
-                  ) : (
-                    serviceAreas.map((area, index) => (
+
+                {/* Display Added Areas */}
+                {serviceAreas.length > 0 && (
+                  <div className="space-y-2 mb-6">
+                    {serviceAreas.map((area, index) => (
                       <motion.div
                         key={index}
                         {...fadeInUp}
-                        className="border border-slate-200 rounded-lg p-6"
+                        className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-3"
                       >
-                        <div className="flex justify-between items-start mb-4">
-                          <h3 className="text-lg font-medium text-slate-800">Service Area #{index + 1}</h3>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeServiceArea(index)}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                        <div className="space-y-4">
-                          <div>
-                            <Label>Area Type *</Label>
-                            <Select
-                              value={area.type}
-                              onValueChange={(value) => updateServiceArea(index, "type", value)}
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select area type..." />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="neighborhoods">Neighborhoods</SelectItem>
-                                <SelectItem value="cities">Cities</SelectItem>
-                                <SelectItem value="counties">Counties</SelectItem>
-                                <SelectItem value="radius">Radius</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div>
-                            <Label>Area Name *</Label>
-                            <Input
-                              placeholder="e.g., Downtown, Springfield, Cook County, 25 miles"
-                              value={area.name}
-                              onChange={(e) => updateServiceArea(index, "name", e.target.value)}
-                            />
-                          </div>
-                          <div>
-                            <Label>Description <span className="text-slate-500">(Optional)</span></Label>
-                            <Input
-                              placeholder="Additional details about this service area..."
-                              value={area.description || ""}
-                              onChange={(e) => updateServiceArea(index, "description", e.target.value)}
-                            />
-                          </div>
-                        </div>
+                        <span className="text-slate-800 font-medium">
+                          {area.name}
+                        </span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeArea(index)}
+                          className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
                       </motion.div>
-                    ))
-                  )}
+                    ))}
+                  </div>
+                )}
+
+                {/* Description Input */}
+                <div>
+                  <Label htmlFor="areaDescription">Description of a specific area</Label>
+                  <Textarea
+                    id="areaDescription"
+                    rows={3}
+                    placeholder="Provide additional details about your service areas..."
+                    value={areaDescription}
+                    onChange={(e) => setAreaDescription(e.target.value)}
+                    className="mt-2"
+                  />
                 </div>
               </div>
             </div>
