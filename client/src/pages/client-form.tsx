@@ -880,7 +880,7 @@ export default function ClientForm() {
                         control={form.control}
                         name="workersCompensation"
                         render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormItem className="flex flex-row items-center space-x-3 space-y-0">
                             <FormControl>
                               <Checkbox 
                                 checked={field.value || false} 
@@ -888,9 +888,7 @@ export default function ClientForm() {
                                 className="h-5 w-5 rounded-sm border-2 border-primary"
                               />
                             </FormControl>
-                            <div className="space-y-1 leading-none">
-                              <FormLabel>Workers Compensation Coverage <span className="text-slate-500">(Optional)</span></FormLabel>
-                            </div>
+                            <FormLabel className="leading-none">Workers Compensation Coverage <span className="text-slate-500">(Optional)</span></FormLabel>
                           </FormItem>
                         )}
                       />
