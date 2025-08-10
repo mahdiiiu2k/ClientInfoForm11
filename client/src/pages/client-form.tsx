@@ -166,12 +166,13 @@ export default function ClientForm() {
   const qualificationTooltipRef = useRef<HTMLDivElement>(null);
 
   // Service Steps state
-  const [serviceSteps, setServiceSteps] = useState<Array<{serviceName: string; steps: string[]; additionalNotes: string}>>([]);
+  const [serviceSteps, setServiceSteps] = useState<Array<{serviceName: string; steps: string[]; additionalNotes: string; pictures?: FileList | null}>>([]);
   const [isServiceStepsModalOpen, setIsServiceStepsModalOpen] = useState(false);
   const [newServiceStep, setNewServiceStep] = useState({
     serviceName: "",
     steps: [] as string[],
-    additionalNotes: ""
+    additionalNotes: "",
+    pictures: null as FileList | null
   });
   const [editingServiceStepIndex, setEditingServiceStepIndex] = useState<number | null>(null);
   const [newStepInput, setNewStepInput] = useState("");
@@ -489,7 +490,8 @@ export default function ClientForm() {
       setNewServiceStep({
         serviceName: "",
         steps: [],
-        additionalNotes: ""
+        additionalNotes: "",
+        pictures: null
       });
       setNewStepInput("");
       setIsServiceStepsModalOpen(false);
@@ -2754,6 +2756,89 @@ export default function ClientForm() {
                                           value={newServiceStep.additionalNotes}
                                           onChange={(e) => setNewServiceStep({...newServiceStep, additionalNotes: e.target.value})}
                                         />
+                                      </div>
+
+                                      {/* Service Step Pictures */}
+                                      <div>
+                                        <Label htmlFor="serviceStepPictures">Add Pictures</Label>
+                                        <div className="w-full">
+                                          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300" style={{maxWidth: '100%'}}>
+                                            {/* Add Pictures Button */}
+                                            <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[160px] flex-shrink-0">
+                                              <input
+                                                id="serviceStepPictures"
+                                                type="file"
+                                                multiple
+                                                accept="image/*"
+                                                className="hidden"
+                                                onChange={(e) => {
+                                                  if (e.target.files && e.target.files.length > 0) {
+                                                    const newFiles = Array.from(e.target.files);
+                                                    const existingFiles = newServiceStep.pictures ? Array.from(newServiceStep.pictures) : [];
+                                                    const allFiles = [...existingFiles, ...newFiles];
+                                                    
+                                                    const dataTransfer = new DataTransfer();
+                                                    allFiles.forEach((file: File) => dataTransfer.items.add(file));
+                                                    
+                                                    setNewServiceStep({...newServiceStep, pictures: dataTransfer.files});
+                                                    e.target.value = '';
+                                                  }
+                                                }}
+                                              />
+                                              <label 
+                                                htmlFor="serviceStepPictures" 
+                                                className="flex flex-col items-center text-center cursor-pointer"
+                                              >
+                                                <span className="text-slate-600 font-medium mb-2">Add Pictures</span>
+                                                <Plus className="h-6 w-6 text-slate-400" />
+                                              </label>
+                                            </div>
+
+                                            {/* Display Selected Files */}
+                                            {newServiceStep.pictures && Array.from(newServiceStep.pictures).map((file: File, index) => (
+                                              <motion.div
+                                                key={index}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                className="relative border border-slate-200 rounded-lg p-2 bg-white min-w-[120px] max-w-[160px] flex-shrink-0"
+                                              >
+                                                <div className="relative">
+                                                  <img
+                                                    src={URL.createObjectURL(file)}
+                                                    alt={file.name}
+                                                    className="w-full h-20 object-cover rounded"
+                                                    onLoad={(e) => URL.revokeObjectURL((e.target as HTMLImageElement).src)}
+                                                  />
+                                                  <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-200 rounded flex items-center justify-center">
+                                                    <Button
+                                                      type="button"
+                                                      variant="destructive"
+                                                      size="sm"
+                                                      className="opacity-0 hover:opacity-100 transition-opacity"
+                                                      onClick={() => {
+                                                        if (newServiceStep.pictures) {
+                                                          const filesArray = Array.from(newServiceStep.pictures);
+                                                          const filteredFiles = filesArray.filter((_, i) => i !== index);
+                                                          
+                                                          if (filteredFiles.length === 0) {
+                                                            setNewServiceStep({...newServiceStep, pictures: null});
+                                                          } else {
+                                                            const dataTransfer = new DataTransfer();
+                                                            filteredFiles.forEach(file => dataTransfer.items.add(file));
+                                                            setNewServiceStep({...newServiceStep, pictures: dataTransfer.files});
+                                                          }
+                                                        }
+                                                      }}
+                                                    >
+                                                      <Trash2 className="h-3 w-3" />
+                                                    </Button>
+                                                  </div>
+                                                </div>
+                                                <p className="text-xs text-slate-600 mt-1 truncate">{file.name}</p>
+                                              </motion.div>
+                                            ))}
+                                          </div>
+                                        </div>
                                       </div>
                                       
                                       <Button 
