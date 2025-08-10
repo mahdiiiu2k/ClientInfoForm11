@@ -2969,27 +2969,31 @@ export default function ClientForm() {
                         >
                           <div className="space-y-4">
                             {/* Add Tip Input */}
-                            <div className="flex gap-2">
-                              <Input
-                                placeholder="Add a maintenance tip..."
-                                value={newTipInput}
-                                onChange={(e) => setNewTipInput(e.target.value)}
-                                onKeyPress={(e) => {
-                                  if (e.key === 'Enter') {
-                                    e.preventDefault();
-                                    addMaintenanceTip();
-                                  }
-                                }}
-                                className="flex-1"
-                              />
-                              <Button
-                                type="button"
-                                onClick={addMaintenanceTip}
-                                disabled={!newTipInput.trim()}
-                                className="bg-primary hover:bg-blue-700 px-3"
-                              >
-                                <Plus className="h-4 w-4" />
-                              </Button>
+                            <div>
+                              <Label htmlFor="addMaintenanceTip">Add a maintenance tip...</Label>
+                              <div className="flex gap-2 mt-2">
+                                <Input
+                                  id="addMaintenanceTip"
+                                  placeholder="Enter maintenance tip"
+                                  value={newTipInput}
+                                  onChange={(e) => setNewTipInput(e.target.value)}
+                                  onKeyPress={(e) => {
+                                    if (e.key === 'Enter') {
+                                      e.preventDefault();
+                                      addMaintenanceTip();
+                                    }
+                                  }}
+                                  className="flex-1"
+                                />
+                                <Button
+                                  type="button"
+                                  onClick={addMaintenanceTip}
+                                  disabled={!newTipInput.trim()}
+                                  className="bg-primary hover:bg-blue-700 px-3"
+                                >
+                                  <Plus className="h-4 w-4" />
+                                </Button>
+                              </div>
                             </div>
 
                             {/* Display Added Tips */}
