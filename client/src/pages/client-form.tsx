@@ -699,7 +699,7 @@ export default function ClientForm() {
                         name="uniqueSellingPoints"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>What Sets You Apart (Unique Selling Points)</FormLabel>
+                            <FormLabel>What Sets You Apart</FormLabel>
                             <FormControl>
                               <Textarea
                                 rows={4}
