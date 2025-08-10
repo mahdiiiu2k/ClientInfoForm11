@@ -1504,7 +1504,7 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Financing Options</h3>
+                        <h3 className="text-xl font-semibold text-slate-800">Financing Options (optional)</h3>
                         {form.watch("hasFinancingOptions") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
