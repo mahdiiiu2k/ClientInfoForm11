@@ -819,8 +819,8 @@ export default function ClientForm() {
                     </DialogTrigger>
                   
                     {/* Project Modal */}
-                    <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
-                      <DialogHeader>
+                    <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-hidden flex flex-col">
+                      <DialogHeader className="flex-shrink-0">
                         <DialogTitle>
                           {editingProjectIndex !== null 
                             ? `Project #${editingProjectIndex + 1}` 
@@ -829,7 +829,8 @@ export default function ClientForm() {
                         </DialogTitle>
                       </DialogHeader>
                       
-                      <div className="space-y-4">
+                      <div className="flex-1 overflow-y-auto">
+                        <div className="space-y-4">
                         <div>
                           <Label htmlFor="projectTitle">Project Title *</Label>
                           <Input
@@ -889,7 +890,8 @@ export default function ClientForm() {
                           ) : (
                             <div>
                               <Label htmlFor="projectPictures">Project Pictures</Label>
-                              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 max-w-full">
+                              <div className="w-full">
+                                <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300" style={{maxWidth: '100%'}}>
                                 {/* Add Pictures Button */}
                                 <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[200px] flex-shrink-0">
                                   <input
@@ -966,6 +968,7 @@ export default function ClientForm() {
                                     </div>
                                   </motion.div>
                                 ))}
+                                </div>
                               </div>
                             </div>
                           )}
@@ -989,6 +992,7 @@ export default function ClientForm() {
                         >
                           {editingProjectIndex !== null ? 'Save' : 'Add Project'}
                         </Button>
+                        </div>
                       </div>
                     </DialogContent>
                   </Dialog>
