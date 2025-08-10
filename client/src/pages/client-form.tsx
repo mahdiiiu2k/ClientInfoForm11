@@ -144,6 +144,10 @@ export default function ClientForm() {
   const [serviceDescHoverTimeout, setServiceDescHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [serviceDescTooltipClickedOpen, setServiceDescTooltipClickedOpen] = useState(false);
   const serviceDescTooltipRef = useRef<HTMLDivElement>(null);
+  const [showFinancingDescTooltip, setShowFinancingDescTooltip] = useState(false);
+  const [financingDescHoverTimeout, setFinancingDescHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [financingDescTooltipClickedOpen, setFinancingDescTooltipClickedOpen] = useState(false);
+  const financingDescTooltipRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside to close tooltips
   useEffect(() => {
@@ -163,9 +167,14 @@ export default function ClientForm() {
         setShowServiceDescTooltip(false);
         setServiceDescTooltipClickedOpen(false);
       }
+      // Handle financing description tooltip
+      if (financingDescTooltipRef.current && !financingDescTooltipRef.current.contains(event.target as Node) && financingDescTooltipClickedOpen) {
+        setShowFinancingDescTooltip(false);
+        setFinancingDescTooltipClickedOpen(false);
+      }
     };
 
-    if ((showResponseTimeTooltip && tooltipClickedOpen) || (showInsuranceTooltip && insuranceTooltipClickedOpen) || (showServiceDescTooltip && serviceDescTooltipClickedOpen)) {
+    if ((showResponseTimeTooltip && tooltipClickedOpen) || (showInsuranceTooltip && insuranceTooltipClickedOpen) || (showServiceDescTooltip && serviceDescTooltipClickedOpen) || (showFinancingDescTooltip && financingDescTooltipClickedOpen)) {
       // Use a slight delay to avoid immediate closure when opening via click
       const timeoutId = setTimeout(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -180,7 +189,7 @@ export default function ClientForm() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showResponseTimeTooltip, tooltipClickedOpen, showInsuranceTooltip, insuranceTooltipClickedOpen, showServiceDescTooltip, serviceDescTooltipClickedOpen]);
+  }, [showResponseTimeTooltip, tooltipClickedOpen, showInsuranceTooltip, insuranceTooltipClickedOpen, showServiceDescTooltip, serviceDescTooltipClickedOpen, showFinancingDescTooltip, financingDescTooltipClickedOpen]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -1608,7 +1617,51 @@ export default function ClientForm() {
                                     </div>
                                     
                                     <div>
-                                      <Label htmlFor="financingDescription">Full Plan Description *</Label>
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <Label htmlFor="financingDescription">Full Plan Description *</Label>
+                                        <div className="relative" ref={financingDescTooltipRef}>
+                                          <Info 
+                                            className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              e.stopPropagation();
+                                              if (financingDescHoverTimeout) {
+                                                clearTimeout(financingDescHoverTimeout);
+                                                setFinancingDescHoverTimeout(null);
+                                              }
+                                              const newState = !showFinancingDescTooltip;
+                                              setShowFinancingDescTooltip(newState);
+                                              setFinancingDescTooltipClickedOpen(newState);
+                                            }}
+                                            onMouseEnter={() => {
+                                              if (!financingDescTooltipClickedOpen && !showFinancingDescTooltip) {
+                                                const timeout = setTimeout(() => {
+                                                  setShowFinancingDescTooltip(true);
+                                                }, 800);
+                                                setFinancingDescHoverTimeout(timeout);
+                                              }
+                                            }}
+                                            onMouseLeave={() => {
+                                              if (financingDescHoverTimeout) {
+                                                clearTimeout(financingDescHoverTimeout);
+                                                setFinancingDescHoverTimeout(null);
+                                              }
+                                              // Only hide on mouse leave if it was shown by hover, not by click
+                                              if (showFinancingDescTooltip && !financingDescTooltipClickedOpen) {
+                                                setTimeout(() => setShowFinancingDescTooltip(false), 100);
+                                              }
+                                            }}
+                                          />
+                                          {showFinancingDescTooltip && (
+                                            <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
+                                              <div className="relative">
+                                                Explain the details of this financing option—how it works, benefits, and any important conditions. Keep it clear and customer-friendly.
+                                                <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
                                       <Textarea
                                         id="financingDescription"
                                         rows={3}
