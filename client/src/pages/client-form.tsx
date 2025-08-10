@@ -1419,6 +1419,7 @@ export default function ClientForm() {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
                           className="mt-4 pt-4 border-t border-slate-300"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <FormField
                             control={form.control}
@@ -1470,6 +1471,7 @@ export default function ClientForm() {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
                           className="mt-4 pt-4 border-t border-slate-300"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <FormField
                             control={form.control}
@@ -1522,6 +1524,7 @@ export default function ClientForm() {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
                           className="mt-4 pt-4 border-t border-slate-300"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <FormField
                             control={form.control}
@@ -1574,6 +1577,7 @@ export default function ClientForm() {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
                           className="mt-4 pt-4 border-t border-slate-300"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <FormField
                             control={form.control}
@@ -1626,6 +1630,7 @@ export default function ClientForm() {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
                           className="mt-4 pt-4 border-t border-slate-300"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <FormField
                             control={form.control}
@@ -1677,6 +1682,7 @@ export default function ClientForm() {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
                           className="mt-4 pt-4 border-t border-slate-300"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <FormField
                             control={form.control}
@@ -1726,6 +1732,7 @@ export default function ClientForm() {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
                           className="mt-4 pt-4 border-t border-slate-300"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <FormField
                             control={form.control}
@@ -1774,6 +1781,7 @@ export default function ClientForm() {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
                           className="mt-4 pt-4 border-t border-slate-300"
+                          onClick={(e) => e.stopPropagation()}
                         >
                         <div className="space-y-6">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
