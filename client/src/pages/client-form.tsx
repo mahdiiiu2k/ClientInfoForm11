@@ -1797,10 +1797,10 @@ export default function ClientForm() {
                                               }}
                                             />
                                             {showTermLengthTooltip && (
-                                              <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
+                                              <div className="absolute right-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
                                                 <div className="relative">
                                                   How long the financing lasts. Examples: "12 months" or "5 years." Leave blank if not applicable.
-                                                  <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                                  <div className="absolute -top-1 right-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
                                                 </div>
                                               </div>
                                             )}
