@@ -1657,7 +1657,7 @@ export default function ClientForm() {
                                         <Label htmlFor="financingDescription">Full Plan Description *</Label>
                                         <div className="relative" ref={financingDescTooltipRef}>
                                           <Info 
-                                            className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                            className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
                                             onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
@@ -1713,7 +1713,7 @@ export default function ClientForm() {
                                           <Label htmlFor="interestRate">Interest Rate (Optional)</Label>
                                           <div className="relative" ref={interestRateTooltipRef}>
                                             <Info 
-                                              className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                              className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
                                               onClick={(e) => {
                                                 e.preventDefault();
                                                 e.stopPropagation();
@@ -1766,7 +1766,7 @@ export default function ClientForm() {
                                           <Label htmlFor="termLength">Term Length (Optional)</Label>
                                           <div className="relative" ref={termLengthTooltipRef}>
                                             <Info 
-                                              className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                              className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
                                               onClick={(e) => {
                                                 e.preventDefault();
                                                 e.stopPropagation();
@@ -1820,7 +1820,7 @@ export default function ClientForm() {
                                         <Label htmlFor="minimumAmount">Minimum Amount (Optional)</Label>
                                         <div className="relative" ref={minAmountTooltipRef}>
                                           <Info 
-                                            className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                            className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
                                             onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
@@ -1873,7 +1873,7 @@ export default function ClientForm() {
                                         <Label htmlFor="qualificationRequirements">Qualification Requirements (Optional)</Label>
                                         <div className="relative" ref={qualificationTooltipRef}>
                                           <Info 
-                                            className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                            className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
                                             onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
@@ -2072,7 +2072,7 @@ export default function ClientForm() {
                                       <Label htmlFor="stormServiceDescription">Service Description *</Label>
                                       <div className="relative" ref={serviceDescTooltipRef}>
                                         <Info 
-                                          className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                          className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
                                           onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
@@ -2127,7 +2127,7 @@ export default function ClientForm() {
                                       <Label htmlFor="responseTime">Response Time (Optional)</Label>
                                       <div className="relative" ref={tooltipRef}>
                                         <Info 
-                                          className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                          className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
                                           onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
@@ -2181,7 +2181,7 @@ export default function ClientForm() {
                                       <Label htmlFor="insurancePartnership">Insurance Partnership (Optional)</Label>
                                       <div className="relative" ref={insuranceTooltipRef}>
                                         <Info 
-                                          className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                          className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
                                           onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
