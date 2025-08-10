@@ -2809,30 +2809,31 @@ export default function ClientForm() {
                                                     className="w-full h-20 object-cover rounded"
                                                     onLoad={(e) => URL.revokeObjectURL((e.target as HTMLImageElement).src)}
                                                   />
-                                                  <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-200 rounded flex items-center justify-center">
-                                                    <Button
-                                                      type="button"
-                                                      variant="destructive"
-                                                      size="sm"
-                                                      className="opacity-0 hover:opacity-100 transition-opacity"
-                                                      onClick={() => {
-                                                        if (newServiceStep.pictures) {
-                                                          const filesArray = Array.from(newServiceStep.pictures);
-                                                          const filteredFiles = filesArray.filter((_, i) => i !== index);
-                                                          
-                                                          if (filteredFiles.length === 0) {
-                                                            setNewServiceStep({...newServiceStep, pictures: null});
-                                                          } else {
-                                                            const dataTransfer = new DataTransfer();
-                                                            filteredFiles.forEach(file => dataTransfer.items.add(file));
-                                                            setNewServiceStep({...newServiceStep, pictures: dataTransfer.files});
-                                                          }
+                                                  {/* Mobile-friendly delete button - always visible */}
+                                                  <Button
+                                                    type="button"
+                                                    variant="destructive"
+                                                    size="sm"
+                                                    className="absolute top-1 right-1 h-6 w-6 p-0 rounded-full bg-red-500 hover:bg-red-600 text-white shadow-lg"
+                                                    onClick={() => {
+                                                      if (newServiceStep.pictures) {
+                                                        const filesArray = Array.from(newServiceStep.pictures);
+                                                        const filteredFiles = filesArray.filter((_, i) => i !== index);
+                                                        
+                                                        if (filteredFiles.length === 0) {
+                                                          setNewServiceStep({...newServiceStep, pictures: null});
+                                                        } else {
+                                                          const dataTransfer = new DataTransfer();
+                                                          filteredFiles.forEach(file => dataTransfer.items.add(file));
+                                                          setNewServiceStep({...newServiceStep, pictures: dataTransfer.files});
                                                         }
-                                                      }}
-                                                    >
-                                                      <Trash2 className="h-3 w-3" />
-                                                    </Button>
-                                                  </div>
+                                                      }
+                                                    }}
+                                                  >
+                                                    <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                  </Button>
                                                 </div>
                                                 <p className="text-xs text-slate-600 mt-1 truncate">{file.name}</p>
                                               </motion.div>
