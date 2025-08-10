@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings } from "lucide-react";
+import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -1394,7 +1394,7 @@ export default function ClientForm() {
                 </h2>
                 
                 {/* Financing Options */}
-                <div className="space-y-4 mb-6">
+                <div className="mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
@@ -1402,46 +1402,50 @@ export default function ClientForm() {
                       form.setValue("hasFinancingOptions", !currentValue);
                     }}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold text-slate-800">Financing Options</h3>
-                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
+                      {form.watch("hasFinancingOptions") ? (
+                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      ) : (
+                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      )}
                     </div>
+                    
+                    <AnimatePresence>
+                      {form.watch("hasFinancingOptions") && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-slate-300"
+                        >
+                          <FormField
+                            control={form.control}
+                            name="financingDetails"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Financing details (e.g., 0% APR, payment plans, approved lenders)</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="Describe your financing options..." 
+                                    {...field} 
+                                    value={field.value || ""} 
+                                    data-testid="input-financing-details"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  
-                  <AnimatePresence>
-                    {form.watch("hasFinancingOptions") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="bg-slate-100 border border-slate-200 rounded-lg p-4"
-                      >
-                        <FormField
-                          control={form.control}
-                          name="financingDetails"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Financing details (e.g., 0% APR, payment plans, approved lenders)</FormLabel>
-                              <FormControl>
-                                <Input 
-                                  placeholder="Describe your financing options..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="input-financing-details"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Storm Services */}
-                <div className="space-y-4 mb-6">
+                <div className="mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
@@ -1449,47 +1453,51 @@ export default function ClientForm() {
                       form.setValue("hasStormServices", !currentValue);
                     }}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold text-slate-800">Storm Services</h3>
-                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
+                      {form.watch("hasStormServices") ? (
+                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      ) : (
+                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      )}
                     </div>
+                    
+                    <AnimatePresence>
+                      {form.watch("hasStormServices") && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-slate-300"
+                        >
+                          <FormField
+                            control={form.control}
+                            name="stormServiceDetails"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Storm service details (e.g., insurance claim assistance, emergency response time, storm damage specialties)</FormLabel>
+                                <FormControl>
+                                  <Textarea 
+                                    rows={3}
+                                    placeholder="Describe your storm services..." 
+                                    {...field} 
+                                    value={field.value || ""} 
+                                    data-testid="textarea-storm-details"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  
-                  <AnimatePresence>
-                    {form.watch("hasStormServices") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="bg-slate-100 border border-slate-200 rounded-lg p-4"
-                      >
-                        <FormField
-                          control={form.control}
-                          name="stormServiceDetails"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Storm service details (e.g., insurance claim assistance, emergency response time, storm damage specialties)</FormLabel>
-                              <FormControl>
-                                <Textarea 
-                                  rows={3}
-                                  placeholder="Describe your storm services..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="textarea-storm-details"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Brands You Work With */}
-                <div className="space-y-4 mb-6">
+                <div className="mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
@@ -1497,47 +1505,51 @@ export default function ClientForm() {
                       form.setValue("hasBrandsWorkedWith", !currentValue);
                     }}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold text-slate-800">Brands You Work With</h3>
-                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
+                      {form.watch("hasBrandsWorkedWith") ? (
+                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      ) : (
+                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      )}
                     </div>
+                    
+                    <AnimatePresence>
+                      {form.watch("hasBrandsWorkedWith") && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-slate-300"
+                        >
+                          <FormField
+                            control={form.control}
+                            name="brandsWorkedWith"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>List of brands/manufacturers you partner with</FormLabel>
+                                <FormControl>
+                                  <Textarea 
+                                    rows={3}
+                                    placeholder="List the brands and manufacturers you work with..." 
+                                    {...field} 
+                                    value={field.value || ""} 
+                                    data-testid="textarea-brands-worked-with"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  
-                  <AnimatePresence>
-                    {form.watch("hasBrandsWorkedWith") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="bg-slate-100 border border-slate-200 rounded-lg p-4"
-                      >
-                        <FormField
-                          control={form.control}
-                          name="brandsWorkedWith"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>List of brands/manufacturers you partner with</FormLabel>
-                              <FormControl>
-                                <Textarea 
-                                  rows={3}
-                                  placeholder="List the brands and manufacturers you work with..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="textarea-brands-worked-with"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Installation Process */}
-                <div className="space-y-4 mb-6">
+                <div className="mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
@@ -1545,47 +1557,51 @@ export default function ClientForm() {
                       form.setValue("hasInstallationProcess", !currentValue);
                     }}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold text-slate-800">Installation Process</h3>
-                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
+                      {form.watch("hasInstallationProcess") ? (
+                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      ) : (
+                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      )}
                     </div>
+                    
+                    <AnimatePresence>
+                      {form.watch("hasInstallationProcess") && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-slate-300"
+                        >
+                          <FormField
+                            control={form.control}
+                            name="installationProcessDetails"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Describe your step-by-step installation process</FormLabel>
+                                <FormControl>
+                                  <Textarea 
+                                    rows={4}
+                                    placeholder="Describe your installation process step-by-step..." 
+                                    {...field} 
+                                    value={field.value || ""} 
+                                    data-testid="textarea-installation-process"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  
-                  <AnimatePresence>
-                    {form.watch("hasInstallationProcess") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="bg-slate-100 border border-slate-200 rounded-lg p-4"
-                      >
-                        <FormField
-                          control={form.control}
-                          name="installationProcessDetails"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Describe your step-by-step installation process</FormLabel>
-                              <FormControl>
-                                <Textarea 
-                                  rows={4}
-                                  placeholder="Describe your installation process step-by-step..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="textarea-installation-process"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Roof Maintenance Guide */}
-                <div className="space-y-4 mb-6">
+                <div className="mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
@@ -1593,46 +1609,50 @@ export default function ClientForm() {
                       form.setValue("hasMaintenanceGuide", !currentValue);
                     }}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide</h3>
-                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
+                      {form.watch("hasMaintenanceGuide") ? (
+                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      ) : (
+                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      )}
                     </div>
+                    
+                    <AnimatePresence>
+                      {form.watch("hasMaintenanceGuide") && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-slate-300"
+                        >
+                          <FormField
+                            control={form.control}
+                            name="maintenanceGuide"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Maintenance tips you want to share with customers</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="Share maintenance tips for customers..." 
+                                    {...field} 
+                                    value={field.value || ""} 
+                                    data-testid="input-maintenance-guide"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  
-                  <AnimatePresence>
-                    {form.watch("hasMaintenanceGuide") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="bg-slate-100 border border-slate-200 rounded-lg p-4"
-                      >
-                        <FormField
-                          control={form.control}
-                          name="maintenanceGuide"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Maintenance tips you want to share with customers</FormLabel>
-                              <FormControl>
-                                <Input 
-                                  placeholder="Share maintenance tips for customers..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="input-maintenance-guide"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Roof Materials and Brands */}
-                <div className="space-y-4 mb-6">
+                <div className="mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
@@ -1640,110 +1660,121 @@ export default function ClientForm() {
                       form.setValue("hasRoofMaterials", !currentValue);
                     }}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold text-slate-800">Roof Materials and Brands</h3>
-                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
+                      {form.watch("hasRoofMaterials") ? (
+                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      ) : (
+                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      )}
                     </div>
+                    
+                    <AnimatePresence>
+                      {form.watch("hasRoofMaterials") && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-slate-300"
+                        >
+                          <FormField
+                            control={form.control}
+                            name="roofMaterialsDetails"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Specific materials and brands you specialize in</FormLabel>
+                                <FormControl>
+                                  <Textarea 
+                                    rows={3}
+                                    placeholder="List the materials and brands you specialize in..." 
+                                    {...field} 
+                                    value={field.value || ""} 
+                                    data-testid="textarea-roof-materials"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  
-                  <AnimatePresence>
-                    {form.watch("hasRoofMaterials") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="bg-slate-100 border border-slate-200 rounded-lg p-4"
-                      >
-                        <FormField
-                          control={form.control}
-                          name="roofMaterialsDetails"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Specific materials and brands you specialize in</FormLabel>
-                              <FormControl>
-                                <Textarea 
-                                  rows={3}
-                                  placeholder="List the materials and brands you specialize in..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="textarea-roof-materials"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Warranty (optional) */}
-                <div className="space-y-4 mb-6">
+                <div className="mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => setShowWarrantySection(!showWarrantySection)}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold text-slate-800">Warranty (optional)</h3>
-                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
+                      {showWarrantySection ? (
+                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      ) : (
+                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      )}
                     </div>
+                    
+                    <AnimatePresence>
+                      {showWarrantySection && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-slate-300"
+                        >
+                          <FormField
+                            control={form.control}
+                            name="warrantyDescription"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Warranty Description</FormLabel>
+                                <FormControl>
+                                  <Textarea
+                                    rows={3}
+                                    placeholder="Describe your warranty terms and coverage..."
+                                    {...field}
+                                    value={field.value || ""}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  
-                  <AnimatePresence>
-                    {showWarrantySection && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="bg-slate-100 border border-slate-200 rounded-lg p-4"
-                      >
-                        <FormField
-                          control={form.control}
-                          name="warrantyDescription"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Warranty Description</FormLabel>
-                              <FormControl>
-                                <Textarea
-                                  rows={3}
-                                  placeholder="Describe your warranty terms and coverage..."
-                                  {...field}
-                                  value={field.value || ""}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Insurance (optional) */}
-                <div className="space-y-4">
+                <div>
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => setShowInsuranceSection(!showInsuranceSection)}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold text-slate-800">Insurance (optional)</h3>
-                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
+                      {showInsuranceSection ? (
+                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      ) : (
+                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                      )}
                     </div>
-                  </div>
-                  
-                  <AnimatePresence>
-                    {showInsuranceSection && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="bg-slate-100 border border-slate-200 rounded-lg p-4"
-                      >
+                    
+                    <AnimatePresence>
+                      {showInsuranceSection && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-slate-300"
+                        >
                         <div className="space-y-6">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <FormField
@@ -1782,7 +1813,7 @@ export default function ClientForm() {
                               <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                                 <FormControl>
                                   <Checkbox
-                                    checked={field.value}
+                                    checked={field.value || false}
                                     onCheckedChange={field.onChange}
                                   />
                                 </FormControl>
@@ -1811,9 +1842,10 @@ export default function ClientForm() {
                             )}
                           />
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </div>
             </div>
