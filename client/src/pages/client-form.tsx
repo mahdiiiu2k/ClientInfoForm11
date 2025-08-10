@@ -105,6 +105,8 @@ export default function ClientForm() {
   const [editingProjectIndex, setEditingProjectIndex] = useState<number | null>(null);
   const [newAreaName, setNewAreaName] = useState("");
   const [areaDescription, setAreaDescription] = useState("");
+  const [brands, setBrands] = useState<string[]>([]);
+  const [newBrand, setNewBrand] = useState("");
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -265,6 +267,24 @@ export default function ClientForm() {
   const removeArea = (index: number) => {
     const updatedAreas = serviceAreas.filter((_, i) => i !== index);
     setServiceAreas(updatedAreas);
+  };
+
+  const addBrand = () => {
+    if (newBrand.trim() && !brands.includes(newBrand.trim())) {
+      setBrands([...brands, newBrand.trim()]);
+      setNewBrand("");
+    }
+  };
+
+  const removeBrand = (index: number) => {
+    setBrands(brands.filter((_, i) => i !== index));
+  };
+
+  const handleBrandKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addBrand();
+    }
   };
 
   const removeService = (index: number) => {
@@ -1526,25 +1546,80 @@ export default function ClientForm() {
                           className="mt-4 pt-4 border-t border-slate-300"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <FormField
-                            control={form.control}
-                            name="brandsWorkedWith"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>List of brands/manufacturers you partner with</FormLabel>
-                                <FormControl>
-                                  <Textarea 
-                                    rows={3}
-                                    placeholder="List the brands and manufacturers you work with..." 
-                                    {...field} 
-                                    value={field.value || ""} 
-                                    data-testid="textarea-brands-worked-with"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
+                          <div className="space-y-4">
+                            {/* Add Brand Input */}
+                            <div>
+                              <Label htmlFor="newBrand">Add Brand</Label>
+                              <div className="flex gap-2 mt-2">
+                                <Input
+                                  id="newBrand"
+                                  value={newBrand}
+                                  onChange={(e) => setNewBrand(e.target.value)}
+                                  onKeyPress={handleBrandKeyPress}
+                                  placeholder="Enter brand name..."
+                                  className="flex-1"
+                                />
+                                <Button
+                                  type="button"
+                                  onClick={addBrand}
+                                  className="px-3"
+                                  disabled={!newBrand.trim()}
+                                >
+                                  <Plus className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Brand List */}
+                            {brands.length > 0 && (
+                              <div className="space-y-2">
+                                <Label>Added Brands:</Label>
+                                <div className="space-y-2">
+                                  {brands.map((brand, index) => (
+                                    <motion.div
+                                      key={index}
+                                      initial={{ opacity: 0, y: -10 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: -10 }}
+                                      className="flex items-center justify-between bg-white border border-slate-200 rounded-lg p-3"
+                                    >
+                                      <span className="text-slate-800 font-medium">{brand}</span>
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => removeBrand(index)}
+                                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                      >
+                                        <Trash2 className="h-4 w-4" />
+                                      </Button>
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              </div>
                             )}
-                          />
+
+                            {/* Additional Description */}
+                            <FormField
+                              control={form.control}
+                              name="brandsWorkedWith"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Additional Description/Notes</FormLabel>
+                                  <FormControl>
+                                    <Textarea 
+                                      rows={3}
+                                      placeholder="Add any additional notes about your brand partnerships..." 
+                                      {...field} 
+                                      value={field.value || ""} 
+                                      data-testid="textarea-brands-description"
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
