@@ -76,6 +76,15 @@ interface ServiceArea {
   description?: string;
 }
 
+interface FinancingOption {
+  name: string;
+  description: string;
+  interestRate?: string;
+  termLength?: string;
+  minimumAmount?: string;
+  qualificationRequirements?: string;
+}
+
 const fadeInUp = {
   initial: { opacity: 0, y: -10 },
   animate: { opacity: 1, y: 0 },
@@ -96,6 +105,7 @@ export default function ClientForm() {
   const [stormServices, setStormServices] = useState<StormService[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [serviceAreas, setServiceAreas] = useState<ServiceArea[]>([]);
+  const [financingOptions, setFinancingOptions] = useState<FinancingOption[]>([]);
   const [isTypingExperience, setIsTypingExperience] = useState(false);
   const experienceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [showAboutSection, setShowAboutSection] = useState(false);
@@ -107,6 +117,9 @@ export default function ClientForm() {
   const [showStormServiceModal, setShowStormServiceModal] = useState(false);
   const [newStormService, setNewStormService] = useState<StormService>({ name: "", description: "", responseTime: "", insurancePartnership: "" });
   const [editingStormServiceIndex, setEditingStormServiceIndex] = useState<number | null>(null);
+  const [showFinancingModal, setShowFinancingModal] = useState(false);
+  const [newFinancingOption, setNewFinancingOption] = useState<FinancingOption>({ name: "", description: "", interestRate: "", termLength: "", minimumAmount: "", qualificationRequirements: "" });
+  const [editingFinancingIndex, setEditingFinancingIndex] = useState<number | null>(null);
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [newProject, setNewProject] = useState<Project>({ 
     title: "", 
@@ -362,6 +375,34 @@ export default function ClientForm() {
     const updated = [...serviceAreas];
     updated[index] = { ...updated[index], [field]: value };
     setServiceAreas(updated);
+  };
+
+  // Financing Options Handlers
+  const addFinancingOptionFromModal = () => {
+    if (newFinancingOption.name && newFinancingOption.description) {
+      if (editingFinancingIndex !== null) {
+        // Update existing financing option
+        const updatedOptions = [...financingOptions];
+        updatedOptions[editingFinancingIndex] = { ...newFinancingOption };
+        setFinancingOptions(updatedOptions);
+        setEditingFinancingIndex(null);
+      } else {
+        // Add new financing option
+        setFinancingOptions([...financingOptions, { ...newFinancingOption }]);
+      }
+      setNewFinancingOption({ name: "", description: "", interestRate: "", termLength: "", minimumAmount: "", qualificationRequirements: "" });
+      setShowFinancingModal(false);
+    }
+  };
+
+  const editFinancingOption = (index: number) => {
+    setNewFinancingOption({ ...financingOptions[index] });
+    setEditingFinancingIndex(index);
+    setShowFinancingModal(true);
+  };
+
+  const removeFinancingOption = (index: number) => {
+    setFinancingOptions(financingOptions.filter((_, i) => i !== index));
   };
 
   const hasLicense = form.watch("hasLicense");
@@ -1481,24 +1522,170 @@ export default function ClientForm() {
                           transition={{ duration: 0.3 }}
                           className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
-                          <FormField
-                            control={form.control}
-                            name="financingDetails"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Financing details (e.g., 0% APR, payment plans, approved lenders)</FormLabel>
-                                <FormControl>
-                                  <Input 
-                                    placeholder="Describe your financing options..." 
-                                    {...field} 
-                                    value={field.value || ""} 
-                                    data-testid="input-financing-details"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                          {/* Financing Options Slider Layout */}
+                          <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 mt-4">
+                            {/* Rectangle Add Financing Option Button */}
+                            <Dialog open={showFinancingModal} onOpenChange={setShowFinancingModal}>
+                              <DialogTrigger asChild>
+                                <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[280px] flex-shrink-0">
+                                  <div className="flex flex-col items-center text-center">
+                                    <span className="text-slate-600 font-medium mb-2">Add Financing Option</span>
+                                    <Plus className="h-6 w-6 text-slate-400" />
+                                  </div>
+                                </div>
+                              </DialogTrigger>
+                              
+                              {/* Financing Option Modal */}
+                              <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-hidden flex flex-col">
+                                <DialogHeader className="flex-shrink-0">
+                                  <DialogTitle>
+                                    {editingFinancingIndex !== null 
+                                      ? `Financing Option #${editingFinancingIndex + 1}` 
+                                      : `Financing Option #${financingOptions.length + 1}`
+                                    }
+                                  </DialogTitle>
+                                </DialogHeader>
+                                
+                                <div className="flex-1 overflow-y-auto">
+                                  <div className="space-y-4">
+                                    <div>
+                                      <Label htmlFor="financingName">Financing Option Name *</Label>
+                                      <Input
+                                        id="financingName"
+                                        placeholder="e.g., 0% APR for 12 months, Payment Plans"
+                                        value={newFinancingOption.name}
+                                        onChange={(e) => setNewFinancingOption({...newFinancingOption, name: e.target.value})}
+                                      />
+                                    </div>
+                                    
+                                    <div>
+                                      <Label htmlFor="financingDescription">Description *</Label>
+                                      <Textarea
+                                        id="financingDescription"
+                                        rows={3}
+                                        placeholder="Describe this financing option in detail..."
+                                        value={newFinancingOption.description}
+                                        onChange={(e) => setNewFinancingOption({...newFinancingOption, description: e.target.value})}
+                                      />
+                                    </div>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                      <div>
+                                        <Label htmlFor="interestRate">Interest Rate (Optional)</Label>
+                                        <Input
+                                          id="interestRate"
+                                          placeholder="e.g., 0%, 5.99% APR"
+                                          value={newFinancingOption.interestRate || ""}
+                                          onChange={(e) => setNewFinancingOption({...newFinancingOption, interestRate: e.target.value})}
+                                        />
+                                      </div>
+                                      
+                                      <div>
+                                        <Label htmlFor="termLength">Term Length (Optional)</Label>
+                                        <Input
+                                          id="termLength"
+                                          placeholder="e.g., 12 months, 5 years"
+                                          value={newFinancingOption.termLength || ""}
+                                          onChange={(e) => setNewFinancingOption({...newFinancingOption, termLength: e.target.value})}
+                                        />
+                                      </div>
+                                    </div>
+                                    
+                                    <div>
+                                      <Label htmlFor="minimumAmount">Minimum Amount (Optional)</Label>
+                                      <Input
+                                        id="minimumAmount"
+                                        placeholder="e.g., $5,000, $10,000"
+                                        value={newFinancingOption.minimumAmount || ""}
+                                        onChange={(e) => setNewFinancingOption({...newFinancingOption, minimumAmount: e.target.value})}
+                                      />
+                                    </div>
+                                    
+                                    <div>
+                                      <Label htmlFor="qualificationRequirements">Qualification Requirements (Optional)</Label>
+                                      <Textarea
+                                        id="qualificationRequirements"
+                                        rows={2}
+                                        placeholder="e.g., Credit score 650+, Income verification required..."
+                                        value={newFinancingOption.qualificationRequirements || ""}
+                                        onChange={(e) => setNewFinancingOption({...newFinancingOption, qualificationRequirements: e.target.value})}
+                                      />
+                                    </div>
+                                    
+                                    <Button 
+                                      onClick={addFinancingOptionFromModal}
+                                      className="w-full bg-primary hover:bg-blue-700"
+                                      disabled={!newFinancingOption.name || !newFinancingOption.description}
+                                    >
+                                      {editingFinancingIndex !== null ? 'Save Financing Option' : 'Add Financing Option'}
+                                    </Button>
+                                  </div>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
+
+                            {/* Display Added Financing Options */}
+                            {financingOptions.map((option, index) => (
+                              <motion.div
+                                key={index}
+                                {...fadeInUp}
+                                className="border border-slate-200 rounded-lg p-4 bg-white min-w-[280px] flex-shrink-0"
+                              >
+                                <div className="space-y-3">
+                                  <div className="flex justify-between items-start">
+                                    <div className="flex-1">
+                                      <h3 className="text-lg font-medium text-slate-800">
+                                        {option.name || "Untitled Financing Option"}
+                                      </h3>
+                                      <p className="text-sm text-slate-600 mt-1 line-clamp-2">
+                                        {option.description}
+                                      </p>
+                                    </div>
+                                    <div className="flex gap-1 ml-2">
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => removeFinancingOption(index)}
+                                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                      >
+                                        <Trash2 className="h-4 w-4" />
+                                      </Button>
+                                      <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => editFinancingOption(index)}
+                                        className="text-primary border-primary hover:bg-primary hover:text-white"
+                                      >
+                                        Edit
+                                      </Button>
+                                    </div>
+                                  </div>
+                                  
+                                  {(option.interestRate || option.termLength || option.minimumAmount) && (
+                                    <div className="flex flex-wrap gap-2">
+                                      {option.interestRate && (
+                                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">
+                                          {option.interestRate}
+                                        </span>
+                                      )}
+                                      {option.termLength && (
+                                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
+                                          {option.termLength}
+                                        </span>
+                                      )}
+                                      {option.minimumAmount && (
+                                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-yellow-100 text-yellow-800">
+                                          Min: {option.minimumAmount}
+                                        </span>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
