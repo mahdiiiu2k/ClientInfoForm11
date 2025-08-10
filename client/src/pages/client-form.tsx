@@ -745,9 +745,6 @@ export default function ClientForm() {
           <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
             Client Information Collection
           </h1>
-          <p className="text-slate-600 text-lg">
-            Please provide your business details to complete your profile
-          </p>
         </div>
 
         <Form {...form}>
