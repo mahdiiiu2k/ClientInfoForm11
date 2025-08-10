@@ -1542,7 +1542,7 @@ export default function ClientForm() {
                 </h2>
                 
                 {/* Financing Options */}
-                <div className="space-y-4">
+                <div className="space-y-4 mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
                     onClick={() => {
@@ -1592,7 +1592,7 @@ export default function ClientForm() {
                 </div>
 
                 {/* Storm Services */}
-                <div className="space-y-4">
+                <div className="space-y-4 mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
                     onClick={() => {
@@ -1643,7 +1643,7 @@ export default function ClientForm() {
                 </div>
 
                 {/* Brands You Work With */}
-                <div className="space-y-4">
+                <div className="space-y-4 mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
                     onClick={() => {
@@ -1694,7 +1694,7 @@ export default function ClientForm() {
                 </div>
 
                 {/* Installation Process */}
-                <div className="space-y-4">
+                <div className="space-y-4 mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
                     onClick={() => {
@@ -1745,7 +1745,7 @@ export default function ClientForm() {
                 </div>
 
                 {/* Roof Maintenance Guide */}
-                <div className="space-y-4">
+                <div className="space-y-4 mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
                     onClick={() => {
