@@ -3272,7 +3272,7 @@ export default function ClientForm() {
                     >
                       <div className="flex items-center justify-between">
                         <h3 className="flex items-center text-xl font-semibold text-slate-800">
-                          <Medal className="text-primary mr-3 h-5 w-5" />
+                          <ShieldCheck className="text-primary mr-3 h-5 w-5" />
                           Warranty Coverage (optional)
                         </h3>
                         {showWarrantySection ? (
