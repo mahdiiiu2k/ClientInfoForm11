@@ -3474,9 +3474,6 @@ export default function ClientForm() {
               </div>
             </div>
 
-            {/* Dashed Line Separator */}
-            <div className="border-t border-dashed border-slate-300 my-8"></div>
-
             {/* Service Areas Section */}
             <div className="space-y-6">
               <div>
