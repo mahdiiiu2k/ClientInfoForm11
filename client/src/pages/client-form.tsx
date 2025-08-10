@@ -136,17 +136,27 @@ export default function ClientForm() {
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [tooltipClickedOpen, setTooltipClickedOpen] = useState(false);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const [showInsuranceTooltip, setShowInsuranceTooltip] = useState(false);
+  const [insuranceHoverTimeout, setInsuranceHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [insuranceTooltipClickedOpen, setInsuranceTooltipClickedOpen] = useState(false);
+  const insuranceTooltipRef = useRef<HTMLDivElement>(null);
 
-  // Handle click outside to close tooltip
+  // Handle click outside to close tooltips
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      // Handle response time tooltip
       if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node) && tooltipClickedOpen) {
         setShowResponseTimeTooltip(false);
         setTooltipClickedOpen(false);
       }
+      // Handle insurance tooltip
+      if (insuranceTooltipRef.current && !insuranceTooltipRef.current.contains(event.target as Node) && insuranceTooltipClickedOpen) {
+        setShowInsuranceTooltip(false);
+        setInsuranceTooltipClickedOpen(false);
+      }
     };
 
-    if (showResponseTimeTooltip && tooltipClickedOpen) {
+    if ((showResponseTimeTooltip && tooltipClickedOpen) || (showInsuranceTooltip && insuranceTooltipClickedOpen)) {
       // Use a slight delay to avoid immediate closure when opening via click
       const timeoutId = setTimeout(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -161,7 +171,7 @@ export default function ClientForm() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showResponseTimeTooltip, tooltipClickedOpen]);
+  }, [showResponseTimeTooltip, tooltipClickedOpen, showInsuranceTooltip, insuranceTooltipClickedOpen]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -1855,7 +1865,53 @@ export default function ClientForm() {
                                   </div>
                                   
                                   <div>
-                                    <Label htmlFor="insurancePartnership">Insurance Partnership (Optional)</Label>
+                                    <div className="flex items-center gap-2 mb-2">
+                                      <Label htmlFor="insurancePartnership">Insurance Partnership (Optional)</Label>
+                                      <div className="relative" ref={insuranceTooltipRef}>
+                                        <div className="flex items-center justify-center w-6 h-6 bg-blue-50 hover:bg-blue-100 rounded-full cursor-pointer transition-colors">
+                                          <Info 
+                                            className="h-4 w-4 text-blue-600 hover:text-blue-700" 
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              e.stopPropagation();
+                                              if (insuranceHoverTimeout) {
+                                                clearTimeout(insuranceHoverTimeout);
+                                                setInsuranceHoverTimeout(null);
+                                              }
+                                              const newState = !showInsuranceTooltip;
+                                              setShowInsuranceTooltip(newState);
+                                              setInsuranceTooltipClickedOpen(newState);
+                                            }}
+                                            onMouseEnter={() => {
+                                              if (!insuranceTooltipClickedOpen && !showInsuranceTooltip) {
+                                                const timeout = setTimeout(() => {
+                                                  setShowInsuranceTooltip(true);
+                                                }, 800);
+                                                setInsuranceHoverTimeout(timeout);
+                                              }
+                                            }}
+                                            onMouseLeave={() => {
+                                              if (insuranceHoverTimeout) {
+                                                clearTimeout(insuranceHoverTimeout);
+                                                setInsuranceHoverTimeout(null);
+                                              }
+                                              // Only hide on mouse leave if it was shown by hover, not by click
+                                              if (showInsuranceTooltip && !insuranceTooltipClickedOpen) {
+                                                setTimeout(() => setShowInsuranceTooltip(false), 100);
+                                              }
+                                            }}
+                                          />
+                                        </div>
+                                        {showInsuranceTooltip && (
+                                          <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
+                                            <div className="relative">
+                                              Explain how you assist customers with insurance claims related to storm damage. Examples: "We work with all major insurance providers" or "Help with claim paperwork." If not applicable, write "N/A."
+                                              <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
                                     <Textarea
                                       id="insurancePartnership"
                                       rows={2}
