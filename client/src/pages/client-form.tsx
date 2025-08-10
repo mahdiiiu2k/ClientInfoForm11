@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings } from "lucide-react";
+import { Plus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, PlusCircle } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -1535,7 +1535,7 @@ export default function ClientForm() {
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                  <Plus className="text-primary mr-3 h-5 w-5" />
+                  <PlusCircle className="text-primary mr-3 h-5 w-5" />
                   Suggestions For Your Website
                 </h2>
                 
