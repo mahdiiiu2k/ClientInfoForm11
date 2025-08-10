@@ -170,10 +170,11 @@ export default function ClientForm() {
   const [isServiceStepsModalOpen, setIsServiceStepsModalOpen] = useState(false);
   const [newServiceStep, setNewServiceStep] = useState({
     serviceName: "",
-    steps: [""],
+    steps: [] as string[],
     additionalNotes: ""
   });
   const [editingServiceStepIndex, setEditingServiceStepIndex] = useState<number | null>(null);
+  const [newStepInput, setNewStepInput] = useState("");
 
 
 
@@ -464,7 +465,7 @@ export default function ClientForm() {
   };
 
   const addServiceStepFromModal = () => {
-    if (newServiceStep.serviceName && newServiceStep.steps.some(step => step.trim())) {
+    if (newServiceStep.serviceName && newServiceStep.steps.length > 0 && newServiceStep.steps.some(step => step.trim())) {
       const filteredSteps = newServiceStep.steps.filter(step => step.trim());
       const serviceToAdd = {
         ...newServiceStep,
@@ -484,9 +485,10 @@ export default function ClientForm() {
       
       setNewServiceStep({
         serviceName: "",
-        steps: [""],
+        steps: [],
         additionalNotes: ""
       });
+      setNewStepInput("");
       setIsServiceStepsModalOpen(false);
     }
   };
@@ -499,6 +501,23 @@ export default function ClientForm() {
 
   const removeServiceStep = (index: number) => {
     setServiceSteps(serviceSteps.filter((_, i) => i !== index));
+  };
+
+  // Add step from input (similar to Service Areas pattern)
+  const addStepFromInput = () => {
+    if (newStepInput.trim()) {
+      setNewServiceStep({
+        ...newServiceStep,
+        steps: [...newServiceStep.steps, newStepInput.trim()]
+      });
+      setNewStepInput("");
+    }
+  };
+
+  // Remove step from service (similar to Service Areas pattern)
+  const removeStepFromService = (index: number) => {
+    const updatedSteps = newServiceStep.steps.filter((_, i) => i !== index);
+    setNewServiceStep({...newServiceStep, steps: updatedSteps});
   };
 
   const updateProject = (index: number, field: keyof Project, value: any) => {
@@ -2514,60 +2533,68 @@ export default function ClientForm() {
                                           placeholder="e.g., Roof Installation, Repair Process"
                                           value={newServiceStep.serviceName}
                                           onChange={(e) => setNewServiceStep({...newServiceStep, serviceName: e.target.value})}
+                                          className="w-full"
                                         />
                                       </div>
                                       
-                                      {/* Steps */}
+                                      {/* Add Step Input */}
                                       <div>
-                                        <div className="flex items-center justify-between mb-2">
-                                          <Label>Steps</Label>
+                                        <Label htmlFor="stepInput" className="mb-2 block">Add step</Label>
+                                        <div className="flex gap-3 mb-4">
+                                          <Input
+                                            id="stepInput"
+                                            placeholder="Enter step description"
+                                            value={newStepInput}
+                                            onChange={(e) => setNewStepInput(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && addStepFromInput()}
+                                            className="flex-1"
+                                          />
+                                          <Button
+                                            type="button"
+                                            onClick={addStepFromInput}
+                                            disabled={!newStepInput.trim()}
+                                            className="bg-primary hover:bg-blue-700 px-3"
+                                          >
+                                            <Plus className="h-4 w-4" />
+                                          </Button>
                                         </div>
-                                        
-                                        {newServiceStep.steps.map((step, index) => (
-                                          <div key={index} className="flex items-center gap-2 mb-2">
-                                            <span className="text-sm text-slate-500 min-w-[30px]">{index + 1}.</span>
-                                            <Input
-                                              placeholder="Enter step description"
-                                              value={step}
-                                              onChange={(e) => {
-                                                const updatedSteps = [...newServiceStep.steps];
-                                                updatedSteps[index] = e.target.value;
-                                                setNewServiceStep({...newServiceStep, steps: updatedSteps});
-                                              }}
-                                            />
-                                            {newServiceStep.steps.length > 1 && (
-                                              <Button
-                                                type="button"
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() => {
-                                                  const updatedSteps = newServiceStep.steps.filter((_, i) => i !== index);
-                                                  setNewServiceStep({...newServiceStep, steps: updatedSteps});
-                                                }}
-                                                className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
-                                              >
-                                                <Minus className="h-4 w-4" />
-                                              </Button>
-                                            )}
-                                          </div>
-                                        ))}
-                                        
-                                        <Button
-                                          type="button"
-                                          variant="outline"
-                                          size="sm"
-                                          onClick={() => {
-                                            setNewServiceStep({
-                                              ...newServiceStep, 
-                                              steps: [...newServiceStep.steps, ""]
-                                            });
-                                          }}
-                                          className="mt-2"
-                                        >
-                                          <Plus className="h-4 w-4 mr-2" />
-                                          Add Step
-                                        </Button>
                                       </div>
+
+                                      {/* Display Added Steps */}
+                                      {newServiceStep.steps.filter(step => step.trim()).length > 0 && (
+                                        <div className="space-y-2 mb-4">
+                                          <Label>Added Steps</Label>
+                                          {newServiceStep.steps.map((step, index) => {
+                                            if (!step.trim()) return null;
+                                            return (
+                                              <motion.div
+                                                key={index}
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-3"
+                                              >
+                                                <div className="flex items-center gap-3">
+                                                  <span className="text-sm font-medium text-slate-500 bg-slate-200 rounded-full w-6 h-6 flex items-center justify-center">
+                                                    {index + 1}
+                                                  </span>
+                                                  <span className="text-slate-800 font-medium">
+                                                    {step}
+                                                  </span>
+                                                </div>
+                                                <Button
+                                                  type="button"
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  onClick={() => removeStepFromService(index)}
+                                                  className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                                >
+                                                  <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                              </motion.div>
+                                            );
+                                          })}
+                                        </div>
+                                      )}
                                       
                                       {/* Additional Notes */}
                                       <div>
