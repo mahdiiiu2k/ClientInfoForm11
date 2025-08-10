@@ -2970,11 +2970,11 @@ export default function ClientForm() {
                           <div className="space-y-4">
                             {/* Add Tip Input */}
                             <div>
-                              <Label htmlFor="addMaintenanceTip">Add a maintenance tip...</Label>
+                              <Label htmlFor="addMaintenanceTip">Add a maintenance tip</Label>
                               <div className="flex gap-2 mt-2">
                                 <Input
                                   id="addMaintenanceTip"
-                                  placeholder="Enter maintenance tip"
+                                  placeholder="e.g., Check gutters for debris every 6 months"
                                   value={newTipInput}
                                   onChange={(e) => setNewTipInput(e.target.value)}
                                   onKeyPress={(e) => {
