@@ -1536,7 +1536,7 @@ export default function ClientForm() {
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <Settings className="text-primary mr-3 h-5 w-5" />
-                  Optional Information
+                  Suggestions for your website
                 </h2>
                 
                 {/* Financing Options */}
