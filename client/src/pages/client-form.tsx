@@ -140,6 +140,10 @@ export default function ClientForm() {
   const [insuranceHoverTimeout, setInsuranceHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [insuranceTooltipClickedOpen, setInsuranceTooltipClickedOpen] = useState(false);
   const insuranceTooltipRef = useRef<HTMLDivElement>(null);
+  const [showServiceDescTooltip, setShowServiceDescTooltip] = useState(false);
+  const [serviceDescHoverTimeout, setServiceDescHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [serviceDescTooltipClickedOpen, setServiceDescTooltipClickedOpen] = useState(false);
+  const serviceDescTooltipRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside to close tooltips
   useEffect(() => {
@@ -154,9 +158,14 @@ export default function ClientForm() {
         setShowInsuranceTooltip(false);
         setInsuranceTooltipClickedOpen(false);
       }
+      // Handle service description tooltip
+      if (serviceDescTooltipRef.current && !serviceDescTooltipRef.current.contains(event.target as Node) && serviceDescTooltipClickedOpen) {
+        setShowServiceDescTooltip(false);
+        setServiceDescTooltipClickedOpen(false);
+      }
     };
 
-    if ((showResponseTimeTooltip && tooltipClickedOpen) || (showInsuranceTooltip && insuranceTooltipClickedOpen)) {
+    if ((showResponseTimeTooltip && tooltipClickedOpen) || (showInsuranceTooltip && insuranceTooltipClickedOpen) || (showServiceDescTooltip && serviceDescTooltipClickedOpen)) {
       // Use a slight delay to avoid immediate closure when opening via click
       const timeoutId = setTimeout(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -171,7 +180,7 @@ export default function ClientForm() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showResponseTimeTooltip, tooltipClickedOpen, showInsuranceTooltip, insuranceTooltipClickedOpen]);
+  }, [showResponseTimeTooltip, tooltipClickedOpen, showInsuranceTooltip, insuranceTooltipClickedOpen, showServiceDescTooltip, serviceDescTooltipClickedOpen]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -1798,7 +1807,53 @@ export default function ClientForm() {
                                   </div>
                                   
                                   <div>
-                                    <Label htmlFor="stormServiceDescription">Service Description *</Label>
+                                    <div className="flex items-center gap-2 mb-2">
+                                      <Label htmlFor="stormServiceDescription">Service Description *</Label>
+                                      <div className="relative" ref={serviceDescTooltipRef}>
+                                        <div className="flex items-center justify-center w-6 h-6 bg-blue-50 hover:bg-blue-100 rounded-full cursor-pointer transition-colors">
+                                          <Info 
+                                            className="h-4 w-4 text-blue-600 hover:text-blue-700" 
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              e.stopPropagation();
+                                              if (serviceDescHoverTimeout) {
+                                                clearTimeout(serviceDescHoverTimeout);
+                                                setServiceDescHoverTimeout(null);
+                                              }
+                                              const newState = !showServiceDescTooltip;
+                                              setShowServiceDescTooltip(newState);
+                                              setServiceDescTooltipClickedOpen(newState);
+                                            }}
+                                            onMouseEnter={() => {
+                                              if (!serviceDescTooltipClickedOpen && !showServiceDescTooltip) {
+                                                const timeout = setTimeout(() => {
+                                                  setShowServiceDescTooltip(true);
+                                                }, 800);
+                                                setServiceDescHoverTimeout(timeout);
+                                              }
+                                            }}
+                                            onMouseLeave={() => {
+                                              if (serviceDescHoverTimeout) {
+                                                clearTimeout(serviceDescHoverTimeout);
+                                                setServiceDescHoverTimeout(null);
+                                              }
+                                              // Only hide on mouse leave if it was shown by hover, not by click
+                                              if (showServiceDescTooltip && !serviceDescTooltipClickedOpen) {
+                                                setTimeout(() => setShowServiceDescTooltip(false), 100);
+                                              }
+                                            }}
+                                          />
+                                        </div>
+                                        {showServiceDescTooltip && (
+                                          <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
+                                            <div className="relative">
+                                              Briefly describe what this storm service includes and why it helps customers after a storm. Keep it clear and focused (around 150 words).
+                                              <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
                                     <Textarea
                                       id="stormServiceDescription"
                                       rows={3}
