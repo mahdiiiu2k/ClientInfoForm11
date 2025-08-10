@@ -148,6 +148,22 @@ export default function ClientForm() {
   const [financingDescHoverTimeout, setFinancingDescHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [financingDescTooltipClickedOpen, setFinancingDescTooltipClickedOpen] = useState(false);
   const financingDescTooltipRef = useRef<HTMLDivElement>(null);
+  const [showInterestRateTooltip, setShowInterestRateTooltip] = useState(false);
+  const [interestRateHoverTimeout, setInterestRateHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [interestRateTooltipClickedOpen, setInterestRateTooltipClickedOpen] = useState(false);
+  const interestRateTooltipRef = useRef<HTMLDivElement>(null);
+  const [showTermLengthTooltip, setShowTermLengthTooltip] = useState(false);
+  const [termLengthHoverTimeout, setTermLengthHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [termLengthTooltipClickedOpen, setTermLengthTooltipClickedOpen] = useState(false);
+  const termLengthTooltipRef = useRef<HTMLDivElement>(null);
+  const [showMinAmountTooltip, setShowMinAmountTooltip] = useState(false);
+  const [minAmountHoverTimeout, setMinAmountHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [minAmountTooltipClickedOpen, setMinAmountTooltipClickedOpen] = useState(false);
+  const minAmountTooltipRef = useRef<HTMLDivElement>(null);
+  const [showQualificationTooltip, setShowQualificationTooltip] = useState(false);
+  const [qualificationHoverTimeout, setQualificationHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [qualificationTooltipClickedOpen, setQualificationTooltipClickedOpen] = useState(false);
+  const qualificationTooltipRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside to close tooltips
   useEffect(() => {
@@ -172,9 +188,29 @@ export default function ClientForm() {
         setShowFinancingDescTooltip(false);
         setFinancingDescTooltipClickedOpen(false);
       }
+      // Handle interest rate tooltip
+      if (interestRateTooltipRef.current && !interestRateTooltipRef.current.contains(event.target as Node) && interestRateTooltipClickedOpen) {
+        setShowInterestRateTooltip(false);
+        setInterestRateTooltipClickedOpen(false);
+      }
+      // Handle term length tooltip
+      if (termLengthTooltipRef.current && !termLengthTooltipRef.current.contains(event.target as Node) && termLengthTooltipClickedOpen) {
+        setShowTermLengthTooltip(false);
+        setTermLengthTooltipClickedOpen(false);
+      }
+      // Handle minimum amount tooltip
+      if (minAmountTooltipRef.current && !minAmountTooltipRef.current.contains(event.target as Node) && minAmountTooltipClickedOpen) {
+        setShowMinAmountTooltip(false);
+        setMinAmountTooltipClickedOpen(false);
+      }
+      // Handle qualification tooltip
+      if (qualificationTooltipRef.current && !qualificationTooltipRef.current.contains(event.target as Node) && qualificationTooltipClickedOpen) {
+        setShowQualificationTooltip(false);
+        setQualificationTooltipClickedOpen(false);
+      }
     };
 
-    if ((showResponseTimeTooltip && tooltipClickedOpen) || (showInsuranceTooltip && insuranceTooltipClickedOpen) || (showServiceDescTooltip && serviceDescTooltipClickedOpen) || (showFinancingDescTooltip && financingDescTooltipClickedOpen)) {
+    if ((showResponseTimeTooltip && tooltipClickedOpen) || (showInsuranceTooltip && insuranceTooltipClickedOpen) || (showServiceDescTooltip && serviceDescTooltipClickedOpen) || (showFinancingDescTooltip && financingDescTooltipClickedOpen) || (showInterestRateTooltip && interestRateTooltipClickedOpen) || (showTermLengthTooltip && termLengthTooltipClickedOpen) || (showMinAmountTooltip && minAmountTooltipClickedOpen) || (showQualificationTooltip && qualificationTooltipClickedOpen)) {
       // Use a slight delay to avoid immediate closure when opening via click
       const timeoutId = setTimeout(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -189,7 +225,7 @@ export default function ClientForm() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showResponseTimeTooltip, tooltipClickedOpen, showInsuranceTooltip, insuranceTooltipClickedOpen, showServiceDescTooltip, serviceDescTooltipClickedOpen, showFinancingDescTooltip, financingDescTooltipClickedOpen]);
+  }, [showResponseTimeTooltip, tooltipClickedOpen, showInsuranceTooltip, insuranceTooltipClickedOpen, showServiceDescTooltip, serviceDescTooltipClickedOpen, showFinancingDescTooltip, financingDescTooltipClickedOpen, showInterestRateTooltip, interestRateTooltipClickedOpen, showTermLengthTooltip, termLengthTooltipClickedOpen, showMinAmountTooltip, minAmountTooltipClickedOpen, showQualificationTooltip, qualificationTooltipClickedOpen]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -1673,7 +1709,50 @@ export default function ClientForm() {
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                       <div>
-                                        <Label htmlFor="interestRate">Interest Rate (Optional)</Label>
+                                        <div className="flex items-center gap-2 mb-2">
+                                          <Label htmlFor="interestRate">Interest Rate (Optional)</Label>
+                                          <div className="relative" ref={interestRateTooltipRef}>
+                                            <Info 
+                                              className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                if (interestRateHoverTimeout) {
+                                                  clearTimeout(interestRateHoverTimeout);
+                                                  setInterestRateHoverTimeout(null);
+                                                }
+                                                const newState = !showInterestRateTooltip;
+                                                setShowInterestRateTooltip(newState);
+                                                setInterestRateTooltipClickedOpen(newState);
+                                              }}
+                                              onMouseEnter={() => {
+                                                if (!interestRateTooltipClickedOpen && !showInterestRateTooltip) {
+                                                  const timeout = setTimeout(() => {
+                                                    setShowInterestRateTooltip(true);
+                                                  }, 800);
+                                                  setInterestRateHoverTimeout(timeout);
+                                                }
+                                              }}
+                                              onMouseLeave={() => {
+                                                if (interestRateHoverTimeout) {
+                                                  clearTimeout(interestRateHoverTimeout);
+                                                  setInterestRateHoverTimeout(null);
+                                                }
+                                                if (showInterestRateTooltip && !interestRateTooltipClickedOpen) {
+                                                  setTimeout(() => setShowInterestRateTooltip(false), 100);
+                                                }
+                                              }}
+                                            />
+                                            {showInterestRateTooltip && (
+                                              <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
+                                                <div className="relative">
+                                                  Enter the annual interest rate for this plan. Examples: "0%" or "5.99% APR." Leave blank if not applicable.
+                                                  <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
                                         <Input
                                           id="interestRate"
                                           placeholder="e.g., 0%, 5.99% APR"
@@ -1683,7 +1762,50 @@ export default function ClientForm() {
                                       </div>
                                       
                                       <div>
-                                        <Label htmlFor="termLength">Term Length (Optional)</Label>
+                                        <div className="flex items-center gap-2 mb-2">
+                                          <Label htmlFor="termLength">Term Length (Optional)</Label>
+                                          <div className="relative" ref={termLengthTooltipRef}>
+                                            <Info 
+                                              className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                if (termLengthHoverTimeout) {
+                                                  clearTimeout(termLengthHoverTimeout);
+                                                  setTermLengthHoverTimeout(null);
+                                                }
+                                                const newState = !showTermLengthTooltip;
+                                                setShowTermLengthTooltip(newState);
+                                                setTermLengthTooltipClickedOpen(newState);
+                                              }}
+                                              onMouseEnter={() => {
+                                                if (!termLengthTooltipClickedOpen && !showTermLengthTooltip) {
+                                                  const timeout = setTimeout(() => {
+                                                    setShowTermLengthTooltip(true);
+                                                  }, 800);
+                                                  setTermLengthHoverTimeout(timeout);
+                                                }
+                                              }}
+                                              onMouseLeave={() => {
+                                                if (termLengthHoverTimeout) {
+                                                  clearTimeout(termLengthHoverTimeout);
+                                                  setTermLengthHoverTimeout(null);
+                                                }
+                                                if (showTermLengthTooltip && !termLengthTooltipClickedOpen) {
+                                                  setTimeout(() => setShowTermLengthTooltip(false), 100);
+                                                }
+                                              }}
+                                            />
+                                            {showTermLengthTooltip && (
+                                              <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
+                                                <div className="relative">
+                                                  How long the financing lasts. Examples: "12 months" or "5 years." Leave blank if not applicable.
+                                                  <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
                                         <Input
                                           id="termLength"
                                           placeholder="e.g., 12 months, 5 years"
@@ -1694,7 +1816,50 @@ export default function ClientForm() {
                                     </div>
                                     
                                     <div>
-                                      <Label htmlFor="minimumAmount">Minimum Amount (Optional)</Label>
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <Label htmlFor="minimumAmount">Minimum Amount (Optional)</Label>
+                                        <div className="relative" ref={minAmountTooltipRef}>
+                                          <Info 
+                                            className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              e.stopPropagation();
+                                              if (minAmountHoverTimeout) {
+                                                clearTimeout(minAmountHoverTimeout);
+                                                setMinAmountHoverTimeout(null);
+                                              }
+                                              const newState = !showMinAmountTooltip;
+                                              setShowMinAmountTooltip(newState);
+                                              setMinAmountTooltipClickedOpen(newState);
+                                            }}
+                                            onMouseEnter={() => {
+                                              if (!minAmountTooltipClickedOpen && !showMinAmountTooltip) {
+                                                const timeout = setTimeout(() => {
+                                                  setShowMinAmountTooltip(true);
+                                                }, 800);
+                                                setMinAmountHoverTimeout(timeout);
+                                              }
+                                            }}
+                                            onMouseLeave={() => {
+                                              if (minAmountHoverTimeout) {
+                                                clearTimeout(minAmountHoverTimeout);
+                                                setMinAmountHoverTimeout(null);
+                                              }
+                                              if (showMinAmountTooltip && !minAmountTooltipClickedOpen) {
+                                                setTimeout(() => setShowMinAmountTooltip(false), 100);
+                                              }
+                                            }}
+                                          />
+                                          {showMinAmountTooltip && (
+                                            <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
+                                              <div className="relative">
+                                                The smallest project cost eligible for this financing. Examples: "$5,000" or "$10,000." Leave blank if not applicable.
+                                                <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
                                       <Input
                                         id="minimumAmount"
                                         placeholder="e.g., $5,000, $10,000"
@@ -1704,7 +1869,50 @@ export default function ClientForm() {
                                     </div>
                                     
                                     <div>
-                                      <Label htmlFor="qualificationRequirements">Qualification Requirements (Optional)</Label>
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <Label htmlFor="qualificationRequirements">Qualification Requirements (Optional)</Label>
+                                        <div className="relative" ref={qualificationTooltipRef}>
+                                          <Info 
+                                            className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              e.stopPropagation();
+                                              if (qualificationHoverTimeout) {
+                                                clearTimeout(qualificationHoverTimeout);
+                                                setQualificationHoverTimeout(null);
+                                              }
+                                              const newState = !showQualificationTooltip;
+                                              setShowQualificationTooltip(newState);
+                                              setQualificationTooltipClickedOpen(newState);
+                                            }}
+                                            onMouseEnter={() => {
+                                              if (!qualificationTooltipClickedOpen && !showQualificationTooltip) {
+                                                const timeout = setTimeout(() => {
+                                                  setShowQualificationTooltip(true);
+                                                }, 800);
+                                                setQualificationHoverTimeout(timeout);
+                                              }
+                                            }}
+                                            onMouseLeave={() => {
+                                              if (qualificationHoverTimeout) {
+                                                clearTimeout(qualificationHoverTimeout);
+                                                setQualificationHoverTimeout(null);
+                                              }
+                                              if (showQualificationTooltip && !qualificationTooltipClickedOpen) {
+                                                setTimeout(() => setShowQualificationTooltip(false), 100);
+                                              }
+                                            }}
+                                          />
+                                          {showQualificationTooltip && (
+                                            <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
+                                              <div className="relative">
+                                                Conditions customers must meet to qualify. Examples: "Credit score 650+," "Income verification required." Leave blank if not applicable.
+                                                <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
                                       <Textarea
                                         id="qualificationRequirements"
                                         rows={2}
