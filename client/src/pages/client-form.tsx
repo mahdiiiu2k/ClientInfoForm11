@@ -168,6 +168,10 @@ export default function ClientForm() {
   const [maintenanceGuideHoverTimeout, setMaintenanceGuideHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [maintenanceGuideTooltipClickedOpen, setMaintenanceGuideTooltipClickedOpen] = useState(false);
   const maintenanceGuideTooltipRef = useRef<HTMLDivElement>(null);
+  const [showBusinessHoursTooltip, setShowBusinessHoursTooltip] = useState(false);
+  const [businessHoursHoverTimeout, setBusinessHoursHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [businessHoursTooltipClickedOpen, setBusinessHoursTooltipClickedOpen] = useState(false);
+  const businessHoursTooltipRef = useRef<HTMLDivElement>(null);
 
   // Service Steps state
   const [serviceSteps, setServiceSteps] = useState<Array<{serviceName: string; steps: string[]; additionalNotes: string; pictures?: FileList | null}>>([]);
@@ -241,9 +245,14 @@ export default function ClientForm() {
         setShowQualificationTooltip(false);
         setQualificationTooltipClickedOpen(false);
       }
+      // Handle business hours tooltip
+      if (businessHoursTooltipRef.current && !businessHoursTooltipRef.current.contains(event.target as Node) && businessHoursTooltipClickedOpen) {
+        setShowBusinessHoursTooltip(false);
+        setBusinessHoursTooltipClickedOpen(false);
+      }
     };
 
-    if ((showResponseTimeTooltip && tooltipClickedOpen) || (showInsuranceTooltip && insuranceTooltipClickedOpen) || (showServiceDescTooltip && serviceDescTooltipClickedOpen) || (showFinancingDescTooltip && financingDescTooltipClickedOpen) || (showInterestRateTooltip && interestRateTooltipClickedOpen) || (showTermLengthTooltip && termLengthTooltipClickedOpen) || (showMinAmountTooltip && minAmountTooltipClickedOpen) || (showQualificationTooltip && qualificationTooltipClickedOpen)) {
+    if ((showResponseTimeTooltip && tooltipClickedOpen) || (showInsuranceTooltip && insuranceTooltipClickedOpen) || (showServiceDescTooltip && serviceDescTooltipClickedOpen) || (showFinancingDescTooltip && financingDescTooltipClickedOpen) || (showInterestRateTooltip && interestRateTooltipClickedOpen) || (showTermLengthTooltip && termLengthTooltipClickedOpen) || (showMinAmountTooltip && minAmountTooltipClickedOpen) || (showQualificationTooltip && qualificationTooltipClickedOpen) || (showBusinessHoursTooltip && businessHoursTooltipClickedOpen)) {
       // Use a slight delay to avoid immediate closure when opening via click
       const timeoutId = setTimeout(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -258,7 +267,7 @@ export default function ClientForm() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showResponseTimeTooltip, tooltipClickedOpen, showInsuranceTooltip, insuranceTooltipClickedOpen, showServiceDescTooltip, serviceDescTooltipClickedOpen, showFinancingDescTooltip, financingDescTooltipClickedOpen, showInterestRateTooltip, interestRateTooltipClickedOpen, showTermLengthTooltip, termLengthTooltipClickedOpen, showMinAmountTooltip, minAmountTooltipClickedOpen, showQualificationTooltip, qualificationTooltipClickedOpen]);
+  }, [showResponseTimeTooltip, tooltipClickedOpen, showInsuranceTooltip, insuranceTooltipClickedOpen, showServiceDescTooltip, serviceDescTooltipClickedOpen, showFinancingDescTooltip, financingDescTooltipClickedOpen, showInterestRateTooltip, interestRateTooltipClickedOpen, showTermLengthTooltip, termLengthTooltipClickedOpen, showMinAmountTooltip, minAmountTooltipClickedOpen, showQualificationTooltip, qualificationTooltipClickedOpen, showBusinessHoursTooltip, businessHoursTooltipClickedOpen]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -896,8 +905,42 @@ export default function ClientForm() {
                   name="businessHours"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>
+                      <FormLabel className="flex items-center gap-2">
                         Business Hours <span className="text-slate-500">(Optional)</span>
+                        <div className="relative" ref={businessHoursTooltipRef}>
+                          <Info
+                            className="h-4 w-4 text-slate-500 hover:text-blue-500 cursor-pointer transition-colors"
+                            onMouseEnter={() => {
+                              if (businessHoursHoverTimeout) {
+                                clearTimeout(businessHoursHoverTimeout);
+                              }
+                              const timeout = setTimeout(() => {
+                                setShowBusinessHoursTooltip(true);
+                              }, 500);
+                              setBusinessHoursHoverTimeout(timeout);
+                            }}
+                            onMouseLeave={() => {
+                              if (businessHoursHoverTimeout) {
+                                clearTimeout(businessHoursHoverTimeout);
+                                setBusinessHoursHoverTimeout(null);
+                              }
+                              if (!businessHoursTooltipClickedOpen) {
+                                setShowBusinessHoursTooltip(false);
+                              }
+                            }}
+                            onClick={() => {
+                              setBusinessHoursTooltipClickedOpen(!businessHoursTooltipClickedOpen);
+                              setShowBusinessHoursTooltip(!showBusinessHoursTooltip);
+                            }}
+                          />
+                          {showBusinessHoursTooltip && (
+                            <div className="absolute z-50 left-0 top-6 w-80 bg-slate-800 text-white text-sm p-3 rounded-md shadow-lg">
+                              <p className="mb-2">Enter the days and times your business is open to serve customers.</p>
+                              <p className="mb-2"><strong>Examples:</strong> "Monday-Friday 8AM–6PM, Saturday 9AM–4PM."</p>
+                              <p>This helps customers know when they can reach you or schedule services.</p>
+                            </div>
+                          )}
+                        </div>
                       </FormLabel>
                       <FormControl>
                         <Textarea
