@@ -1396,7 +1396,7 @@ export default function ClientForm() {
                 {/* Financing Options */}
                 <div className="space-y-4 mb-6">
                   <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
                       const currentValue = form.getValues("hasFinancingOptions");
                       form.setValue("hasFinancingOptions", !currentValue);
@@ -1442,7 +1442,7 @@ export default function ClientForm() {
                 {/* Storm Services */}
                 <div className="space-y-4 mb-6">
                   <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
                       const currentValue = form.getValues("hasStormServices");
                       form.setValue("hasStormServices", !currentValue);
@@ -1489,7 +1489,7 @@ export default function ClientForm() {
                 {/* Brands You Work With */}
                 <div className="space-y-4 mb-6">
                   <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
                       const currentValue = form.getValues("hasBrandsWorkedWith");
                       form.setValue("hasBrandsWorkedWith", !currentValue);
@@ -1536,7 +1536,7 @@ export default function ClientForm() {
                 {/* Installation Process */}
                 <div className="space-y-4 mb-6">
                   <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
                       const currentValue = form.getValues("hasInstallationProcess");
                       form.setValue("hasInstallationProcess", !currentValue);
@@ -1583,7 +1583,7 @@ export default function ClientForm() {
                 {/* Roof Maintenance Guide */}
                 <div className="space-y-4 mb-6">
                   <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
                       const currentValue = form.getValues("hasMaintenanceGuide");
                       form.setValue("hasMaintenanceGuide", !currentValue);
@@ -1629,7 +1629,7 @@ export default function ClientForm() {
                 {/* Roof Materials and Brands */}
                 <div className="space-y-4 mb-6">
                   <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => {
                       const currentValue = form.getValues("hasRoofMaterials");
                       form.setValue("hasRoofMaterials", !currentValue);
@@ -1676,7 +1676,7 @@ export default function ClientForm() {
                 {/* Warranty (optional) */}
                 <div className="space-y-4 mb-6">
                   <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => setShowWarrantySection(!showWarrantySection)}
                   >
                     <div className="flex items-center">
@@ -1719,7 +1719,7 @@ export default function ClientForm() {
                 {/* Insurance (optional) */}
                 <div className="space-y-4">
                   <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
                     onClick={() => setShowInsuranceSection(!showInsuranceSection)}
                   >
                     <div className="flex items-center">
