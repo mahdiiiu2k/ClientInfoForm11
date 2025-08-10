@@ -1747,7 +1747,10 @@ export default function ClientForm() {
                       onClick={() => setShowServiceAreasSection(!showServiceAreasSection)}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Service Areas (optional)</h3>
+                        <h3 className="flex items-center text-xl font-semibold text-slate-800">
+                          <MapPin className="text-primary mr-3 h-5 w-5" />
+                          Service Areas (optional)
+                        </h3>
                         {showServiceAreasSection ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
