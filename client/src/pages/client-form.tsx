@@ -867,26 +867,26 @@ export default function ClientForm() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div>
                                 <Label htmlFor="beforePictures">Before Pictures</Label>
-                                <div className="border-2 border-dashed border-slate-300 rounded-sm p-4 hover:border-primary transition-colors">
+                                <div className="border border-dashed border-slate-200 rounded-md p-6 hover:border-slate-300 hover:bg-slate-50 transition-all duration-200">
                                   <Input
                                     id="beforePictures"
                                     type="file"
                                     multiple
                                     accept="image/*"
-                                    className="rounded-sm"
+                                    className="border-0 bg-transparent p-0"
                                     onChange={(e) => setNewProject({...newProject, beforePictures: e.target.files || undefined})}
                                   />
                                 </div>
                               </div>
                               <div>
                                 <Label htmlFor="afterPictures">After Pictures</Label>
-                                <div className="border-2 border-dashed border-slate-300 rounded-sm p-4 hover:border-primary transition-colors">
+                                <div className="border border-dashed border-slate-200 rounded-md p-6 hover:border-slate-300 hover:bg-slate-50 transition-all duration-200">
                                   <Input
                                     id="afterPictures"
                                     type="file"
                                     multiple
                                     accept="image/*"
-                                    className="rounded-sm"
+                                    className="border-0 bg-transparent p-0"
                                     onChange={(e) => setNewProject({...newProject, afterPictures: e.target.files || undefined})}
                                   />
                                 </div>
