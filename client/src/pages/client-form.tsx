@@ -3005,8 +3005,8 @@ export default function ClientForm() {
                                     {...fadeInUp}
                                     className="space-y-2"
                                   >
-                                    <div className="text-sm font-medium text-slate-600">Tip {index + 1}</div>
-                                    <div className="bg-slate-100 rounded-lg px-3 py-2">
+                                    <div className="text-sm font-medium text-slate-600">Tip #{index + 1}</div>
+                                    <div className="border border-slate-300 rounded px-3 py-2 bg-white">
                                       {editingTipIndex === index ? (
                                         /* Edit Mode */
                                         <div className="flex items-center gap-2">
