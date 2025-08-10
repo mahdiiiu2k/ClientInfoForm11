@@ -1777,19 +1777,31 @@ export default function ClientForm() {
                                         <div className="flex items-center justify-center w-6 h-6 bg-blue-50 hover:bg-blue-100 rounded-full cursor-pointer transition-colors">
                                           <Info 
                                             className="h-4 w-4 text-blue-600 hover:text-blue-700" 
-                                            onClick={() => setShowResponseTimeTooltip(!showResponseTimeTooltip)}
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              if (hoverTimeout) {
+                                                clearTimeout(hoverTimeout);
+                                                setHoverTimeout(null);
+                                              }
+                                              setShowResponseTimeTooltip(!showResponseTimeTooltip);
+                                            }}
                                             onMouseEnter={() => {
-                                              const timeout = setTimeout(() => {
-                                                setShowResponseTimeTooltip(true);
-                                              }, 800);
-                                              setHoverTimeout(timeout);
+                                              if (!showResponseTimeTooltip) {
+                                                const timeout = setTimeout(() => {
+                                                  setShowResponseTimeTooltip(true);
+                                                }, 800);
+                                                setHoverTimeout(timeout);
+                                              }
                                             }}
                                             onMouseLeave={() => {
                                               if (hoverTimeout) {
                                                 clearTimeout(hoverTimeout);
                                                 setHoverTimeout(null);
                                               }
-                                              setShowResponseTimeTooltip(false);
+                                              // Only hide on mouse leave if it was shown by hover, not by click
+                                              if (showResponseTimeTooltip) {
+                                                setTimeout(() => setShowResponseTimeTooltip(false), 100);
+                                              }
                                             }}
                                           />
                                         </div>
