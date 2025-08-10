@@ -2798,44 +2798,51 @@ export default function ClientForm() {
                                             {newServiceStep.pictures && Array.from(newServiceStep.pictures).map((file: File, index) => (
                                               <motion.div
                                                 key={index}
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                className="relative border border-slate-200 rounded-lg p-2 bg-white min-w-[120px] max-w-[160px] flex-shrink-0"
+                                                {...fadeInUp}
+                                                className="border border-slate-200 rounded-lg p-2 bg-white min-w-[160px] flex-shrink-0"
                                               >
-                                                <div className="relative">
-                                                  <img
-                                                    src={URL.createObjectURL(file)}
-                                                    alt={file.name}
-                                                    className="w-full h-20 object-cover rounded"
-                                                    onLoad={(e) => URL.revokeObjectURL((e.target as HTMLImageElement).src)}
-                                                  />
-                                                  {/* Mobile-friendly delete button - always visible */}
-                                                  <Button
-                                                    type="button"
-                                                    variant="destructive"
-                                                    size="sm"
-                                                    className="absolute top-1 right-1 h-6 w-6 p-0 rounded-full bg-red-500 hover:bg-red-600 text-white shadow-lg"
-                                                    onClick={() => {
-                                                      if (newServiceStep.pictures) {
-                                                        const filesArray = Array.from(newServiceStep.pictures);
-                                                        const filteredFiles = filesArray.filter((_, i) => i !== index);
-                                                        
-                                                        if (filteredFiles.length === 0) {
-                                                          setNewServiceStep({...newServiceStep, pictures: null});
-                                                        } else {
+                                                <div className="space-y-2">
+                                                  {/* Image Preview */}
+                                                  <div className="w-full h-20 bg-slate-100 rounded border overflow-hidden">
+                                                    <img 
+                                                      src={URL.createObjectURL(file)} 
+                                                      alt={`Preview ${index + 1}`}
+                                                      className="w-full h-full object-cover"
+                                                    />
+                                                  </div>
+                                                  {/* File Info */}
+                                                  <div>
+                                                    <h3 className="text-xs font-medium text-slate-800">
+                                                      Picture #{index + 1}
+                                                    </h3>
+                                                    <p className="text-xs text-slate-600 truncate">
+                                                      {file.name}
+                                                    </p>
+                                                    <p className="text-xs text-slate-500">
+                                                      {(file.size / 1024 / 1024).toFixed(2)} MB
+                                                    </p>
+                                                  </div>
+                                                  {/* Delete Button */}
+                                                  <div className="flex justify-end">
+                                                    <Button
+                                                      type="button"
+                                                      variant="ghost"
+                                                      size="sm"
+                                                      onClick={() => {
+                                                        if (newServiceStep.pictures) {
+                                                          const fileArray = Array.from(newServiceStep.pictures);
+                                                          fileArray.splice(index, 1);
                                                           const dataTransfer = new DataTransfer();
-                                                          filteredFiles.forEach(file => dataTransfer.items.add(file));
+                                                          fileArray.forEach((file: File) => dataTransfer.items.add(file));
                                                           setNewServiceStep({...newServiceStep, pictures: dataTransfer.files});
                                                         }
-                                                      }
-                                                    }}
-                                                  >
-                                                    <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                  </Button>
+                                                      }}
+                                                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                                    >
+                                                      <Trash2 className="h-3 w-3" />
+                                                    </Button>
+                                                  </div>
                                                 </div>
-                                                <p className="text-xs text-slate-600 mt-1 truncate">{file.name}</p>
                                               </motion.div>
                                             ))}
                                           </div>
