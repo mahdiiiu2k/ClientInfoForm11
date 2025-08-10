@@ -1549,7 +1549,7 @@ export default function ClientForm() {
                                 <div className="flex-1 overflow-y-auto">
                                   <div className="space-y-4">
                                     <div>
-                                      <Label htmlFor="financingName">Financing Option Name *</Label>
+                                      <Label htmlFor="financingName">Plan Title (Shown on Website) *</Label>
                                       <Input
                                         id="financingName"
                                         placeholder="e.g., 0% APR for 12 months, Payment Plans"
@@ -1559,7 +1559,7 @@ export default function ClientForm() {
                                     </div>
                                     
                                     <div>
-                                      <Label htmlFor="financingDescription">Description *</Label>
+                                      <Label htmlFor="financingDescription">Full Plan Description (Shown under Title) *</Label>
                                       <Textarea
                                         id="financingDescription"
                                         rows={3}
