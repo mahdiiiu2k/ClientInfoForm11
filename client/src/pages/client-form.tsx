@@ -889,13 +889,23 @@ export default function ClientForm() {
                           ) : (
                             <div>
                               <Label htmlFor="projectPictures">Project Pictures</Label>
-                              <Input
-                                id="projectPictures"
-                                type="file"
-                                multiple
-                                accept="image/*"
-                                onChange={(e) => setNewProject({...newProject, pictures: e.target.files || undefined})}
-                              />
+                              <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors">
+                                <input
+                                  id="projectPictures"
+                                  type="file"
+                                  multiple
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={(e) => setNewProject({...newProject, pictures: e.target.files || undefined})}
+                                />
+                                <label 
+                                  htmlFor="projectPictures" 
+                                  className="flex flex-col items-center text-center cursor-pointer"
+                                >
+                                  <span className="text-slate-600 font-medium mb-2">Add Pictures</span>
+                                  <Plus className="h-6 w-6 text-slate-400" />
+                                </label>
+                              </div>
                             </div>
                           )}
                         </div>
