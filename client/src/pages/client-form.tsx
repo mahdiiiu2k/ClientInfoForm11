@@ -164,6 +164,10 @@ export default function ClientForm() {
   const [qualificationHoverTimeout, setQualificationHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [qualificationTooltipClickedOpen, setQualificationTooltipClickedOpen] = useState(false);
   const qualificationTooltipRef = useRef<HTMLDivElement>(null);
+  const [showMaintenanceGuideTooltip, setShowMaintenanceGuideTooltip] = useState(false);
+  const [maintenanceGuideHoverTimeout, setMaintenanceGuideHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [maintenanceGuideTooltipClickedOpen, setMaintenanceGuideTooltipClickedOpen] = useState(false);
+  const maintenanceGuideTooltipRef = useRef<HTMLDivElement>(null);
 
   // Service Steps state
   const [serviceSteps, setServiceSteps] = useState<Array<{serviceName: string; steps: string[]; additionalNotes: string; pictures?: FileList | null}>>([]);
@@ -2864,7 +2868,50 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide (optional)</h3>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide (optional)</h3>
+                          <div className="relative" ref={maintenanceGuideTooltipRef}>
+                            <Info 
+                              className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                if (maintenanceGuideHoverTimeout) {
+                                  clearTimeout(maintenanceGuideHoverTimeout);
+                                  setMaintenanceGuideHoverTimeout(null);
+                                }
+                                const newState = !showMaintenanceGuideTooltip;
+                                setShowMaintenanceGuideTooltip(newState);
+                                setMaintenanceGuideTooltipClickedOpen(newState);
+                              }}
+                              onMouseEnter={() => {
+                                if (!maintenanceGuideTooltipClickedOpen && !showMaintenanceGuideTooltip) {
+                                  const timeout = setTimeout(() => {
+                                    setShowMaintenanceGuideTooltip(true);
+                                  }, 800);
+                                  setMaintenanceGuideHoverTimeout(timeout);
+                                }
+                              }}
+                              onMouseLeave={() => {
+                                if (maintenanceGuideHoverTimeout) {
+                                  clearTimeout(maintenanceGuideHoverTimeout);
+                                  setMaintenanceGuideHoverTimeout(null);
+                                }
+                                if (showMaintenanceGuideTooltip && !maintenanceGuideTooltipClickedOpen) {
+                                  setTimeout(() => setShowMaintenanceGuideTooltip(false), 100);
+                                }
+                              }}
+                            />
+                            {showMaintenanceGuideTooltip && (
+                              <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-80">
+                                <div className="relative">
+                                  This section lets you share helpful, practical tips your customers can use to maintain their roofs and avoid problems. Think seasonal advice, easy DIY checks, signs of damage to watch for, and when it's time to call a professional. Adding this content builds trust and shows your expertise.
+                                  <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                         {form.watch("hasMaintenanceGuide") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
