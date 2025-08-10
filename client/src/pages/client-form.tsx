@@ -1415,20 +1415,22 @@ export default function ClientForm() {
                 
                 {/* Financing Options */}
                 <div className="mb-6">
-                  <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
-                    onClick={() => {
-                      const currentValue = form.getValues("hasFinancingOptions");
-                      form.setValue("hasFinancingOptions", !currentValue);
-                    }}
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold text-slate-800">Financing Options</h3>
-                      {form.watch("hasFinancingOptions") ? (
-                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      ) : (
-                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      )}
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => {
+                        const currentValue = form.getValues("hasFinancingOptions");
+                        form.setValue("hasFinancingOptions", !currentValue);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold text-slate-800">Financing Options</h3>
+                        {form.watch("hasFinancingOptions") ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
                     </div>
                     
                     <AnimatePresence>
@@ -1438,8 +1440,7 @@ export default function ClientForm() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 pt-4 border-t border-slate-300"
-                          onClick={(e) => e.stopPropagation()}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
                           <FormField
                             control={form.control}
@@ -1467,20 +1468,22 @@ export default function ClientForm() {
 
                 {/* Storm Services */}
                 <div className="mb-6">
-                  <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
-                    onClick={() => {
-                      const currentValue = form.getValues("hasStormServices");
-                      form.setValue("hasStormServices", !currentValue);
-                    }}
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold text-slate-800">Storm Services</h3>
-                      {form.watch("hasStormServices") ? (
-                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      ) : (
-                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      )}
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => {
+                        const currentValue = form.getValues("hasStormServices");
+                        form.setValue("hasStormServices", !currentValue);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold text-slate-800">Storm Services</h3>
+                        {form.watch("hasStormServices") ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
                     </div>
                     
                     <AnimatePresence>
@@ -1490,8 +1493,7 @@ export default function ClientForm() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 pt-4 border-t border-slate-300"
-                          onClick={(e) => e.stopPropagation()}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
                           <FormField
                             control={form.control}
@@ -1520,20 +1522,22 @@ export default function ClientForm() {
 
                 {/* Brands You Work With */}
                 <div className="mb-6">
-                  <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
-                    onClick={() => {
-                      const currentValue = form.getValues("hasBrandsWorkedWith");
-                      form.setValue("hasBrandsWorkedWith", !currentValue);
-                    }}
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold text-slate-800">Brands You Work With</h3>
-                      {form.watch("hasBrandsWorkedWith") ? (
-                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      ) : (
-                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      )}
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => {
+                        const currentValue = form.getValues("hasBrandsWorkedWith");
+                        form.setValue("hasBrandsWorkedWith", !currentValue);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold text-slate-800">Brands You Work With</h3>
+                        {form.watch("hasBrandsWorkedWith") ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
                     </div>
                     
                     <AnimatePresence>
@@ -1543,8 +1547,7 @@ export default function ClientForm() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 pt-4 border-t border-slate-300"
-                          onClick={(e) => e.stopPropagation()}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
                           <div className="space-y-4">
                             {/* Add Brand Input */}
@@ -1628,20 +1631,22 @@ export default function ClientForm() {
 
                 {/* Installation Process */}
                 <div className="mb-6">
-                  <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
-                    onClick={() => {
-                      const currentValue = form.getValues("hasInstallationProcess");
-                      form.setValue("hasInstallationProcess", !currentValue);
-                    }}
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold text-slate-800">Installation Process</h3>
-                      {form.watch("hasInstallationProcess") ? (
-                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      ) : (
-                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      )}
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => {
+                        const currentValue = form.getValues("hasInstallationProcess");
+                        form.setValue("hasInstallationProcess", !currentValue);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold text-slate-800">Installation Process</h3>
+                        {form.watch("hasInstallationProcess") ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
                     </div>
                     
                     <AnimatePresence>
@@ -1651,8 +1656,7 @@ export default function ClientForm() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 pt-4 border-t border-slate-300"
-                          onClick={(e) => e.stopPropagation()}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
                           <FormField
                             control={form.control}
@@ -1681,20 +1685,22 @@ export default function ClientForm() {
 
                 {/* Roof Maintenance Guide */}
                 <div className="mb-6">
-                  <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
-                    onClick={() => {
-                      const currentValue = form.getValues("hasMaintenanceGuide");
-                      form.setValue("hasMaintenanceGuide", !currentValue);
-                    }}
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide</h3>
-                      {form.watch("hasMaintenanceGuide") ? (
-                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      ) : (
-                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      )}
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => {
+                        const currentValue = form.getValues("hasMaintenanceGuide");
+                        form.setValue("hasMaintenanceGuide", !currentValue);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide</h3>
+                        {form.watch("hasMaintenanceGuide") ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
                     </div>
                     
                     <AnimatePresence>
@@ -1704,8 +1710,7 @@ export default function ClientForm() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 pt-4 border-t border-slate-300"
-                          onClick={(e) => e.stopPropagation()}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
                           <FormField
                             control={form.control}
@@ -1733,20 +1738,22 @@ export default function ClientForm() {
 
                 {/* Roof Materials and Brands */}
                 <div className="mb-6">
-                  <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
-                    onClick={() => {
-                      const currentValue = form.getValues("hasRoofMaterials");
-                      form.setValue("hasRoofMaterials", !currentValue);
-                    }}
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold text-slate-800">Roof Materials and Brands</h3>
-                      {form.watch("hasRoofMaterials") ? (
-                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      ) : (
-                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      )}
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => {
+                        const currentValue = form.getValues("hasRoofMaterials");
+                        form.setValue("hasRoofMaterials", !currentValue);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold text-slate-800">Roof Materials and Brands</h3>
+                        {form.watch("hasRoofMaterials") ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
                     </div>
                     
                     <AnimatePresence>
@@ -1756,8 +1763,7 @@ export default function ClientForm() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 pt-4 border-t border-slate-300"
-                          onClick={(e) => e.stopPropagation()}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
                           <FormField
                             control={form.control}
@@ -1786,17 +1792,19 @@ export default function ClientForm() {
 
                 {/* Warranty (optional) */}
                 <div className="mb-6">
-                  <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
-                    onClick={() => setShowWarrantySection(!showWarrantySection)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold text-slate-800">Warranty (optional)</h3>
-                      {showWarrantySection ? (
-                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      ) : (
-                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      )}
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => setShowWarrantySection(!showWarrantySection)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold text-slate-800">Warranty (optional)</h3>
+                        {showWarrantySection ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
                     </div>
                     
                     <AnimatePresence>
@@ -1806,8 +1814,7 @@ export default function ClientForm() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 pt-4 border-t border-slate-300"
-                          onClick={(e) => e.stopPropagation()}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
                           <FormField
                             control={form.control}
@@ -1835,17 +1842,19 @@ export default function ClientForm() {
 
                 {/* Insurance (optional) */}
                 <div>
-                  <div 
-                    className="border border-slate-200 rounded-lg p-4 cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors"
-                    onClick={() => setShowInsuranceSection(!showInsuranceSection)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold text-slate-800">Insurance (optional)</h3>
-                      {showInsuranceSection ? (
-                        <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      ) : (
-                        <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                      )}
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => setShowInsuranceSection(!showInsuranceSection)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold text-slate-800">Insurance (optional)</h3>
+                        {showInsuranceSection ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
                     </div>
                     
                     <AnimatePresence>
@@ -1855,8 +1864,7 @@ export default function ClientForm() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 pt-4 border-t border-slate-300"
-                          onClick={(e) => e.stopPropagation()}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
                         <div className="space-y-6">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
