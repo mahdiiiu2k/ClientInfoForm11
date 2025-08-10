@@ -56,6 +56,8 @@ export const clientSubmissions = pgTable("client_submissions", {
   // Warranty & Insurance
   hasWarranty: boolean("has_warranty").default(false),
   warrantyDescription: text("warranty_description"),
+  warrantyDuration: text("warranty_duration"),
+  warrantyType: text("warranty_type"),
   hasInsurance: boolean("has_insurance").default(false),
   generalLiability: text("general_liability"),
   workersCompensation: boolean("workers_compensation").default(false),

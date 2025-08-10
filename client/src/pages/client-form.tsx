@@ -190,6 +190,12 @@ export default function ClientForm() {
   const [editingTipIndex, setEditingTipIndex] = useState<number | null>(null);
   const [editingTipValue, setEditingTipValue] = useState("");
 
+  // Warranty Terms state
+  const [warrantyTerms, setWarrantyTerms] = useState<string[]>([]);
+  const [newWarrantyTermInput, setNewWarrantyTermInput] = useState("");
+  const [editingWarrantyTermIndex, setEditingWarrantyTermIndex] = useState<number | null>(null);
+  const [editingWarrantyTermValue, setEditingWarrantyTermValue] = useState("");
+
 
 
   // Handle click outside to close tooltips
@@ -635,6 +641,38 @@ export default function ClientForm() {
   const cancelEditingTip = () => {
     setEditingTipIndex(null);
     setEditingTipValue("");
+  };
+
+  // Warranty Terms Handlers
+  const addWarrantyTerm = () => {
+    if (newWarrantyTermInput.trim()) {
+      setWarrantyTerms([...warrantyTerms, newWarrantyTermInput.trim()]);
+      setNewWarrantyTermInput("");
+    }
+  };
+
+  const removeWarrantyTerm = (index: number) => {
+    setWarrantyTerms(warrantyTerms.filter((_, i) => i !== index));
+  };
+
+  const startEditingWarrantyTerm = (index: number) => {
+    setEditingWarrantyTermIndex(index);
+    setEditingWarrantyTermValue(warrantyTerms[index]);
+  };
+
+  const saveEditingWarrantyTerm = () => {
+    if (editingWarrantyTermIndex !== null && editingWarrantyTermValue.trim()) {
+      const updatedTerms = [...warrantyTerms];
+      updatedTerms[editingWarrantyTermIndex] = editingWarrantyTermValue.trim();
+      setWarrantyTerms(updatedTerms);
+      setEditingWarrantyTermIndex(null);
+      setEditingWarrantyTermValue("");
+    }
+  };
+
+  const cancelEditingWarrantyTerm = () => {
+    setEditingWarrantyTermIndex(null);
+    setEditingWarrantyTermValue("");
   };
 
   const updateProject = (index: number, field: keyof Project, value: any) => {
@@ -3145,7 +3183,7 @@ export default function ClientForm() {
                       onClick={() => setShowWarrantySection(!showWarrantySection)}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Warranty (optional)</h3>
+                        <h3 className="text-xl font-semibold text-slate-800">Warranty Coverage (optional)</h3>
                         {showWarrantySection ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
@@ -3163,24 +3201,187 @@ export default function ClientForm() {
                           transition={{ duration: 0.3 }}
                           className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
-                          <FormField
-                            control={form.control}
-                            name="warrantyDescription"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Warranty Description</FormLabel>
-                                <FormControl>
-                                  <Textarea
-                                    rows={3}
-                                    placeholder="Describe your warranty terms and coverage..."
-                                    {...field}
-                                    value={field.value || ""}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                          <div className="space-y-6">
+                            {/* Warranty Overview */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <FormField
+                                control={form.control}
+                                name="warrantyDuration"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Warranty Duration</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        placeholder="e.g., 5 years, 10 years, Lifetime"
+                                        {...field}
+                                        value={field.value || ""}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={form.control}
+                                name="warrantyType"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Warranty Type</FormLabel>
+                                    <Select onValueChange={field.onChange} value={field.value || ""}>
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select warranty type" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="materials-labor">Materials & Labor</SelectItem>
+                                        <SelectItem value="materials-only">Materials Only</SelectItem>
+                                        <SelectItem value="workmanship">Workmanship Only</SelectItem>
+                                        <SelectItem value="limited">Limited Warranty</SelectItem>
+                                        <SelectItem value="full">Full Warranty</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+
+                            {/* Warranty Coverage Details */}
+                            <FormField
+                              control={form.control}
+                              name="warrantyDescription"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Coverage Details</FormLabel>
+                                  <FormControl>
+                                    <Textarea
+                                      rows={4}
+                                      placeholder="e.g., Covers materials defects, workmanship issues, weather damage protection. Excludes acts of nature, improper maintenance..."
+                                      {...field}
+                                      value={field.value || ""}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            {/* Warranty Terms & Conditions */}
+                            <div className="space-y-3">
+                              <Label>Warranty Terms & Conditions (optional)</Label>
+                              <div className="space-y-4">
+                                {/* Add Term Input */}
+                                <div>
+                                  <Label htmlFor="addWarrantyTerm">Add warranty term or condition</Label>
+                                  <div className="flex gap-2 mt-2">
+                                    <Input
+                                      id="addWarrantyTerm"
+                                      placeholder="e.g., Annual inspection required to maintain warranty"
+                                      value={newWarrantyTermInput}
+                                      onChange={(e) => setNewWarrantyTermInput(e.target.value)}
+                                      onKeyPress={(e) => {
+                                        if (e.key === 'Enter') {
+                                          e.preventDefault();
+                                          addWarrantyTerm();
+                                        }
+                                      }}
+                                      className="flex-1"
+                                    />
+                                    <Button
+                                      type="button"
+                                      onClick={addWarrantyTerm}
+                                      disabled={!newWarrantyTermInput.trim()}
+                                      className="bg-primary hover:bg-blue-700 px-3"
+                                    >
+                                      <Plus className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                </div>
+
+                                {/* Display Added Terms */}
+                                {warrantyTerms.length > 0 && (
+                                  <div className="space-y-2">
+                                    {warrantyTerms.map((term, index) => (
+                                      <motion.div
+                                        key={index}
+                                        {...fadeInUp}
+                                        className="space-y-2"
+                                      >
+                                        <div className="text-sm font-medium text-slate-600">Term #{index + 1}</div>
+                                        <div className="border border-slate-300 rounded px-3 py-2 bg-white">
+                                          {editingWarrantyTermIndex === index ? (
+                                            /* Edit Mode */
+                                            <div className="flex items-center gap-2">
+                                              <Input
+                                                value={editingWarrantyTermValue}
+                                                onChange={(e) => setEditingWarrantyTermValue(e.target.value)}
+                                                onKeyPress={(e) => {
+                                                  if (e.key === 'Enter') {
+                                                    e.preventDefault();
+                                                    saveEditingWarrantyTerm();
+                                                  } else if (e.key === 'Escape') {
+                                                    e.preventDefault();
+                                                    cancelEditingWarrantyTerm();
+                                                  }
+                                                }}
+                                                className="flex-1 bg-white"
+                                                autoFocus
+                                              />
+                                              <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={saveEditingWarrantyTerm}
+                                                disabled={!editingWarrantyTermValue.trim()}
+                                                className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                                              >
+                                                <Check className="h-3 w-3" />
+                                              </Button>
+                                              <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={cancelEditingWarrantyTerm}
+                                                className="text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                                              >
+                                                <X className="h-3 w-3" />
+                                              </Button>
+                                            </div>
+                                          ) : (
+                                            /* Display Mode */
+                                            <div className="flex items-center justify-between">
+                                              <span className="text-slate-700 flex-1">{term}</span>
+                                              <div className="flex items-center gap-1 ml-2">
+                                                <Button
+                                                  type="button"
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  onClick={() => startEditingWarrantyTerm(index)}
+                                                  className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+                                                >
+                                                  <Edit2 className="h-3 w-3" />
+                                                </Button>
+                                                <Button
+                                                  type="button"
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  onClick={() => removeWarrantyTerm(index)}
+                                                  className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                                >
+                                                  <Trash2 className="h-3 w-3" />
+                                                </Button>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </motion.div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
