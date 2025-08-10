@@ -1817,7 +1817,7 @@ export default function ClientForm() {
 
                             {/* Description Input */}
                             <div>
-                              <Label htmlFor="areaDescription">Description of a specific area(s)</Label>
+                              <Label htmlFor="areaDescription">Additional Descriptions/Notes</Label>
                               <Textarea
                                 id="areaDescription"
                                 rows={3}
