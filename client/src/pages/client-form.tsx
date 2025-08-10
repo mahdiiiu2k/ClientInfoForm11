@@ -2810,15 +2810,7 @@ export default function ClientForm() {
                                                       className="w-full h-full object-cover"
                                                     />
                                                   </div>
-                                                  {/* File Info */}
-                                                  <div>
-                                                    <h3 className="text-xs font-medium text-slate-800">
-                                                      Picture #{index + 1}
-                                                    </h3>
-                                                    <p className="text-xs text-slate-600 truncate">
-                                                      {file.name}
-                                                    </p>
-                                                  </div>
+
                                                   {/* Delete Button */}
                                                   <div className="flex justify-end">
                                                     <Button
