@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings } from "lucide-react";
+import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, Cloud } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -52,6 +52,14 @@ interface Service {
   pictures?: FileList;
 }
 
+interface StormService {
+  name: string;
+  description: string;
+  responseTime?: string;
+  insurancePartnership?: string;
+  pictures?: FileList;
+}
+
 interface Project {
   title: string;
   description: string;
@@ -85,6 +93,7 @@ const slideDown = {
 export default function ClientForm() {
   const { toast } = useToast();
   const [services, setServices] = useState<Service[]>([]);
+  const [stormServices, setStormServices] = useState<StormService[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [serviceAreas, setServiceAreas] = useState<ServiceArea[]>([]);
   const [isTypingExperience, setIsTypingExperience] = useState(false);
@@ -95,6 +104,9 @@ export default function ClientForm() {
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [newService, setNewService] = useState<Service>({ name: "", description: "", steps: "" });
   const [editingServiceIndex, setEditingServiceIndex] = useState<number | null>(null);
+  const [showStormServiceModal, setShowStormServiceModal] = useState(false);
+  const [newStormService, setNewStormService] = useState<StormService>({ name: "", description: "", responseTime: "", insurancePartnership: "" });
+  const [editingStormServiceIndex, setEditingStormServiceIndex] = useState<number | null>(null);
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [newProject, setNewProject] = useState<Project>({ 
     title: "", 
@@ -295,6 +307,33 @@ export default function ClientForm() {
     const updated = [...services];
     updated[index] = { ...updated[index], [field]: value };
     setServices(updated);
+  };
+
+  const addStormServiceFromModal = () => {
+    if (newStormService.name && newStormService.description) {
+      if (editingStormServiceIndex !== null) {
+        // Update existing storm service
+        const updatedStormServices = [...stormServices];
+        updatedStormServices[editingStormServiceIndex] = { ...newStormService };
+        setStormServices(updatedStormServices);
+        setEditingStormServiceIndex(null);
+      } else {
+        // Add new storm service
+        setStormServices([...stormServices, { ...newStormService }]);
+      }
+      setNewStormService({ name: "", description: "", responseTime: "", insurancePartnership: "" });
+      setShowStormServiceModal(false);
+    }
+  };
+
+  const editStormService = (index: number) => {
+    setNewStormService({ ...stormServices[index] });
+    setEditingStormServiceIndex(index);
+    setShowStormServiceModal(true);
+  };
+
+  const removeStormService = (index: number) => {
+    setStormServices(stormServices.filter((_, i) => i !== index));
   };
 
   const addProject = () => {
@@ -1466,57 +1505,224 @@ export default function ClientForm() {
                   </div>
                 </div>
 
-                {/* Storm Services */}
-                <div className="mb-6">
-                  <div className="border border-slate-200 rounded-lg bg-slate-100">
-                    <div 
-                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
-                      onClick={() => {
-                        const currentValue = form.getValues("hasStormServices");
-                        form.setValue("hasStormServices", !currentValue);
-                      }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Storm Services</h3>
-                        {form.watch("hasStormServices") ? (
-                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                        ) : (
-                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                        )}
-                      </div>
-                    </div>
+                {/* Storm Services Section */}
+                <div className="space-y-6 mb-6">
+                  <div>
+                    <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
+                      <Cloud className="text-primary mr-3 h-5 w-5" />
+                      Storm Services
+                    </h2>
                     
-                    <AnimatePresence>
-                      {form.watch("hasStormServices") && (
+                    {/* Storm Services Slider Layout */}
+                    <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
+                      {/* Rectangle Add Storm Service Button */}
+                      <Dialog open={showStormServiceModal} onOpenChange={setShowStormServiceModal}>
+                        <DialogTrigger asChild>
+                          <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[280px] flex-shrink-0">
+                            <div className="flex flex-col items-center text-center">
+                              <span className="text-slate-600 font-medium mb-2">Add Storm Service</span>
+                              <Plus className="h-6 w-6 text-slate-400" />
+                            </div>
+                          </div>
+                        </DialogTrigger>
+                        
+                        {/* Storm Service Modal */}
+                        <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-hidden flex flex-col">
+                          <DialogHeader className="flex-shrink-0">
+                            <DialogTitle>
+                              {editingStormServiceIndex !== null 
+                                ? `Storm Service #${editingStormServiceIndex + 1}` 
+                                : `Storm Service #${stormServices.length + 1}`
+                              }
+                            </DialogTitle>
+                          </DialogHeader>
+                          
+                          <div className="flex-1 overflow-y-auto">
+                            <div className="space-y-4">
+                            <div>
+                              <Label htmlFor="stormServiceName">Service Name *</Label>
+                              <Input
+                                id="stormServiceName"
+                                placeholder="e.g., Emergency Storm Response"
+                                value={newStormService.name}
+                                onChange={(e) => setNewStormService({...newStormService, name: e.target.value})}
+                              />
+                            </div>
+                            
+                            <div>
+                              <Label htmlFor="stormServiceDescription">Service Description *</Label>
+                              <Textarea
+                                id="stormServiceDescription"
+                                rows={3}
+                                placeholder="Describe this storm service..."
+                                value={newStormService.description}
+                                onChange={(e) => setNewStormService({...newStormService, description: e.target.value})}
+                              />
+                            </div>
+                            
+                            <div>
+                              <Label htmlFor="responseTime">Response Time (Optional)</Label>
+                              <Input
+                                id="responseTime"
+                                placeholder="e.g., 24 hours, Same day"
+                                value={newStormService.responseTime || ""}
+                                onChange={(e) => setNewStormService({...newStormService, responseTime: e.target.value})}
+                              />
+                            </div>
+                            
+                            <div>
+                              <Label htmlFor="insurancePartnership">Insurance Partnership (Optional)</Label>
+                              <Textarea
+                                id="insurancePartnership"
+                                rows={2}
+                                placeholder="Details about working with insurance companies..."
+                                value={newStormService.insurancePartnership || ""}
+                                onChange={(e) => setNewStormService({...newStormService, insurancePartnership: e.target.value})}
+                              />
+                            </div>
+                            
+                            <div>
+                              <Label htmlFor="stormServicePictures">Service Pictures</Label>
+                              <div className="w-full">
+                                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300" style={{maxWidth: '100%'}}>
+                                  {/* Add Pictures Button */}
+                                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[160px] flex-shrink-0">
+                                    <input
+                                      id="stormServicePictures"
+                                      type="file"
+                                      multiple
+                                      accept="image/*"
+                                      className="hidden"
+                                      onChange={(e) => {
+                                        if (e.target.files && e.target.files.length > 0) {
+                                          const newFiles = Array.from(e.target.files);
+                                          const existingFiles = newStormService.pictures ? Array.from(newStormService.pictures) : [];
+                                          const allFiles = [...existingFiles, ...newFiles];
+                                          
+                                          const dataTransfer = new DataTransfer();
+                                          allFiles.forEach((file: File) => dataTransfer.items.add(file));
+                                          
+                                          setNewStormService({...newStormService, pictures: dataTransfer.files});
+                                          e.target.value = '';
+                                        }
+                                      }}
+                                    />
+                                    <label 
+                                      htmlFor="stormServicePictures" 
+                                      className="flex flex-col items-center text-center cursor-pointer"
+                                    >
+                                      <span className="text-slate-600 font-medium mb-2">Add Pictures</span>
+                                      <Plus className="h-6 w-6 text-slate-400" />
+                                    </label>
+                                  </div>
+
+                                  {/* Display Selected Files */}
+                                  {newStormService.pictures && Array.from(newStormService.pictures).map((file: File, index) => (
+                                    <motion.div
+                                      key={index}
+                                      {...fadeInUp}
+                                      className="border border-slate-200 rounded-lg p-2 bg-white min-w-[160px] flex-shrink-0"
+                                    >
+                                      <div className="space-y-2">
+                                        {/* Image Preview */}
+                                        <div className="w-full h-20 bg-slate-100 rounded border overflow-hidden">
+                                          <img 
+                                            src={URL.createObjectURL(file)} 
+                                            alt={`Preview ${index + 1}`}
+                                            className="w-full h-full object-cover"
+                                          />
+                                        </div>
+                                        {/* File Info */}
+                                        <div>
+                                          <h3 className="text-xs font-medium text-slate-800">
+                                            Picture #{index + 1}
+                                          </h3>
+                                          <p className="text-xs text-slate-600 truncate">
+                                            {file.name}
+                                          </p>
+                                          <p className="text-xs text-slate-500">
+                                            {(file.size / 1024 / 1024).toFixed(2)} MB
+                                          </p>
+                                        </div>
+                                        {/* Delete Button */}
+                                        <div className="flex justify-end">
+                                          <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => {
+                                              if (newStormService.pictures) {
+                                                const fileArray = Array.from(newStormService.pictures);
+                                                fileArray.splice(index, 1);
+                                                const dataTransfer = new DataTransfer();
+                                                fileArray.forEach((file: File) => dataTransfer.items.add(file));
+                                                setNewStormService({...newStormService, pictures: dataTransfer.files});
+                                              }
+                                            }}
+                                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                          >
+                                            <Trash2 className="h-3 w-3" />
+                                          </Button>
+                                        </div>
+                                      </div>
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <Button 
+                              onClick={addStormServiceFromModal}
+                              className="w-full bg-primary hover:bg-blue-700"
+                              disabled={!newStormService.name || !newStormService.description}
+                            >
+                              {editingStormServiceIndex !== null ? 'Save Storm Service' : 'Add Storm Service'}
+                            </Button>
+                            </div>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+
+                      {/* Display Added Storm Services */}
+                      {stormServices.map((stormService, index) => (
                         <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="px-4 pb-4 pt-0 border-t border-slate-300"
+                          key={index}
+                          {...fadeInUp}
+                          className="border border-slate-200 rounded-lg p-4 bg-white min-w-[280px] flex-shrink-0"
                         >
-                          <FormField
-                            control={form.control}
-                            name="stormServiceDetails"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Storm service details (e.g., insurance claim assistance, emergency response time, storm damage specialties)</FormLabel>
-                                <FormControl>
-                                  <Textarea 
-                                    rows={3}
-                                    placeholder="Describe your storm services..." 
-                                    {...field} 
-                                    value={field.value || ""} 
-                                    data-testid="textarea-storm-details"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <h3 className="text-lg font-medium text-slate-800">
+                                Storm Service #{index + 1}
+                              </h3>
+                              <p className="text-sm text-slate-600 mt-1">
+                                {stormService.name || "Untitled Storm Service"}
+                              </p>
+                            </div>
+                            <div className="flex gap-2">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removeStormService(index)}
+                                className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={() => editStormService(index)}
+                                className="text-primary border-primary hover:bg-primary hover:text-white"
+                              >
+                                Edit
+                              </Button>
+                            </div>
+                          </div>
                         </motion.div>
-                      )}
-                    </AnimatePresence>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
