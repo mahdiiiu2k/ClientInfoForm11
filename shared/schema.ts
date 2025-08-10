@@ -69,6 +69,20 @@ export const clientSubmissions = pgTable("client_submissions", {
     description?: string;
   }>>().default([]),
   
+  // Additional Optional Sections
+  hasFinancingOptions: boolean("has_financing_options").default(false),
+  financingDetails: text("financing_details"),
+  hasStormServices: boolean("has_storm_services").default(false),
+  stormServiceDetails: text("storm_service_details"),
+  hasBrandsWorkedWith: boolean("has_brands_worked_with").default(false),
+  brandsWorkedWith: text("brands_worked_with"),
+  hasInstallationProcess: boolean("has_installation_process").default(false),
+  installationProcessDetails: text("installation_process_details"),
+  hasMaintenanceGuide: boolean("has_maintenance_guide").default(false),
+  maintenanceGuide: text("maintenance_guide"),
+  hasRoofMaterials: boolean("has_roof_materials").default(false),
+  roofMaterialsDetails: text("roof_materials_details"),
+  
   createdAt: text("created_at").default(sql`NOW()`),
 });
 
@@ -95,6 +109,12 @@ export const insertClientSubmissionSchema = createInsertSchema(clientSubmissions
   generalLiability: z.string().nullable().optional(),
   bondedAmount: z.string().nullable().optional(),
   additionalCoverage: z.string().nullable().optional(),
+  financingDetails: z.string().nullable().optional(),
+  stormServiceDetails: z.string().nullable().optional(),
+  brandsWorkedWith: z.string().nullable().optional(),
+  installationProcessDetails: z.string().nullable().optional(),
+  maintenanceGuide: z.string().nullable().optional(),
+  roofMaterialsDetails: z.string().nullable().optional(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
