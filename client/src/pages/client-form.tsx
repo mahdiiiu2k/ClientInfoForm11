@@ -140,20 +140,28 @@ export default function ClientForm() {
   // Handle click outside to close tooltip
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node) && tooltipClickedOpen) {
         setShowResponseTimeTooltip(false);
         setTooltipClickedOpen(false);
       }
     };
 
-    if (showResponseTimeTooltip) {
-      document.addEventListener('mousedown', handleClickOutside);
+    if (showResponseTimeTooltip && tooltipClickedOpen) {
+      // Use a slight delay to avoid immediate closure when opening via click
+      const timeoutId = setTimeout(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+      }, 100);
+      
+      return () => {
+        clearTimeout(timeoutId);
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showResponseTimeTooltip]);
+  }, [showResponseTimeTooltip, tooltipClickedOpen]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
