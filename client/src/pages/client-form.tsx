@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, Cloud } from "lucide-react";
+import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, Cloud, Info } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -132,6 +132,7 @@ export default function ClientForm() {
   const [areaDescription, setAreaDescription] = useState("");
   const [brands, setBrands] = useState<string[]>([]);
   const [newBrand, setNewBrand] = useState("");
+  const [showResponseTimeTooltip, setShowResponseTimeTooltip] = useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -1769,7 +1770,23 @@ export default function ClientForm() {
                                   </div>
                                   
                                   <div>
-                                    <Label htmlFor="responseTime">Response Time (Optional)</Label>
+                                    <div className="flex items-center gap-2 mb-2">
+                                      <Label htmlFor="responseTime">Response Time (Optional)</Label>
+                                      <div className="relative">
+                                        <Info 
+                                          className="h-4 w-4 text-slate-500 cursor-pointer hover:text-slate-700" 
+                                          onClick={() => setShowResponseTimeTooltip(!showResponseTimeTooltip)}
+                                        />
+                                        {showResponseTimeTooltip && (
+                                          <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
+                                            <div className="relative">
+                                              How quickly your team responds after a storm. Examples: "Same day," "Within 24 hours," or "2 hours for emergencies." Leave blank if not applicable.
+                                              <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 transform rotate-45"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
                                     <Input
                                       id="responseTime"
                                       placeholder="e.g., 24 hours, Same day"
