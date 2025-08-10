@@ -990,19 +990,29 @@ export default function ClientForm() {
                                         {...fadeInUp}
                                         className="border border-slate-200 rounded-lg p-3 bg-white min-w-[200px] flex-shrink-0"
                                       >
-                                        <div className="flex justify-between items-center">
+                                        <div className="space-y-2">
+                                          {/* Image Preview */}
+                                          <div className="w-full h-20 bg-slate-100 rounded border overflow-hidden">
+                                            <img 
+                                              src={URL.createObjectURL(file)} 
+                                              alt={`Before Preview ${index + 1}`}
+                                              className="w-full h-full object-cover"
+                                            />
+                                          </div>
+                                          {/* File Info */}
                                           <div>
-                                            <h3 className="text-lg font-medium text-slate-800">
+                                            <h3 className="text-xs font-medium text-slate-800">
                                               Before #{index + 1}
                                             </h3>
-                                            <p className="text-sm text-slate-600 mt-1 truncate">
+                                            <p className="text-xs text-slate-600 truncate">
                                               {file.name}
                                             </p>
-                                            <p className="text-xs text-slate-500 mt-1">
+                                            <p className="text-xs text-slate-500">
                                               {(file.size / 1024 / 1024).toFixed(2)} MB
                                             </p>
                                           </div>
-                                          <div className="flex gap-2">
+                                          {/* Delete Button */}
+                                          <div className="flex justify-end">
                                             <Button
                                               type="button"
                                               variant="ghost"
@@ -1018,7 +1028,7 @@ export default function ClientForm() {
                                               }}
                                               className="text-red-500 hover:text-red-700 hover:bg-red-50"
                                             >
-                                              <Trash2 className="h-4 w-4" />
+                                              <Trash2 className="h-3 w-3" />
                                             </Button>
                                           </div>
                                         </div>
@@ -1071,19 +1081,29 @@ export default function ClientForm() {
                                         {...fadeInUp}
                                         className="border border-slate-200 rounded-lg p-3 bg-white min-w-[200px] flex-shrink-0"
                                       >
-                                        <div className="flex justify-between items-center">
+                                        <div className="space-y-2">
+                                          {/* Image Preview */}
+                                          <div className="w-full h-20 bg-slate-100 rounded border overflow-hidden">
+                                            <img 
+                                              src={URL.createObjectURL(file)} 
+                                              alt={`After Preview ${index + 1}`}
+                                              className="w-full h-full object-cover"
+                                            />
+                                          </div>
+                                          {/* File Info */}
                                           <div>
-                                            <h3 className="text-lg font-medium text-slate-800">
+                                            <h3 className="text-xs font-medium text-slate-800">
                                               After #{index + 1}
                                             </h3>
-                                            <p className="text-sm text-slate-600 mt-1 truncate">
+                                            <p className="text-xs text-slate-600 truncate">
                                               {file.name}
                                             </p>
-                                            <p className="text-xs text-slate-500 mt-1">
+                                            <p className="text-xs text-slate-500">
                                               {(file.size / 1024 / 1024).toFixed(2)} MB
                                             </p>
                                           </div>
-                                          <div className="flex gap-2">
+                                          {/* Delete Button */}
+                                          <div className="flex justify-end">
                                             <Button
                                               type="button"
                                               variant="ghost"
@@ -1099,7 +1119,7 @@ export default function ClientForm() {
                                               }}
                                               className="text-red-500 hover:text-red-700 hover:bg-red-50"
                                             >
-                                              <Trash2 className="h-4 w-4" />
+                                              <Trash2 className="h-3 w-3" />
                                             </Button>
                                           </div>
                                         </div>
@@ -1156,19 +1176,29 @@ export default function ClientForm() {
                                     {...fadeInUp}
                                     className="border border-slate-200 rounded-lg p-3 bg-white min-w-[200px] flex-shrink-0"
                                   >
-                                    <div className="flex justify-between items-center">
+                                    <div className="space-y-2">
+                                      {/* Image Preview */}
+                                      <div className="w-full h-20 bg-slate-100 rounded border overflow-hidden">
+                                        <img 
+                                          src={URL.createObjectURL(file)} 
+                                          alt={`Preview ${index + 1}`}
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                      {/* File Info */}
                                       <div>
-                                        <h3 className="text-lg font-medium text-slate-800">
+                                        <h3 className="text-xs font-medium text-slate-800">
                                           Picture #{index + 1}
                                         </h3>
-                                        <p className="text-sm text-slate-600 mt-1 truncate">
+                                        <p className="text-xs text-slate-600 truncate">
                                           {file.name}
                                         </p>
-                                        <p className="text-xs text-slate-500 mt-1">
+                                        <p className="text-xs text-slate-500">
                                           {(file.size / 1024 / 1024).toFixed(2)} MB
                                         </p>
                                       </div>
-                                      <div className="flex gap-2">
+                                      {/* Delete Button */}
+                                      <div className="flex justify-end">
                                         <Button
                                           type="button"
                                           variant="ghost"
@@ -1184,7 +1214,7 @@ export default function ClientForm() {
                                           }}
                                           className="text-red-500 hover:text-red-700 hover:bg-red-50"
                                         >
-                                          <Trash2 className="h-4 w-4" />
+                                          <Trash2 className="h-3 w-3" />
                                         </Button>
                                       </div>
                                     </div>
