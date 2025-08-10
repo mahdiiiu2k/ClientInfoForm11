@@ -1774,9 +1774,9 @@ export default function ClientForm() {
                                     <div className="flex items-center gap-2 mb-2">
                                       <Label htmlFor="responseTime">Response Time (Optional)</Label>
                                       <div className="relative">
-                                        <div className="flex items-center justify-center w-6 h-6 bg-slate-100 hover:bg-slate-200 rounded-full cursor-pointer transition-colors">
+                                        <div className="flex items-center justify-center w-6 h-6 bg-blue-50 hover:bg-blue-100 rounded-full cursor-pointer transition-colors">
                                           <Info 
-                                            className="h-4 w-4 text-slate-600 hover:text-slate-800" 
+                                            className="h-4 w-4 text-blue-600 hover:text-blue-700" 
                                             onClick={() => setShowResponseTimeTooltip(!showResponseTimeTooltip)}
                                             onMouseEnter={() => {
                                               const timeout = setTimeout(() => {
