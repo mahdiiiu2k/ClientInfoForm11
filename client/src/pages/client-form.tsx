@@ -3227,20 +3227,13 @@ export default function ClientForm() {
                                 render={({ field }) => (
                                   <FormItem>
                                     <FormLabel>Warranty Type</FormLabel>
-                                    <Select onValueChange={field.onChange} value={field.value || ""}>
-                                      <FormControl>
-                                        <SelectTrigger>
-                                          <SelectValue placeholder="Select warranty type" />
-                                        </SelectTrigger>
-                                      </FormControl>
-                                      <SelectContent>
-                                        <SelectItem value="materials-labor">Materials & Labor</SelectItem>
-                                        <SelectItem value="materials-only">Materials Only</SelectItem>
-                                        <SelectItem value="workmanship">Workmanship Only</SelectItem>
-                                        <SelectItem value="limited">Limited Warranty</SelectItem>
-                                        <SelectItem value="full">Full Warranty</SelectItem>
-                                      </SelectContent>
-                                    </Select>
+                                    <FormControl>
+                                      <Input
+                                        placeholder="e.g., Materials & Labor, Limited Warranty, Full Coverage"
+                                        {...field}
+                                        value={field.value || ""}
+                                      />
+                                    </FormControl>
                                     <FormMessage />
                                   </FormItem>
                                 )}
@@ -3381,6 +3374,26 @@ export default function ClientForm() {
                                 )}
                               </div>
                             </div>
+
+                            {/* Additional Notes/Description */}
+                            <FormField
+                              control={form.control}
+                              name="warrantyAdditionalNotes"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Additional Notes/Description (optional)</FormLabel>
+                                  <FormControl>
+                                    <Textarea
+                                      rows={3}
+                                      placeholder="Add any additional warranty information, special conditions, or clarifications..."
+                                      {...field}
+                                      value={field.value || ""}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
                           </div>
                         </motion.div>
                       )}
