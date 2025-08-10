@@ -910,7 +910,7 @@ export default function ClientForm() {
                         Business Hours <span className="text-slate-500">(Optional)</span>
                         <div className="relative" ref={businessHoursTooltipRef}>
                           <Info
-                            className="h-4 w-4 text-slate-500 hover:text-blue-500 cursor-pointer transition-colors"
+                            className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer"
                             onMouseEnter={() => {
                               if (businessHoursHoverTimeout) {
                                 clearTimeout(businessHoursHoverTimeout);
