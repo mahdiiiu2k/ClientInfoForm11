@@ -1545,328 +1545,148 @@ export default function ClientForm() {
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="hasFinancingOptions"
+                    name="financingDetails"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormItem>
+                        <FormLabel>
+                          Financing Options <span className="text-slate-500">(Optional)</span>
+                        </FormLabel>
                         <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-financing-options"
+                          <Input 
+                            placeholder="Describe your financing options (e.g., 0% APR, payment plans, approved lenders)..." 
+                            {...field} 
+                            value={field.value || ""} 
+                            data-testid="input-financing-details"
                           />
                         </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Financing Options
-                          </FormLabel>
-                        </div>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
-                  <AnimatePresence>
-                    {form.watch("hasFinancingOptions") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <FormField
-                          control={form.control}
-                          name="financingDetails"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Financing details (e.g., 0% APR, payment plans, approved lenders)</FormLabel>
-                              <FormControl>
-                                <Input 
-                                  placeholder="Describe your financing options..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="input-financing-details"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Storm Services */}
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="hasStormServices"
+                    name="stormServiceDetails"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormItem>
+                        <FormLabel>
+                          Storm Services <span className="text-slate-500">(Optional)</span>
+                        </FormLabel>
                         <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-storm-services"
+                          <Textarea 
+                            rows={3}
+                            placeholder="Describe your storm services (e.g., insurance claim assistance, emergency response time, storm damage specialties)..." 
+                            {...field} 
+                            value={field.value || ""} 
+                            data-testid="textarea-storm-details"
                           />
                         </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Storm Services
-                          </FormLabel>
-                        </div>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
-                  <AnimatePresence>
-                    {form.watch("hasStormServices") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <FormField
-                          control={form.control}
-                          name="stormServiceDetails"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Storm service details (e.g., insurance claim assistance, emergency response time, storm damage specialties)</FormLabel>
-                              <FormControl>
-                                <Textarea 
-                                  rows={3}
-                                  placeholder="Describe your storm services..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="textarea-storm-details"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Brands You Work With */}
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="hasBrandsWorkedWith"
+                    name="brandsWorkedWith"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormItem>
+                        <FormLabel>
+                          Brands You Work With <span className="text-slate-500">(Optional)</span>
+                        </FormLabel>
                         <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-brands-worked-with"
+                          <Textarea 
+                            rows={3}
+                            placeholder="List the brands and manufacturers you work with..." 
+                            {...field} 
+                            value={field.value || ""} 
+                            data-testid="textarea-brands-worked-with"
                           />
                         </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Brands You Work With
-                          </FormLabel>
-                        </div>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
-                  <AnimatePresence>
-                    {form.watch("hasBrandsWorkedWith") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <FormField
-                          control={form.control}
-                          name="brandsWorkedWith"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>List of brands/manufacturers you partner with</FormLabel>
-                              <FormControl>
-                                <Textarea 
-                                  rows={3}
-                                  placeholder="List the brands and manufacturers you work with..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="textarea-brands-worked-with"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Installation Process */}
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="hasInstallationProcess"
+                    name="installationProcessDetails"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormItem>
+                        <FormLabel>
+                          Installation Process <span className="text-slate-500">(Optional)</span>
+                        </FormLabel>
                         <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-installation-process"
+                          <Textarea 
+                            rows={4}
+                            placeholder="Describe your installation process step-by-step..." 
+                            {...field} 
+                            value={field.value || ""} 
+                            data-testid="textarea-installation-process"
                           />
                         </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Installation Process
-                          </FormLabel>
-                        </div>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
-                  <AnimatePresence>
-                    {form.watch("hasInstallationProcess") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <FormField
-                          control={form.control}
-                          name="installationProcessDetails"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Describe your step-by-step installation process</FormLabel>
-                              <FormControl>
-                                <Textarea 
-                                  rows={4}
-                                  placeholder="Describe your installation process step-by-step..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="textarea-installation-process"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Roof Maintenance Guide */}
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="hasMaintenanceGuide"
+                    name="maintenanceGuide"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormItem>
+                        <FormLabel>
+                          Roof Maintenance Guide <span className="text-slate-500">(Optional)</span>
+                        </FormLabel>
                         <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-maintenance-guide"
+                          <Input 
+                            placeholder="Share maintenance tips for customers..." 
+                            {...field} 
+                            value={field.value || ""} 
+                            data-testid="input-maintenance-guide"
                           />
                         </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Roof Maintenance Guide
-                          </FormLabel>
-                        </div>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
-                  <AnimatePresence>
-                    {form.watch("hasMaintenanceGuide") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <FormField
-                          control={form.control}
-                          name="maintenanceGuide"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Maintenance tips you want to share with customers</FormLabel>
-                              <FormControl>
-                                <Input 
-                                  placeholder="Share maintenance tips for customers..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="input-maintenance-guide"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
                 {/* Roof Materials and Brands */}
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="hasRoofMaterials"
+                    name="roofMaterialsDetails"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormItem>
+                        <FormLabel>
+                          Roof Materials and Brands <span className="text-slate-500">(Optional)</span>
+                        </FormLabel>
                         <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-roof-materials"
+                          <Textarea 
+                            rows={3}
+                            placeholder="List the materials and brands you specialize in..." 
+                            {...field} 
+                            value={field.value || ""} 
+                            data-testid="textarea-roof-materials"
                           />
                         </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Roof Materials and Brands
-                          </FormLabel>
-                        </div>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
-                  <AnimatePresence>
-                    {form.watch("hasRoofMaterials") && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <FormField
-                          control={form.control}
-                          name="roofMaterialsDetails"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Specific materials and brands you specialize in</FormLabel>
-                              <FormControl>
-                                <Textarea 
-                                  rows={3}
-                                  placeholder="List the materials and brands you specialize in..." 
-                                  {...field} 
-                                  value={field.value || ""} 
-                                  data-testid="textarea-roof-materials"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
               </div>
             </div>
