@@ -1449,7 +1449,7 @@ export default function ClientForm() {
                   <div className="bg-slate-200 rounded-full p-2 mr-3">
                     <Plus className="text-primary h-5 w-5" strokeWidth={3} />
                   </div>
-                  Suggestions For Your Website
+                  Features for your website
                 </h2>
                 
                 {/* Financing Options */}
