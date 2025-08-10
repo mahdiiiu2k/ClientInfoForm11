@@ -689,8 +689,8 @@ export default function ClientForm() {
                     </DialogTrigger>
                     
                     {/* Service Modal */}
-                    <DialogContent className="sm:max-w-[500px]">
-                      <DialogHeader>
+                    <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-hidden flex flex-col">
+                      <DialogHeader className="flex-shrink-0">
                         <DialogTitle>
                           {editingServiceIndex !== null 
                             ? `Service #${editingServiceIndex + 1}` 
@@ -699,7 +699,8 @@ export default function ClientForm() {
                         </DialogTitle>
                       </DialogHeader>
                       
-                      <div className="space-y-4">
+                      <div className="flex-1 overflow-y-auto">
+                        <div className="space-y-4">
                         <div>
                           <Label htmlFor="serviceName">Service Name *</Label>
                           <Input
@@ -735,9 +736,9 @@ export default function ClientForm() {
                         <div>
                           <Label htmlFor="servicePictures">Service Pictures</Label>
                           <div className="w-full">
-                            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300" style={{maxWidth: '100%'}}>
+                            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300" style={{maxWidth: '100%'}}>
                               {/* Add Pictures Button */}
-                              <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[200px] flex-shrink-0">
+                              <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[160px] flex-shrink-0">
                                 <input
                                   id="servicePictures"
                                   type="file"
@@ -772,14 +773,14 @@ export default function ClientForm() {
                                 <motion.div
                                   key={index}
                                   {...fadeInUp}
-                                  className="border border-slate-200 rounded-lg p-3 bg-white min-w-[200px] flex-shrink-0"
+                                  className="border border-slate-200 rounded-lg p-2 bg-white min-w-[160px] flex-shrink-0"
                                 >
                                   <div className="flex justify-between items-center">
                                     <div>
-                                      <h3 className="text-lg font-medium text-slate-800">
+                                      <h3 className="text-sm font-medium text-slate-800">
                                         Picture #{index + 1}
                                       </h3>
-                                      <p className="text-sm text-slate-600 mt-1 truncate">
+                                      <p className="text-xs text-slate-600 mt-1 truncate">
                                         {file.name}
                                       </p>
                                       <p className="text-xs text-slate-500 mt-1">
@@ -819,6 +820,7 @@ export default function ClientForm() {
                         >
                           {editingServiceIndex !== null ? 'Save' : 'Add Service'}
                         </Button>
+                        </div>
                       </div>
                     </DialogContent>
                   </Dialog>
