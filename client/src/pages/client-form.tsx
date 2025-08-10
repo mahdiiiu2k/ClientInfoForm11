@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, Cloud, Info, Edit, Edit2, Check, X, DollarSign, CloudLightning, Award, Wrench, BookOpen, Package, ShieldCheck, Building2 } from "lucide-react";
+import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, Cloud, Info, Edit, Edit2, Check, X, DollarSign, CloudLightning, Award, Wrench, BookOpen, Package, ShieldCheck, Building2, ClipboardList } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -3028,7 +3028,7 @@ export default function ClientForm() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <h3 className="flex items-center text-xl font-semibold text-slate-800">
-                            <BookOpen className="text-primary mr-3 h-5 w-5" />
+                            <ClipboardList className="text-primary mr-3 h-5 w-5" />
                             Roof Maintenance Guide (optional)
                           </h3>
                           <div className="relative" ref={maintenanceGuideTooltipRef}>
