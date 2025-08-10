@@ -175,6 +175,7 @@ export default function ClientForm() {
   });
   const [editingServiceStepIndex, setEditingServiceStepIndex] = useState<number | null>(null);
   const [newStepInput, setNewStepInput] = useState("");
+  const [draggedStepIndex, setDraggedStepIndex] = useState<number | null>(null);
 
 
 
@@ -518,6 +519,55 @@ export default function ClientForm() {
   const removeStepFromService = (index: number) => {
     const updatedSteps = newServiceStep.steps.filter((_, i) => i !== index);
     setNewServiceStep({...newServiceStep, steps: updatedSteps});
+  };
+
+  // Move step to first position
+  const moveStepToFirst = (index: number) => {
+    if (index === 0) return; // Already first
+    const steps = [...newServiceStep.steps];
+    const [movedStep] = steps.splice(index, 1);
+    steps.unshift(movedStep);
+    setNewServiceStep({...newServiceStep, steps});
+  };
+
+  // Move step to last position
+  const moveStepToLast = (index: number) => {
+    if (index === newServiceStep.steps.length - 1) return; // Already last
+    const steps = [...newServiceStep.steps];
+    const [movedStep] = steps.splice(index, 1);
+    steps.push(movedStep);
+    setNewServiceStep({...newServiceStep, steps});
+  };
+
+  // Handle double click for PC
+  const handleStepDoubleClick = (index: number) => {
+    // Toggle between first and last position
+    if (index === 0) {
+      moveStepToLast(index);
+    } else {
+      moveStepToFirst(index);
+    }
+  };
+
+  // Drag and drop handlers
+  const handleDragStart = (index: number) => {
+    setDraggedStepIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent, dropIndex: number) => {
+    e.preventDefault();
+    if (draggedStepIndex === null || draggedStepIndex === dropIndex) return;
+
+    const steps = [...newServiceStep.steps];
+    const [draggedStep] = steps.splice(draggedStepIndex, 1);
+    steps.splice(dropIndex, 0, draggedStep);
+    
+    setNewServiceStep({...newServiceStep, steps});
+    setDraggedStepIndex(null);
   };
 
   const updateProject = (index: number, field: keyof Project, value: any) => {
@@ -2571,25 +2621,81 @@ export default function ClientForm() {
                                                 key={index}
                                                 initial={{ opacity: 0, y: -10 }}
                                                 animate={{ opacity: 1, y: 0 }}
-                                                className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-3"
+                                                draggable
+                                                onDragStart={() => handleDragStart(index)}
+                                                onDragOver={handleDragOver}
+                                                onDrop={(e) => handleDrop(e, index)}
+                                                onDoubleClick={() => handleStepDoubleClick(index)}
+                                                className={`flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-3 cursor-move hover:bg-slate-100 transition-colors ${
+                                                  draggedStepIndex === index ? 'opacity-50 scale-105' : ''
+                                                }`}
+                                                title="Double-click to move to first/last position, or drag to reorder"
                                               >
                                                 <div className="flex items-center gap-3">
-                                                  <span className="text-sm font-medium text-slate-500 bg-slate-200 rounded-full w-6 h-6 flex items-center justify-center">
-                                                    {index + 1}
-                                                  </span>
+                                                  <div className="flex flex-col items-center">
+                                                    <span className="text-sm font-medium text-slate-500 bg-slate-200 rounded-full w-6 h-6 flex items-center justify-center">
+                                                      {index + 1}
+                                                    </span>
+                                                    <div className="text-xs text-slate-400 mt-1">
+                                                      ⋮⋮
+                                                    </div>
+                                                  </div>
                                                   <span className="text-slate-800 font-medium">
                                                     {step}
                                                   </span>
                                                 </div>
-                                                <Button
-                                                  type="button"
-                                                  variant="ghost"
-                                                  size="sm"
-                                                  onClick={() => removeStepFromService(index)}
-                                                  className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                                                >
-                                                  <Trash2 className="h-4 w-4" />
-                                                </Button>
+                                                <div className="flex items-center gap-1">
+                                                  {/* Move to First Button */}
+                                                  <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      moveStepToFirst(index);
+                                                    }}
+                                                    disabled={index === 0}
+                                                    className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-1 disabled:opacity-30 disabled:cursor-not-allowed"
+                                                    title="Move to first"
+                                                  >
+                                                    <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                                      <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM4 15a1 1 0 100-2 1 1 0 000 2zM8 15a1 1 0 100-2 1 1 0 000 2zM12 15a1 1 0 100-2 1 1 0 000 2z"/>
+                                                    </svg>
+                                                  </Button>
+                                                  
+                                                  {/* Move to Last Button */}
+                                                  <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      moveStepToLast(index);
+                                                    }}
+                                                    disabled={index === newServiceStep.steps.filter(s => s.trim()).length - 1}
+                                                    className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-1 disabled:opacity-30 disabled:cursor-not-allowed"
+                                                    title="Move to last"
+                                                  >
+                                                    <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                                      <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM7 8a1 1 0 100-2 1 1 0 000 2zM11 8a1 1 0 100-2 1 1 0 000 2zM15 8a1 1 0 100-2 1 1 0 000 2zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
+                                                    </svg>
+                                                  </Button>
+                                                  
+                                                  {/* Delete Button */}
+                                                  <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      removeStepFromService(index);
+                                                    }}
+                                                    className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                                    title="Delete step"
+                                                  >
+                                                    <Trash2 className="h-4 w-4" />
+                                                  </Button>
+                                                </div>
                                               </motion.div>
                                             );
                                           })}
