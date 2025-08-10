@@ -1146,7 +1146,7 @@ export default function ClientForm() {
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <ServerCog className="text-primary mr-3 h-5 w-5" />
-                  Services Customization
+                  Services Customization (optional)
                 </h2>
                 
                 {/* Services Slider Layout */}
