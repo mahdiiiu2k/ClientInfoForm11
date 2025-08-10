@@ -2606,7 +2606,6 @@ export default function ClientForm() {
                                           placeholder="e.g., Roof Installation, Repair Process"
                                           value={newServiceStep.serviceName}
                                           onChange={(e) => setNewServiceStep({...newServiceStep, serviceName: e.target.value})}
-                                          className="max-w-md"
                                         />
                                       </div>
                                       
