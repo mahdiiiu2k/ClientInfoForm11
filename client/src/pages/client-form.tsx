@@ -49,7 +49,7 @@ interface Service {
   name: string;
   description: string;
   steps?: string;
-  picture?: FileList;
+  pictures?: FileList;
 }
 
 interface Project {
@@ -166,7 +166,7 @@ export default function ClientForm() {
         name: service.name,
         description: service.description,
         steps: service.steps,
-        pictureUrl: service.picture?.[0]?.name // In a real app, you'd upload to a CDN
+        pictureUrls: service.pictures ? Array.from(service.pictures).map(f => f.name) : undefined
       })),
       projects: projects.map(project => ({
         title: project.title,
@@ -733,14 +733,83 @@ export default function ClientForm() {
                         </div>
                         
                         <div>
-                          <Label htmlFor="servicePicture">Add Picture</Label>
-                          <Input
-                            id="servicePicture"
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => setNewService({...newService, picture: e.target.files || undefined})}
-                          />
-                          <span className="text-sm text-slate-500 mt-1">Aucun fichier choisi</span>
+                          <Label htmlFor="servicePictures">Service Pictures</Label>
+                          <div className="w-full">
+                            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300" style={{maxWidth: '100%'}}>
+                              {/* Add Pictures Button */}
+                              <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[200px] flex-shrink-0">
+                                <input
+                                  id="servicePictures"
+                                  type="file"
+                                  multiple
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={(e) => {
+                                    if (e.target.files && e.target.files.length > 0) {
+                                      const newFiles = Array.from(e.target.files);
+                                      const existingFiles = newService.pictures ? Array.from(newService.pictures) : [];
+                                      const allFiles = [...existingFiles, ...newFiles];
+                                      
+                                      const dataTransfer = new DataTransfer();
+                                      allFiles.forEach((file: File) => dataTransfer.items.add(file));
+                                      
+                                      setNewService({...newService, pictures: dataTransfer.files});
+                                      e.target.value = '';
+                                    }
+                                  }}
+                                />
+                                <label 
+                                  htmlFor="servicePictures" 
+                                  className="flex flex-col items-center text-center cursor-pointer"
+                                >
+                                  <span className="text-slate-600 font-medium mb-2">Add Pictures</span>
+                                  <Plus className="h-6 w-6 text-slate-400" />
+                                </label>
+                              </div>
+
+                              {/* Display Selected Files */}
+                              {newService.pictures && Array.from(newService.pictures).map((file: File, index) => (
+                                <motion.div
+                                  key={index}
+                                  {...fadeInUp}
+                                  className="border border-slate-200 rounded-lg p-3 bg-white min-w-[200px] flex-shrink-0"
+                                >
+                                  <div className="flex justify-between items-center">
+                                    <div>
+                                      <h3 className="text-lg font-medium text-slate-800">
+                                        Picture #{index + 1}
+                                      </h3>
+                                      <p className="text-sm text-slate-600 mt-1 truncate">
+                                        {file.name}
+                                      </p>
+                                      <p className="text-xs text-slate-500 mt-1">
+                                        {(file.size / 1024 / 1024).toFixed(2)} MB
+                                      </p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => {
+                                          if (newService.pictures) {
+                                            const fileArray = Array.from(newService.pictures);
+                                            fileArray.splice(index, 1);
+                                            const dataTransfer = new DataTransfer();
+                                            fileArray.forEach((file: File) => dataTransfer.items.add(file));
+                                            setNewService({...newService, pictures: dataTransfer.files});
+                                          }
+                                        }}
+                                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                      >
+                                        <Trash2 className="h-4 w-4" />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </div>
                         </div>
                         
                         <Button 

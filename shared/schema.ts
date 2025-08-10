@@ -39,7 +39,7 @@ export const clientSubmissions = pgTable("client_submissions", {
     name: string;
     description: string;
     steps?: string;
-    pictureUrl?: string;
+    pictureUrls?: string[];
   }>>().default([]),
   
   // Projects (JSON array)
