@@ -1304,157 +1304,9 @@ export default function ClientForm() {
               </div>
             </div>
 
-            {/* Warranty Section */}
-            <div className="space-y-6">
-              <div 
-                className={`transition-colors p-4 rounded-lg border border-slate-200 ${
-                  showWarrantySection 
-                    ? 'bg-slate-50' 
-                    : 'cursor-pointer hover:bg-slate-100 bg-slate-50'
-                }`}
-              >
-                <div
-                  className={showWarrantySection ? '' : 'cursor-pointer'}
-                  onClick={() => setShowWarrantySection(!showWarrantySection)}
-                  data-testid="button-toggle-warranty-section"
-                >
-                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
-                    <Shield className="text-primary mr-3 h-5 w-5" />
-                    Warranty (optional)
-                    {showWarrantySection ? (
-                      <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
-                    )}
-                  </h2>
-                </div>
-              
-                <AnimatePresence>
-                  {showWarrantySection && (
-                    <motion.div {...slideDown} className="mt-6">
-                      <div className="space-y-6">
-                      <FormField
-                        control={form.control}
-                        name="warrantyDescription"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Warranty Description</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                rows={3}
-                                placeholder="Describe your warranty terms and coverage..."
-                                {...field}
-                                value={field.value || ""}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
 
-            {/* Insurance Section */}
-            <div className="space-y-6">
-              <div 
-                className={`transition-colors p-4 rounded-lg border border-slate-200 ${
-                  showInsuranceSection 
-                    ? 'bg-slate-50' 
-                    : 'cursor-pointer hover:bg-slate-100 bg-slate-50'
-                }`}
-              >
-                <div
-                  className={showInsuranceSection ? '' : 'cursor-pointer'}
-                  onClick={() => setShowInsuranceSection(!showInsuranceSection)}
-                  data-testid="button-toggle-insurance-section"
-                >
-                  <h2 className="flex items-center text-xl text-slate-800 font-semibold">
-                    <Shield className="text-primary mr-3 h-5 w-5" />
-                    Insurance (optional)
-                    {showInsuranceSection ? (
-                      <ChevronUp className="h-5 w-5 text-slate-600 ml-2" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5 text-slate-600 ml-2" />
-                    )}
-                  </h2>
-                </div>
-              
-                <AnimatePresence>
-                  {showInsuranceSection && (
-                    <motion.div {...slideDown} className="mt-6">
-                      <div className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="generalLiability"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>General Liability Amount</FormLabel>
-                              <FormControl>
-                                <Input placeholder="$1,000,000" {...field} value={field.value || ""} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
 
-                        <FormField
-                          control={form.control}
-                          name="bondedAmount"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Bonded Amount</FormLabel>
-                              <FormControl>
-                                <Input placeholder="$50,000" {...field} value={field.value || ""} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
 
-                      <FormField
-                        control={form.control}
-                        name="workersCompensation"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <Checkbox 
-                                checked={field.value || false} 
-                                onCheckedChange={field.onChange}
-                                className="h-5 w-5 rounded-sm border-2 border-primary"
-                              />
-                            </FormControl>
-                            <FormLabel className="leading-none">Workers Compensation Coverage <span className="text-slate-500">(Optional)</span></FormLabel>
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="additionalCoverage"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>
-                              Additional Coverage <span className="text-slate-500">(Optional)</span>
-                            </FormLabel>
-                            <FormControl>
-                              <Input placeholder="Additional insurance details..." {...field} value={field.value || ""} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
 
             {/* Service Areas Section */}
             <div className="space-y-6">
@@ -1795,7 +1647,7 @@ export default function ClientForm() {
                 </div>
 
                 {/* Roof Materials and Brands */}
-                <div className="space-y-4">
+                <div className="space-y-4 mb-6">
                   <div 
                     className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
                     onClick={() => {
@@ -1840,6 +1692,149 @@ export default function ClientForm() {
                             </FormItem>
                           )}
                         />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Warranty (optional) */}
+                <div className="space-y-4 mb-6">
+                  <div 
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    onClick={() => setShowWarrantySection(!showWarrantySection)}
+                  >
+                    <div className="flex items-center">
+                      <h3 className="text-xl font-semibold text-slate-800">Warranty (optional)</h3>
+                      {showWarrantySection ? (
+                        <ChevronUp className="h-5 w-5 text-slate-500 ml-2" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-slate-500 ml-2" />
+                      )}
+                    </div>
+                  </div>
+                  
+                  <AnimatePresence>
+                    {showWarrantySection && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <FormField
+                          control={form.control}
+                          name="warrantyDescription"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Warranty Description</FormLabel>
+                              <FormControl>
+                                <Textarea
+                                  rows={3}
+                                  placeholder="Describe your warranty terms and coverage..."
+                                  {...field}
+                                  value={field.value || ""}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Insurance (optional) */}
+                <div className="space-y-4">
+                  <div 
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    onClick={() => setShowInsuranceSection(!showInsuranceSection)}
+                  >
+                    <div className="flex items-center">
+                      <h3 className="text-xl font-semibold text-slate-800">Insurance (optional)</h3>
+                      {showInsuranceSection ? (
+                        <ChevronUp className="h-5 w-5 text-slate-500 ml-2" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-slate-500 ml-2" />
+                      )}
+                    </div>
+                  </div>
+                  
+                  <AnimatePresence>
+                    {showInsuranceSection && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="space-y-6">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <FormField
+                              control={form.control}
+                              name="generalLiability"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>General Liability Amount</FormLabel>
+                                  <FormControl>
+                                    <Input placeholder="$1,000,000" {...field} value={field.value || ""} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name="bondedAmount"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Bonded Amount</FormLabel>
+                                  <FormControl>
+                                    <Input placeholder="$50,000" {...field} value={field.value || ""} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+
+                          <FormField
+                            control={form.control}
+                            name="workersCompensation"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                  />
+                                </FormControl>
+                                <div className="space-y-1 leading-none">
+                                  <FormLabel>
+                                    Workers' Compensation Insurance
+                                  </FormLabel>
+                                </div>
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={form.control}
+                            name="additionalCoverage"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>
+                                  Additional Coverage <span className="text-slate-500">(Optional)</span>
+                                </FormLabel>
+                                <FormControl>
+                                  <Input placeholder="Additional insurance details..." {...field} value={field.value || ""} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
