@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, Cloud, Info, Edit, Edit2, Check, X, DollarSign, CloudLightning } from "lucide-react";
+import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, Cloud, Info, Edit, Edit2, Check, X, DollarSign, CloudLightning, Award, Wrench, BookOpen, Package, ShieldCheck } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -2556,7 +2556,10 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Brands You Work With (optional)</h3>
+                        <h3 className="flex items-center text-xl font-semibold text-slate-800">
+                          <Award className="text-primary mr-3 h-5 w-5" />
+                          Brands You Work With (optional)
+                        </h3>
                         {form.watch("hasBrandsWorkedWith") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
@@ -2665,7 +2668,10 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Installation Process (optional)</h3>
+                        <h3 className="flex items-center text-xl font-semibold text-slate-800">
+                          <Wrench className="text-primary mr-3 h-5 w-5" />
+                          Installation Process (optional)
+                        </h3>
                         {form.watch("hasInstallationProcess") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
@@ -3021,7 +3027,10 @@ export default function ClientForm() {
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide (optional)</h3>
+                          <h3 className="flex items-center text-xl font-semibold text-slate-800">
+                            <BookOpen className="text-primary mr-3 h-5 w-5" />
+                            Roof Maintenance Guide (optional)
+                          </h3>
                           <div className="relative" ref={maintenanceGuideTooltipRef}>
                             <Info 
                               className="h-4 w-4 text-blue-600 hover:text-blue-700 cursor-pointer" 
@@ -3208,7 +3217,10 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Roof Materials and Brands (optional)</h3>
+                        <h3 className="flex items-center text-xl font-semibold text-slate-800">
+                          <Package className="text-primary mr-3 h-5 w-5" />
+                          Roof Materials and Brands (optional)
+                        </h3>
                         {form.watch("hasRoofMaterials") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
@@ -3259,7 +3271,10 @@ export default function ClientForm() {
                       onClick={() => setShowWarrantySection(!showWarrantySection)}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Warranty Coverage (optional)</h3>
+                        <h3 className="flex items-center text-xl font-semibold text-slate-800">
+                          <ShieldCheck className="text-primary mr-3 h-5 w-5" />
+                          Warranty Coverage (optional)
+                        </h3>
                         {showWarrantySection ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
@@ -3485,7 +3500,10 @@ export default function ClientForm() {
                       onClick={() => setShowInsuranceSection(!showInsuranceSection)}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Insurance (optional)</h3>
+                        <h3 className="flex items-center text-xl font-semibold text-slate-800">
+                          <Shield className="text-primary mr-3 h-5 w-5" />
+                          Insurance (optional)
+                        </h3>
                         {showInsuranceSection ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
