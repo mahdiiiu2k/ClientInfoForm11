@@ -1725,78 +1725,6 @@ export default function ClientForm() {
 
 
 
-            {/* Service Areas Section */}
-            <div className="space-y-6">
-              <div>
-                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                  <MapPin className="text-primary mr-3 h-5 w-5" />
-                  Service Areas
-                </h2>
-                
-                {/* Add Area Input */}
-                <div className="mb-4">
-                  <Label htmlFor="areaInput" className="mb-2 block">Add area</Label>
-                  <div className="flex gap-3">
-                    <Input
-                      id="areaInput"
-                      placeholder="Enter area name"
-                      value={newAreaName}
-                      onChange={(e) => setNewAreaName(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && addAreaFromInput()}
-                      className="flex-1"
-                    />
-                    <Button
-                      type="button"
-                      onClick={addAreaFromInput}
-                      disabled={!newAreaName.trim()}
-                      className="bg-primary hover:bg-blue-700 px-3"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Display Added Areas */}
-                {serviceAreas.length > 0 && (
-                  <div className="space-y-2 mb-6">
-                    {serviceAreas.map((area, index) => (
-                      <motion.div
-                        key={index}
-                        {...fadeInUp}
-                        className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-3"
-                      >
-                        <span className="text-slate-800 font-medium">
-                          {area.name}
-                        </span>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeArea(index)}
-                          className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </motion.div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Description Input */}
-                <div>
-                  <Label htmlFor="areaDescription">Description of a specific area(s)</Label>
-                  <Textarea
-                    id="areaDescription"
-                    rows={3}
-                    placeholder="Provide additional details about your service areas..."
-                    value={areaDescription}
-                    onChange={(e) => setAreaDescription(e.target.value)}
-                    className="mt-2"
-                  />
-                </div>
-              </div>
-            </div>
-
             {/* Dashed Line Separator */}
             <div className="border-t border-dashed border-slate-300 my-8"></div>
 
@@ -3541,6 +3469,81 @@ export default function ClientForm() {
                       )}
                     </AnimatePresence>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Dashed Line Separator */}
+            <div className="border-t border-dashed border-slate-300 my-8"></div>
+
+            {/* Service Areas Section */}
+            <div className="space-y-6">
+              <div>
+                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
+                  <MapPin className="text-primary mr-3 h-5 w-5" />
+                  Service Areas
+                </h2>
+                
+                {/* Add Area Input */}
+                <div className="mb-4">
+                  <Label htmlFor="areaInput" className="mb-2 block">Add area</Label>
+                  <div className="flex gap-3">
+                    <Input
+                      id="areaInput"
+                      placeholder="Enter area name"
+                      value={newAreaName}
+                      onChange={(e) => setNewAreaName(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && addAreaFromInput()}
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      onClick={addAreaFromInput}
+                      disabled={!newAreaName.trim()}
+                      className="bg-primary hover:bg-blue-700 px-3"
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Display Added Areas */}
+                {serviceAreas.length > 0 && (
+                  <div className="space-y-2 mb-6">
+                    {serviceAreas.map((area, index) => (
+                      <motion.div
+                        key={index}
+                        {...fadeInUp}
+                        className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-3"
+                      >
+                        <span className="text-slate-800 font-medium">
+                          {area.name}
+                        </span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeArea(index)}
+                          className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Description Input */}
+                <div>
+                  <Label htmlFor="areaDescription">Description of a specific area(s)</Label>
+                  <Textarea
+                    id="areaDescription"
+                    rows={3}
+                    placeholder="Provide additional details about your service areas..."
+                    value={areaDescription}
+                    onChange={(e) => setAreaDescription(e.target.value)}
+                    className="mt-2"
+                  />
                 </div>
               </div>
             </div>
