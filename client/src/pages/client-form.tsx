@@ -889,30 +889,70 @@ export default function ClientForm() {
                           ) : (
                             <div>
                               <Label htmlFor="projectPictures">Project Pictures</Label>
-                              <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors">
-                                <input
-                                  id="projectPictures"
-                                  type="file"
-                                  multiple
-                                  accept="image/*"
-                                  className="hidden"
-                                  onChange={(e) => {
-                                    console.log('Files selected:', e.target.files);
-                                    setNewProject({...newProject, pictures: e.target.files || undefined});
-                                  }}
-                                />
-                                <label 
-                                  htmlFor="projectPictures" 
-                                  className="flex flex-col items-center text-center cursor-pointer"
-                                >
-                                  <span className="text-slate-600 font-medium mb-2">
-                                    {newProject.pictures && newProject.pictures.length > 0 
-                                      ? `${newProject.pictures.length} file${newProject.pictures.length > 1 ? 's' : ''} selected`
-                                      : 'Add Pictures'
-                                    }
-                                  </span>
-                                  <Plus className="h-6 w-6 text-slate-400" />
-                                </label>
+                              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
+                                {/* Add Pictures Button */}
+                                <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[280px] flex-shrink-0">
+                                  <input
+                                    id="projectPictures"
+                                    type="file"
+                                    multiple
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                      console.log('Files selected:', e.target.files);
+                                      setNewProject({...newProject, pictures: e.target.files || undefined});
+                                    }}
+                                  />
+                                  <label 
+                                    htmlFor="projectPictures" 
+                                    className="flex flex-col items-center text-center cursor-pointer"
+                                  >
+                                    <span className="text-slate-600 font-medium mb-2">Add Pictures</span>
+                                    <Plus className="h-6 w-6 text-slate-400" />
+                                  </label>
+                                </div>
+
+                                {/* Display Selected Files */}
+                                {newProject.pictures && Array.from(newProject.pictures).map((file, index) => (
+                                  <motion.div
+                                    key={index}
+                                    {...fadeInUp}
+                                    className="border border-slate-200 rounded-lg p-4 bg-white min-w-[280px] flex-shrink-0"
+                                  >
+                                    <div className="flex justify-between items-center">
+                                      <div>
+                                        <h3 className="text-lg font-medium text-slate-800">
+                                          Picture #{index + 1}
+                                        </h3>
+                                        <p className="text-sm text-slate-600 mt-1 truncate">
+                                          {file.name}
+                                        </p>
+                                        <p className="text-xs text-slate-500 mt-1">
+                                          {(file.size / 1024 / 1024).toFixed(2)} MB
+                                        </p>
+                                      </div>
+                                      <div className="flex gap-2">
+                                        <Button
+                                          type="button"
+                                          variant="ghost"
+                                          size="sm"
+                                          onClick={() => {
+                                            if (newProject.pictures) {
+                                              const fileArray = Array.from(newProject.pictures);
+                                              fileArray.splice(index, 1);
+                                              const dataTransfer = new DataTransfer();
+                                              fileArray.forEach(file => dataTransfer.items.add(file));
+                                              setNewProject({...newProject, pictures: dataTransfer.files});
+                                            }
+                                          }}
+                                          className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                        >
+                                          <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </motion.div>
+                                ))}
                               </div>
                             </div>
                           )}
