@@ -1774,23 +1774,25 @@ export default function ClientForm() {
                                     <div className="flex items-center gap-2 mb-2">
                                       <Label htmlFor="responseTime">Response Time (Optional)</Label>
                                       <div className="relative">
-                                        <Info 
-                                          className="h-4 w-4 text-slate-500 cursor-pointer hover:text-slate-700" 
-                                          onClick={() => setShowResponseTimeTooltip(!showResponseTimeTooltip)}
-                                          onMouseEnter={() => {
-                                            const timeout = setTimeout(() => {
-                                              setShowResponseTimeTooltip(true);
-                                            }, 800);
-                                            setHoverTimeout(timeout);
-                                          }}
-                                          onMouseLeave={() => {
-                                            if (hoverTimeout) {
-                                              clearTimeout(hoverTimeout);
-                                              setHoverTimeout(null);
-                                            }
-                                            setShowResponseTimeTooltip(false);
-                                          }}
-                                        />
+                                        <div className="flex items-center justify-center w-6 h-6 bg-slate-100 hover:bg-slate-200 rounded-full cursor-pointer transition-colors">
+                                          <Info 
+                                            className="h-4 w-4 text-slate-600 hover:text-slate-800" 
+                                            onClick={() => setShowResponseTimeTooltip(!showResponseTimeTooltip)}
+                                            onMouseEnter={() => {
+                                              const timeout = setTimeout(() => {
+                                                setShowResponseTimeTooltip(true);
+                                              }, 800);
+                                              setHoverTimeout(timeout);
+                                            }}
+                                            onMouseLeave={() => {
+                                              if (hoverTimeout) {
+                                                clearTimeout(hoverTimeout);
+                                                setHoverTimeout(null);
+                                              }
+                                              setShowResponseTimeTooltip(false);
+                                            }}
+                                          />
+                                        </div>
                                         {showResponseTimeTooltip && (
                                           <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
                                             <div className="relative">
