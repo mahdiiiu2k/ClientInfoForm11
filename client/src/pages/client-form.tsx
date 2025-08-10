@@ -896,13 +896,21 @@ export default function ClientForm() {
                                   multiple
                                   accept="image/*"
                                   className="hidden"
-                                  onChange={(e) => setNewProject({...newProject, pictures: e.target.files || undefined})}
+                                  onChange={(e) => {
+                                    console.log('Files selected:', e.target.files);
+                                    setNewProject({...newProject, pictures: e.target.files || undefined});
+                                  }}
                                 />
                                 <label 
                                   htmlFor="projectPictures" 
                                   className="flex flex-col items-center text-center cursor-pointer"
                                 >
-                                  <span className="text-slate-600 font-medium mb-2">Add Pictures</span>
+                                  <span className="text-slate-600 font-medium mb-2">
+                                    {newProject.pictures && newProject.pictures.length > 0 
+                                      ? `${newProject.pictures.length} file${newProject.pictures.length > 1 ? 's' : ''} selected`
+                                      : 'Add Pictures'
+                                    }
+                                  </span>
                                   <Plus className="h-6 w-6 text-slate-400" />
                                 </label>
                               </div>
