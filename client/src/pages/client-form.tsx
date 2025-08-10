@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, Cloud, Info } from "lucide-react";
+import { Plus, Minus, Trash2, Building, Tag, TriangleAlert, CircleOff, ServerCog, FolderOpen, Shield, MapPin, NotebookPen, UserCircle, ChevronDown, ChevronUp, Settings, Cloud, Info, Edit } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -164,6 +164,16 @@ export default function ClientForm() {
   const [qualificationHoverTimeout, setQualificationHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [qualificationTooltipClickedOpen, setQualificationTooltipClickedOpen] = useState(false);
   const qualificationTooltipRef = useRef<HTMLDivElement>(null);
+
+  // Service Steps state
+  const [serviceSteps, setServiceSteps] = useState<Array<{serviceName: string; steps: string[]; additionalNotes: string}>>([]);
+  const [isServiceStepsModalOpen, setIsServiceStepsModalOpen] = useState(false);
+  const [newServiceStep, setNewServiceStep] = useState({
+    serviceName: "",
+    steps: [""],
+    additionalNotes: ""
+  });
+  const [editingServiceStepIndex, setEditingServiceStepIndex] = useState<number | null>(null);
 
   // Handle click outside to close tooltips
   useEffect(() => {
@@ -2427,25 +2437,235 @@ export default function ClientForm() {
                           transition={{ duration: 0.3 }}
                           className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
-                          <FormField
-                            control={form.control}
-                            name="installationProcessDetails"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Describe your step-by-step installation process</FormLabel>
-                                <FormControl>
-                                  <Textarea 
-                                    rows={4}
-                                    placeholder="Describe your installation process step-by-step..." 
-                                    {...field} 
-                                    value={field.value || ""} 
-                                    data-testid="textarea-installation-process"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                          <div className="space-y-4">
+                            <FormField
+                              control={form.control}
+                              name="installationProcessDetails"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Describe your step-by-step installation process</FormLabel>
+                                  <FormControl>
+                                    <Textarea 
+                                      rows={4}
+                                      placeholder="Describe your installation process step-by-step..." 
+                                      {...field} 
+                                      value={field.value || ""} 
+                                      data-testid="textarea-installation-process"
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            {/* Service Steps Section */}
+                            <div className="border-t border-slate-200 pt-4">
+                              <div className="flex items-center justify-between mb-4">
+                                <h4 className="text-lg font-medium text-slate-700">Service Steps</h4>
+                                
+                                <Dialog open={isServiceStepsModalOpen} onOpenChange={setIsServiceStepsModalOpen}>
+                                  <DialogTrigger asChild>
+                                    <Button 
+                                      type="button" 
+                                      variant="outline" 
+                                      className="bg-primary text-white hover:bg-blue-700 border-primary hover:border-blue-700"
+                                      onClick={() => {
+                                        setNewServiceStep({
+                                          serviceName: "",
+                                          steps: [""],
+                                          additionalNotes: ""
+                                        });
+                                        setEditingServiceStepIndex(null);
+                                      }}
+                                    >
+                                      <Plus className="h-4 w-4 mr-2" />
+                                      Add Service Steps
+                                    </Button>
+                                  </DialogTrigger>
+
+                                  <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col">
+                                    <DialogHeader>
+                                      <DialogTitle>
+                                        {editingServiceStepIndex !== null ? 'Edit Service Steps' : 'Add Service Steps'}
+                                      </DialogTitle>
+                                    </DialogHeader>
+                                    
+                                    <div className="flex-1 overflow-y-auto">
+                                      <div className="space-y-4">
+                                        {/* Service Name */}
+                                        <div>
+                                          <Label htmlFor="serviceName">Service Name *</Label>
+                                          <Input
+                                            id="serviceName"
+                                            placeholder="e.g., Roof Installation, Repair Process"
+                                            value={newServiceStep.serviceName}
+                                            onChange={(e) => setNewServiceStep({...newServiceStep, serviceName: e.target.value})}
+                                          />
+                                        </div>
+                                        
+                                        {/* Steps */}
+                                        <div>
+                                          <div className="flex items-center justify-between mb-2">
+                                            <Label>Steps</Label>
+                                          </div>
+                                          
+                                          {newServiceStep.steps.map((step, index) => (
+                                            <div key={index} className="flex items-center gap-2 mb-2">
+                                              <span className="text-sm text-slate-500 min-w-[30px]">{index + 1}.</span>
+                                              <Input
+                                                placeholder="Enter step description"
+                                                value={step}
+                                                onChange={(e) => {
+                                                  const updatedSteps = [...newServiceStep.steps];
+                                                  updatedSteps[index] = e.target.value;
+                                                  setNewServiceStep({...newServiceStep, steps: updatedSteps});
+                                                }}
+                                              />
+                                              {newServiceStep.steps.length > 1 && (
+                                                <Button
+                                                  type="button"
+                                                  variant="outline"
+                                                  size="sm"
+                                                  onClick={() => {
+                                                    const updatedSteps = newServiceStep.steps.filter((_, i) => i !== index);
+                                                    setNewServiceStep({...newServiceStep, steps: updatedSteps});
+                                                  }}
+                                                  className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                                                >
+                                                  <Minus className="h-4 w-4" />
+                                                </Button>
+                                              )}
+                                            </div>
+                                          ))}
+                                          
+                                          <Button
+                                            type="button"
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => {
+                                              setNewServiceStep({
+                                                ...newServiceStep, 
+                                                steps: [...newServiceStep.steps, ""]
+                                              });
+                                            }}
+                                            className="mt-2"
+                                          >
+                                            <Plus className="h-4 w-4 mr-2" />
+                                            Add Step
+                                          </Button>
+                                        </div>
+                                        
+                                        {/* Additional Notes */}
+                                        <div>
+                                          <Label htmlFor="serviceAdditionalNotes">Additional Notes/Description</Label>
+                                          <Textarea
+                                            id="serviceAdditionalNotes"
+                                            rows={3}
+                                            placeholder="Any additional notes or descriptions for this service..."
+                                            value={newServiceStep.additionalNotes}
+                                            onChange={(e) => setNewServiceStep({...newServiceStep, additionalNotes: e.target.value})}
+                                          />
+                                        </div>
+                                        
+                                        <Button 
+                                          onClick={() => {
+                                            if (newServiceStep.serviceName && newServiceStep.steps.some(step => step.trim())) {
+                                              const filteredSteps = newServiceStep.steps.filter(step => step.trim());
+                                              const serviceToAdd = {
+                                                ...newServiceStep,
+                                                steps: filteredSteps
+                                              };
+                                              
+                                              if (editingServiceStepIndex !== null) {
+                                                const updatedSteps = [...serviceSteps];
+                                                updatedSteps[editingServiceStepIndex] = serviceToAdd;
+                                                setServiceSteps(updatedSteps);
+                                              } else {
+                                                setServiceSteps([...serviceSteps, serviceToAdd]);
+                                              }
+                                              
+                                              setNewServiceStep({
+                                                serviceName: "",
+                                                steps: [""],
+                                                additionalNotes: ""
+                                              });
+                                              setEditingServiceStepIndex(null);
+                                              setIsServiceStepsModalOpen(false);
+                                            }
+                                          }}
+                                          className="w-full bg-primary hover:bg-blue-700"
+                                          disabled={!newServiceStep.serviceName || !newServiceStep.steps.some(step => step.trim())}
+                                        >
+                                          {editingServiceStepIndex !== null ? 'Save Service Steps' : 'Add Service Steps'}
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </DialogContent>
+                                </Dialog>
+                              </div>
+
+                              {/* Display Added Service Steps */}
+                              {serviceSteps.map((service, index) => (
+                                <motion.div
+                                  key={index}
+                                  {...fadeInUp}
+                                  className="border border-slate-200 rounded-lg p-4 bg-white mb-3"
+                                >
+                                  <div className="flex justify-between items-start mb-3">
+                                    <h5 className="font-semibold text-slate-800">{service.serviceName}</h5>
+                                    <div className="flex gap-2">
+                                      <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                          setNewServiceStep(service);
+                                          setEditingServiceStepIndex(index);
+                                          setIsServiceStepsModalOpen(true);
+                                        }}
+                                        className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 border-blue-200"
+                                      >
+                                        <Edit className="h-4 w-4" />
+                                      </Button>
+                                      <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                          setServiceSteps(serviceSteps.filter((_, i) => i !== index));
+                                        }}
+                                        className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                                      >
+                                        <Trash2 className="h-4 w-4" />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="space-y-2">
+                                    <h6 className="text-sm font-medium text-slate-600 mb-2">Steps:</h6>
+                                    {service.steps.map((step, stepIndex) => (
+                                      <div key={stepIndex} className="flex items-start gap-2 text-sm text-slate-700">
+                                        <span className="font-medium text-slate-500 min-w-[20px]">{stepIndex + 1}.</span>
+                                        <span>{step}</span>
+                                      </div>
+                                    ))}
+                                    
+                                    {service.additionalNotes && (
+                                      <div className="mt-3 pt-2 border-t border-slate-100">
+                                        <p className="text-sm text-slate-600">
+                                          <span className="font-medium">Notes:</span> {service.additionalNotes}
+                                        </p>
+                                      </div>
+                                    )}
+                                  </div>
+                                </motion.div>
+                              ))}
+
+                              {serviceSteps.length === 0 && (
+                                <p className="text-slate-500 text-sm italic">No service steps added yet. Click "Add Service Steps" to get started.</p>
+                              )}
+                            </div>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
