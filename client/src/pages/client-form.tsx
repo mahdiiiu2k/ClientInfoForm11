@@ -718,7 +718,7 @@ export default function ClientForm() {
                         name="specialties"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Specific Specialties to Highlight</FormLabel>
+                            <FormLabel>Specific Specialties</FormLabel>
                             <FormControl>
                               <Textarea
                                 rows={3}
