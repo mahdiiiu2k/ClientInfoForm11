@@ -91,6 +91,16 @@ input[type="file"] {
   @apply file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary file:text-primary-foreground;
 }
 
+/* Force English text for file inputs */
+input[type="file"]::-webkit-file-upload-button {
+  @apply mr-4 py-2 px-4 rounded-lg border-0 text-sm font-medium bg-primary text-primary-foreground;
+}
+
+input[type="file"]::after {
+  content: "No file chosen";
+  @apply text-slate-600 text-sm;
+}
+
 /* Radio group styling with soft rounded corners */
 [data-radix-collection-item] {
   border-radius: 0.375rem !important;
