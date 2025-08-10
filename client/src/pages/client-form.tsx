@@ -1543,26 +1543,22 @@ export default function ClientForm() {
                 
                 {/* Financing Options */}
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="hasFinancingOptions"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-financing-options"
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Financing Options
-                          </FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
+                  <div 
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    onClick={() => {
+                      const currentValue = form.getValues("hasFinancingOptions");
+                      form.setValue("hasFinancingOptions", !currentValue);
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base font-medium text-slate-800">Financing Options</h3>
+                      {form.watch("hasFinancingOptions") ? (
+                        <ChevronUp className="h-5 w-5 text-slate-500" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-slate-500" />
+                      )}
+                    </div>
+                  </div>
                   
                   <AnimatePresence>
                     {form.watch("hasFinancingOptions") && (
@@ -1597,26 +1593,22 @@ export default function ClientForm() {
 
                 {/* Storm Services */}
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="hasStormServices"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-storm-services"
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Storm Services
-                          </FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
+                  <div 
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    onClick={() => {
+                      const currentValue = form.getValues("hasStormServices");
+                      form.setValue("hasStormServices", !currentValue);
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base font-medium text-slate-800">Storm Services</h3>
+                      {form.watch("hasStormServices") ? (
+                        <ChevronUp className="h-5 w-5 text-slate-500" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-slate-500" />
+                      )}
+                    </div>
+                  </div>
                   
                   <AnimatePresence>
                     {form.watch("hasStormServices") && (
@@ -1652,26 +1644,22 @@ export default function ClientForm() {
 
                 {/* Brands You Work With */}
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="hasBrandsWorkedWith"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-brands-worked-with"
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Brands You Work With
-                          </FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
+                  <div 
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    onClick={() => {
+                      const currentValue = form.getValues("hasBrandsWorkedWith");
+                      form.setValue("hasBrandsWorkedWith", !currentValue);
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base font-medium text-slate-800">Brands You Work With</h3>
+                      {form.watch("hasBrandsWorkedWith") ? (
+                        <ChevronUp className="h-5 w-5 text-slate-500" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-slate-500" />
+                      )}
+                    </div>
+                  </div>
                   
                   <AnimatePresence>
                     {form.watch("hasBrandsWorkedWith") && (
@@ -1707,26 +1695,22 @@ export default function ClientForm() {
 
                 {/* Installation Process */}
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="hasInstallationProcess"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-installation-process"
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Installation Process
-                          </FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
+                  <div 
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    onClick={() => {
+                      const currentValue = form.getValues("hasInstallationProcess");
+                      form.setValue("hasInstallationProcess", !currentValue);
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base font-medium text-slate-800">Installation Process</h3>
+                      {form.watch("hasInstallationProcess") ? (
+                        <ChevronUp className="h-5 w-5 text-slate-500" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-slate-500" />
+                      )}
+                    </div>
+                  </div>
                   
                   <AnimatePresence>
                     {form.watch("hasInstallationProcess") && (
@@ -1762,26 +1746,22 @@ export default function ClientForm() {
 
                 {/* Roof Maintenance Guide */}
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="hasMaintenanceGuide"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-maintenance-guide"
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Roof Maintenance Guide
-                          </FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
+                  <div 
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    onClick={() => {
+                      const currentValue = form.getValues("hasMaintenanceGuide");
+                      form.setValue("hasMaintenanceGuide", !currentValue);
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base font-medium text-slate-800">Roof Maintenance Guide</h3>
+                      {form.watch("hasMaintenanceGuide") ? (
+                        <ChevronUp className="h-5 w-5 text-slate-500" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-slate-500" />
+                      )}
+                    </div>
+                  </div>
                   
                   <AnimatePresence>
                     {form.watch("hasMaintenanceGuide") && (
@@ -1816,26 +1796,22 @@ export default function ClientForm() {
 
                 {/* Roof Materials and Brands */}
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="hasRoofMaterials"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox 
-                            checked={field.value || false}
-                            onCheckedChange={field.onChange}
-                            data-testid="checkbox-roof-materials"
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-base font-medium">
-                            Roof Materials and Brands
-                          </FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
+                  <div 
+                    className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                    onClick={() => {
+                      const currentValue = form.getValues("hasRoofMaterials");
+                      form.setValue("hasRoofMaterials", !currentValue);
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base font-medium text-slate-800">Roof Materials and Brands</h3>
+                      {form.watch("hasRoofMaterials") ? (
+                        <ChevronUp className="h-5 w-5 text-slate-500" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-slate-500" />
+                      )}
+                    </div>
+                  </div>
                   
                   <AnimatePresence>
                     {form.watch("hasRoofMaterials") && (
