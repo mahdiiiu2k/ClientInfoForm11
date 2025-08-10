@@ -1810,10 +1810,9 @@ export default function ClientForm() {
                                     <div className="flex items-center gap-2 mb-2">
                                       <Label htmlFor="stormServiceDescription">Service Description *</Label>
                                       <div className="relative" ref={serviceDescTooltipRef}>
-                                        <div className="flex items-center justify-center w-6 h-6 bg-blue-50 hover:bg-blue-100 rounded-full cursor-pointer transition-colors">
-                                          <Info 
-                                            className="h-4 w-4 text-blue-600 hover:text-blue-700" 
-                                            onClick={(e) => {
+                                        <Info 
+                                          className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                          onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
                                               if (serviceDescHoverTimeout) {
@@ -1843,7 +1842,6 @@ export default function ClientForm() {
                                               }
                                             }}
                                           />
-                                        </div>
                                         {showServiceDescTooltip && (
                                           <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
                                             <div className="relative">
@@ -1867,10 +1865,9 @@ export default function ClientForm() {
                                     <div className="flex items-center gap-2 mb-2">
                                       <Label htmlFor="responseTime">Response Time (Optional)</Label>
                                       <div className="relative" ref={tooltipRef}>
-                                        <div className="flex items-center justify-center w-6 h-6 bg-blue-50 hover:bg-blue-100 rounded-full cursor-pointer transition-colors">
-                                          <Info 
-                                            className="h-4 w-4 text-blue-600 hover:text-blue-700" 
-                                            onClick={(e) => {
+                                        <Info 
+                                          className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                          onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
                                               if (hoverTimeout) {
@@ -1900,7 +1897,6 @@ export default function ClientForm() {
                                               }
                                             }}
                                           />
-                                        </div>
                                         {showResponseTimeTooltip && (
                                           <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
                                             <div className="relative">
@@ -1923,10 +1919,9 @@ export default function ClientForm() {
                                     <div className="flex items-center gap-2 mb-2">
                                       <Label htmlFor="insurancePartnership">Insurance Partnership (Optional)</Label>
                                       <div className="relative" ref={insuranceTooltipRef}>
-                                        <div className="flex items-center justify-center w-6 h-6 bg-blue-50 hover:bg-blue-100 rounded-full cursor-pointer transition-colors">
-                                          <Info 
-                                            className="h-4 w-4 text-blue-600 hover:text-blue-700" 
-                                            onClick={(e) => {
+                                        <Info 
+                                          className="h-5 w-5 text-blue-600 hover:text-blue-700 cursor-pointer" 
+                                          onClick={(e) => {
                                               e.preventDefault();
                                               e.stopPropagation();
                                               if (insuranceHoverTimeout) {
@@ -1956,7 +1951,6 @@ export default function ClientForm() {
                                               }
                                             }}
                                           />
-                                        </div>
                                         {showInsuranceTooltip && (
                                           <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
                                             <div className="relative">
