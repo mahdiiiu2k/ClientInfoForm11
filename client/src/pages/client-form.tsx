@@ -1703,7 +1703,7 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Storm Services</h3>
+                        <h3 className="text-xl font-semibold text-slate-800">Storm Services (optional)</h3>
                         {form.watch("hasStormServices") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
@@ -1858,7 +1858,7 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Brands You Work With</h3>
+                        <h3 className="text-xl font-semibold text-slate-800">Brands You Work With (optional)</h3>
                         {form.watch("hasBrandsWorkedWith") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
@@ -1967,7 +1967,7 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Installation Process</h3>
+                        <h3 className="text-xl font-semibold text-slate-800">Installation Process (optional)</h3>
                         {form.watch("hasInstallationProcess") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
@@ -2021,7 +2021,7 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide</h3>
+                        <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide (optional)</h3>
                         {form.watch("hasMaintenanceGuide") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
@@ -2074,7 +2074,7 @@ export default function ClientForm() {
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-semibold text-slate-800">Roof Materials and Brands</h3>
+                        <h3 className="text-xl font-semibold text-slate-800">Roof Materials and Brands (optional)</h3>
                         {form.watch("hasRoofMaterials") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
