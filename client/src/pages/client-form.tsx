@@ -2818,9 +2818,6 @@ export default function ClientForm() {
                                                     <p className="text-xs text-slate-600 truncate">
                                                       {file.name}
                                                     </p>
-                                                    <p className="text-xs text-slate-500">
-                                                      {(file.size / 1024 / 1024).toFixed(2)} MB
-                                                    </p>
                                                   </div>
                                                   {/* Delete Button */}
                                                   <div className="flex justify-end">
