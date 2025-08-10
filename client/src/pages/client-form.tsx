@@ -865,26 +865,167 @@ export default function ClientForm() {
                         
                         <div>
                           {newProject.beforeAfter ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-6">
+                              {/* Before Pictures */}
                               <div>
                                 <Label htmlFor="beforePictures">Before Pictures</Label>
-                                <Input
-                                  id="beforePictures"
-                                  type="file"
-                                  multiple
-                                  accept="image/*"
-                                  onChange={(e) => setNewProject({...newProject, beforePictures: e.target.files || undefined})}
-                                />
+                                <div className="w-full">
+                                  <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300" style={{maxWidth: '100%'}}>
+                                    {/* Add Before Pictures Button */}
+                                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[200px] flex-shrink-0">
+                                      <input
+                                        id="beforePictures"
+                                        type="file"
+                                        multiple
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                          if (e.target.files && e.target.files.length > 0) {
+                                            const newFiles = Array.from(e.target.files);
+                                            const existingFiles = newProject.beforePictures ? Array.from(newProject.beforePictures) : [];
+                                            const allFiles = [...existingFiles, ...newFiles];
+                                            
+                                            const dataTransfer = new DataTransfer();
+                                            allFiles.forEach(file => dataTransfer.items.add(file));
+                                            
+                                            setNewProject({...newProject, beforePictures: dataTransfer.files});
+                                            e.target.value = '';
+                                          }
+                                        }}
+                                      />
+                                      <label 
+                                        htmlFor="beforePictures" 
+                                        className="flex flex-col items-center text-center cursor-pointer"
+                                      >
+                                        <span className="text-slate-600 font-medium mb-2">Add Before Pictures</span>
+                                        <Plus className="h-6 w-6 text-slate-400" />
+                                      </label>
+                                    </div>
+
+                                    {/* Display Before Pictures */}
+                                    {newProject.beforePictures && Array.from(newProject.beforePictures).map((file, index) => (
+                                      <motion.div
+                                        key={index}
+                                        {...fadeInUp}
+                                        className="border border-slate-200 rounded-lg p-3 bg-white min-w-[200px] flex-shrink-0"
+                                      >
+                                        <div className="flex justify-between items-center">
+                                          <div>
+                                            <h3 className="text-lg font-medium text-slate-800">
+                                              Before #{index + 1}
+                                            </h3>
+                                            <p className="text-sm text-slate-600 mt-1 truncate">
+                                              {file.name}
+                                            </p>
+                                            <p className="text-xs text-slate-500 mt-1">
+                                              {(file.size / 1024 / 1024).toFixed(2)} MB
+                                            </p>
+                                          </div>
+                                          <div className="flex gap-2">
+                                            <Button
+                                              type="button"
+                                              variant="ghost"
+                                              size="sm"
+                                              onClick={() => {
+                                                if (newProject.beforePictures) {
+                                                  const fileArray = Array.from(newProject.beforePictures);
+                                                  fileArray.splice(index, 1);
+                                                  const dataTransfer = new DataTransfer();
+                                                  fileArray.forEach(file => dataTransfer.items.add(file));
+                                                  setNewProject({...newProject, beforePictures: dataTransfer.files});
+                                                }
+                                              }}
+                                              className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                            >
+                                              <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                          </div>
+                                        </div>
+                                      </motion.div>
+                                    ))}
+                                  </div>
+                                </div>
                               </div>
+
+                              {/* After Pictures */}
                               <div>
                                 <Label htmlFor="afterPictures">After Pictures</Label>
-                                <Input
-                                  id="afterPictures"
-                                  type="file"
-                                  multiple
-                                  accept="image/*"
-                                  onChange={(e) => setNewProject({...newProject, afterPictures: e.target.files || undefined})}
-                                />
+                                <div className="w-full">
+                                  <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300" style={{maxWidth: '100%'}}>
+                                    {/* Add After Pictures Button */}
+                                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[200px] flex-shrink-0">
+                                      <input
+                                        id="afterPictures"
+                                        type="file"
+                                        multiple
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                          if (e.target.files && e.target.files.length > 0) {
+                                            const newFiles = Array.from(e.target.files);
+                                            const existingFiles = newProject.afterPictures ? Array.from(newProject.afterPictures) : [];
+                                            const allFiles = [...existingFiles, ...newFiles];
+                                            
+                                            const dataTransfer = new DataTransfer();
+                                            allFiles.forEach(file => dataTransfer.items.add(file));
+                                            
+                                            setNewProject({...newProject, afterPictures: dataTransfer.files});
+                                            e.target.value = '';
+                                          }
+                                        }}
+                                      />
+                                      <label 
+                                        htmlFor="afterPictures" 
+                                        className="flex flex-col items-center text-center cursor-pointer"
+                                      >
+                                        <span className="text-slate-600 font-medium mb-2">Add After Pictures</span>
+                                        <Plus className="h-6 w-6 text-slate-400" />
+                                      </label>
+                                    </div>
+
+                                    {/* Display After Pictures */}
+                                    {newProject.afterPictures && Array.from(newProject.afterPictures).map((file, index) => (
+                                      <motion.div
+                                        key={index}
+                                        {...fadeInUp}
+                                        className="border border-slate-200 rounded-lg p-3 bg-white min-w-[200px] flex-shrink-0"
+                                      >
+                                        <div className="flex justify-between items-center">
+                                          <div>
+                                            <h3 className="text-lg font-medium text-slate-800">
+                                              After #{index + 1}
+                                            </h3>
+                                            <p className="text-sm text-slate-600 mt-1 truncate">
+                                              {file.name}
+                                            </p>
+                                            <p className="text-xs text-slate-500 mt-1">
+                                              {(file.size / 1024 / 1024).toFixed(2)} MB
+                                            </p>
+                                          </div>
+                                          <div className="flex gap-2">
+                                            <Button
+                                              type="button"
+                                              variant="ghost"
+                                              size="sm"
+                                              onClick={() => {
+                                                if (newProject.afterPictures) {
+                                                  const fileArray = Array.from(newProject.afterPictures);
+                                                  fileArray.splice(index, 1);
+                                                  const dataTransfer = new DataTransfer();
+                                                  fileArray.forEach(file => dataTransfer.items.add(file));
+                                                  setNewProject({...newProject, afterPictures: dataTransfer.files});
+                                                }
+                                              }}
+                                              className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                            >
+                                              <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                          </div>
+                                        </div>
+                                      </motion.div>
+                                    ))}
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           ) : (
