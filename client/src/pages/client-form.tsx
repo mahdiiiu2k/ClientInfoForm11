@@ -899,8 +899,21 @@ export default function ClientForm() {
                                     accept="image/*"
                                     className="hidden"
                                     onChange={(e) => {
-                                      console.log('Files selected:', e.target.files);
-                                      setNewProject({...newProject, pictures: e.target.files || undefined});
+                                      if (e.target.files && e.target.files.length > 0) {
+                                        const newFiles = Array.from(e.target.files);
+                                        const existingFiles = newProject.pictures ? Array.from(newProject.pictures) : [];
+                                        const allFiles = [...existingFiles, ...newFiles];
+                                        
+                                        // Create new FileList
+                                        const dataTransfer = new DataTransfer();
+                                        allFiles.forEach(file => dataTransfer.items.add(file));
+                                        
+                                        setNewProject({...newProject, pictures: dataTransfer.files});
+                                        console.log('Total files:', dataTransfer.files.length);
+                                        
+                                        // Reset the input so the same files can be selected again if needed
+                                        e.target.value = '';
+                                      }
                                     }}
                                   />
                                   <label 
