@@ -1535,7 +1535,9 @@ export default function ClientForm() {
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                  <Plus className="text-primary mr-3 h-5 w-5" strokeWidth={3} />
+                  <div className="bg-slate-200 rounded-full p-2 mr-3">
+                    <Plus className="text-primary h-5 w-5" strokeWidth={3} />
+                  </div>
                   Suggestions For Your Website
                 </h2>
                 
