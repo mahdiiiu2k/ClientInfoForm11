@@ -867,35 +867,44 @@ export default function ClientForm() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div>
                                 <Label htmlFor="beforePictures">Before Pictures</Label>
-                                <Input
-                                  id="beforePictures"
-                                  type="file"
-                                  multiple
-                                  accept="image/*"
-                                  onChange={(e) => setNewProject({...newProject, beforePictures: e.target.files || undefined})}
-                                />
+                                <div className="border-2 border-dashed border-slate-300 rounded-sm p-4 hover:border-primary transition-colors">
+                                  <Input
+                                    id="beforePictures"
+                                    type="file"
+                                    multiple
+                                    accept="image/*"
+                                    className="rounded-sm"
+                                    onChange={(e) => setNewProject({...newProject, beforePictures: e.target.files || undefined})}
+                                  />
+                                </div>
                               </div>
                               <div>
                                 <Label htmlFor="afterPictures">After Pictures</Label>
-                                <Input
-                                  id="afterPictures"
-                                  type="file"
-                                  multiple
-                                  accept="image/*"
-                                  onChange={(e) => setNewProject({...newProject, afterPictures: e.target.files || undefined})}
-                                />
+                                <div className="border-2 border-dashed border-slate-300 rounded-sm p-4 hover:border-primary transition-colors">
+                                  <Input
+                                    id="afterPictures"
+                                    type="file"
+                                    multiple
+                                    accept="image/*"
+                                    className="rounded-sm"
+                                    onChange={(e) => setNewProject({...newProject, afterPictures: e.target.files || undefined})}
+                                  />
+                                </div>
                               </div>
                             </div>
                           ) : (
                             <div>
                               <Label htmlFor="projectPictures">Project Pictures</Label>
-                              <Input
-                                id="projectPictures"
-                                type="file"
-                                multiple
-                                accept="image/*"
-                                onChange={(e) => setNewProject({...newProject, pictures: e.target.files || undefined})}
-                              />
+                              <div className="border-2 border-dashed border-slate-300 rounded-sm p-4 hover:border-primary transition-colors">
+                                <Input
+                                  id="projectPictures"
+                                  type="file"
+                                  multiple
+                                  accept="image/*"
+                                  className="rounded-sm"
+                                  onChange={(e) => setNewProject({...newProject, pictures: e.target.files || undefined})}
+                                />
+                              </div>
                             </div>
                           )}
                         </div>
