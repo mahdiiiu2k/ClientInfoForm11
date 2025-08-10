@@ -3003,72 +3003,75 @@ export default function ClientForm() {
                                   <motion.div
                                     key={index}
                                     {...fadeInUp}
-                                    className="bg-slate-100 rounded-lg px-3 py-2"
+                                    className="space-y-2"
                                   >
-                                    {editingTipIndex === index ? (
-                                      /* Edit Mode */
-                                      <div className="flex items-center gap-2">
-                                        <Input
-                                          value={editingTipValue}
-                                          onChange={(e) => setEditingTipValue(e.target.value)}
-                                          onKeyPress={(e) => {
-                                            if (e.key === 'Enter') {
-                                              e.preventDefault();
-                                              saveEditingTip();
-                                            } else if (e.key === 'Escape') {
-                                              e.preventDefault();
-                                              cancelEditingTip();
-                                            }
-                                          }}
-                                          className="flex-1 bg-white"
-                                          autoFocus
-                                        />
-                                        <Button
-                                          type="button"
-                                          variant="ghost"
-                                          size="sm"
-                                          onClick={saveEditingTip}
-                                          disabled={!editingTipValue.trim()}
-                                          className="text-green-600 hover:text-green-700 hover:bg-green-50"
-                                        >
-                                          <Check className="h-3 w-3" />
-                                        </Button>
-                                        <Button
-                                          type="button"
-                                          variant="ghost"
-                                          size="sm"
-                                          onClick={cancelEditingTip}
-                                          className="text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                                        >
-                                          <X className="h-3 w-3" />
-                                        </Button>
-                                      </div>
-                                    ) : (
-                                      /* Display Mode */
-                                      <div className="flex items-center justify-between">
-                                        <span className="text-slate-700 flex-1">{tip}</span>
-                                        <div className="flex items-center gap-1 ml-2">
+                                    <div className="text-sm font-medium text-slate-600">Tip {index + 1}</div>
+                                    <div className="bg-slate-100 rounded-lg px-3 py-2">
+                                      {editingTipIndex === index ? (
+                                        /* Edit Mode */
+                                        <div className="flex items-center gap-2">
+                                          <Input
+                                            value={editingTipValue}
+                                            onChange={(e) => setEditingTipValue(e.target.value)}
+                                            onKeyPress={(e) => {
+                                              if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                saveEditingTip();
+                                              } else if (e.key === 'Escape') {
+                                                e.preventDefault();
+                                                cancelEditingTip();
+                                              }
+                                            }}
+                                            className="flex-1 bg-white"
+                                            autoFocus
+                                          />
                                           <Button
                                             type="button"
                                             variant="ghost"
                                             size="sm"
-                                            onClick={() => startEditingTip(index)}
-                                            className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+                                            onClick={saveEditingTip}
+                                            disabled={!editingTipValue.trim()}
+                                            className="text-green-600 hover:text-green-700 hover:bg-green-50"
                                           >
-                                            <Edit2 className="h-3 w-3" />
+                                            <Check className="h-3 w-3" />
                                           </Button>
                                           <Button
                                             type="button"
                                             variant="ghost"
                                             size="sm"
-                                            onClick={() => removeMaintenanceTip(index)}
-                                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                            onClick={cancelEditingTip}
+                                            className="text-gray-500 hover:text-gray-700 hover:bg-gray-50"
                                           >
-                                            <Trash2 className="h-3 w-3" />
+                                            <X className="h-3 w-3" />
                                           </Button>
                                         </div>
-                                      </div>
-                                    )}
+                                      ) : (
+                                        /* Display Mode */
+                                        <div className="flex items-center justify-between">
+                                          <span className="text-slate-700 flex-1">{tip}</span>
+                                          <div className="flex items-center gap-1 ml-2">
+                                            <Button
+                                              type="button"
+                                              variant="ghost"
+                                              size="sm"
+                                              onClick={() => startEditingTip(index)}
+                                              className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+                                            >
+                                              <Edit2 className="h-3 w-3" />
+                                            </Button>
+                                            <Button
+                                              type="button"
+                                              variant="ghost"
+                                              size="sm"
+                                              onClick={() => removeMaintenanceTip(index)}
+                                              className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                            >
+                                              <Trash2 className="h-3 w-3" />
+                                            </Button>
+                                          </div>
+                                        </div>
+                                      )}
+                                    </div>
                                   </motion.div>
                                 ))}
                               </div>
