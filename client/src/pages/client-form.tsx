@@ -1404,9 +1404,7 @@ export default function ClientForm() {
                   >
                     <div className="flex items-center">
                       <h3 className="text-xl font-semibold text-slate-800">Financing Options</h3>
-                      <div className="w-6 h-6 bg-slate-300 rounded-full flex items-center justify-center ml-2">
-                        <Plus className="h-4 w-4 text-slate-600" strokeWidth={3} />
-                      </div>
+                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
                     </div>
                   </div>
                   
@@ -1452,9 +1450,7 @@ export default function ClientForm() {
                   >
                     <div className="flex items-center">
                       <h3 className="text-xl font-semibold text-slate-800">Storm Services</h3>
-                      <div className="w-6 h-6 bg-slate-300 rounded-full flex items-center justify-center ml-2">
-                        <Plus className="h-4 w-4 text-slate-600" strokeWidth={3} />
-                      </div>
+                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
                     </div>
                   </div>
                   
@@ -1501,9 +1497,7 @@ export default function ClientForm() {
                   >
                     <div className="flex items-center">
                       <h3 className="text-xl font-semibold text-slate-800">Brands You Work With</h3>
-                      <div className="w-6 h-6 bg-slate-300 rounded-full flex items-center justify-center ml-2">
-                        <Plus className="h-4 w-4 text-slate-600" strokeWidth={3} />
-                      </div>
+                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
                     </div>
                   </div>
                   
@@ -1550,9 +1544,7 @@ export default function ClientForm() {
                   >
                     <div className="flex items-center">
                       <h3 className="text-xl font-semibold text-slate-800">Installation Process</h3>
-                      <div className="w-6 h-6 bg-slate-300 rounded-full flex items-center justify-center ml-2">
-                        <Plus className="h-4 w-4 text-slate-600" strokeWidth={3} />
-                      </div>
+                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
                     </div>
                   </div>
                   
@@ -1599,9 +1591,7 @@ export default function ClientForm() {
                   >
                     <div className="flex items-center">
                       <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide</h3>
-                      <div className="w-6 h-6 bg-slate-300 rounded-full flex items-center justify-center ml-2">
-                        <Plus className="h-4 w-4 text-slate-600" strokeWidth={3} />
-                      </div>
+                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
                     </div>
                   </div>
                   
@@ -1647,9 +1637,7 @@ export default function ClientForm() {
                   >
                     <div className="flex items-center">
                       <h3 className="text-xl font-semibold text-slate-800">Roof Materials and Brands</h3>
-                      <div className="w-6 h-6 bg-slate-300 rounded-full flex items-center justify-center ml-2">
-                        <Plus className="h-4 w-4 text-slate-600" strokeWidth={3} />
-                      </div>
+                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
                     </div>
                   </div>
                   
@@ -1693,9 +1681,7 @@ export default function ClientForm() {
                   >
                     <div className="flex items-center">
                       <h3 className="text-xl font-semibold text-slate-800">Warranty (optional)</h3>
-                      <div className="w-6 h-6 bg-slate-300 rounded-full flex items-center justify-center ml-2">
-                        <Plus className="h-4 w-4 text-slate-600" strokeWidth={3} />
-                      </div>
+                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
                     </div>
                   </div>
                   
@@ -1738,9 +1724,7 @@ export default function ClientForm() {
                   >
                     <div className="flex items-center">
                       <h3 className="text-xl font-semibold text-slate-800">Insurance (optional)</h3>
-                      <div className="w-6 h-6 bg-slate-300 rounded-full flex items-center justify-center ml-2">
-                        <Plus className="h-4 w-4 text-slate-600" strokeWidth={3} />
-                      </div>
+                      <Plus className="h-5 w-5 text-slate-500 ml-2" strokeWidth={3} />
                     </div>
                   </div>
                   
