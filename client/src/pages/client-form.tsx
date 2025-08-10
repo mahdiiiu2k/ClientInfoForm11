@@ -183,6 +183,10 @@ export default function ClientForm() {
   const [draggedStepIndex, setDraggedStepIndex] = useState<number | null>(null);
   const [editingStepIndex, setEditingStepIndex] = useState<number | null>(null);
   const [editingStepValue, setEditingStepValue] = useState("");
+  
+  // Maintenance Tips state
+  const [maintenanceTips, setMaintenanceTips] = useState<string[]>([]);
+  const [newTipInput, setNewTipInput] = useState("");
 
 
 
@@ -597,6 +601,18 @@ export default function ClientForm() {
     
     setNewServiceStep({...newServiceStep, steps});
     setDraggedStepIndex(null);
+  };
+
+  // Maintenance Tips Handlers
+  const addMaintenanceTip = () => {
+    if (newTipInput.trim()) {
+      setMaintenanceTips([...maintenanceTips, newTipInput.trim()]);
+      setNewTipInput("");
+    }
+  };
+
+  const removeMaintenanceTip = (index: number) => {
+    setMaintenanceTips(maintenanceTips.filter((_, i) => i !== index));
   };
 
   const updateProject = (index: number, field: keyof Project, value: any) => {
@@ -2929,24 +2945,55 @@ export default function ClientForm() {
                           transition={{ duration: 0.3 }}
                           className="px-4 pb-4 pt-0 border-t border-slate-300"
                         >
-                          <FormField
-                            control={form.control}
-                            name="maintenanceGuide"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Maintenance tips you want to share with customers</FormLabel>
-                                <FormControl>
-                                  <Input 
-                                    placeholder="Share maintenance tips for customers..." 
-                                    {...field} 
-                                    value={field.value || ""} 
-                                    data-testid="input-maintenance-guide"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
+                          <div className="space-y-4">
+                            {/* Add Tip Input */}
+                            <div className="flex gap-2">
+                              <Input
+                                placeholder="Add a maintenance tip..."
+                                value={newTipInput}
+                                onChange={(e) => setNewTipInput(e.target.value)}
+                                onKeyPress={(e) => {
+                                  if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    addMaintenanceTip();
+                                  }
+                                }}
+                                className="flex-1"
+                              />
+                              <Button
+                                type="button"
+                                onClick={addMaintenanceTip}
+                                disabled={!newTipInput.trim()}
+                                className="bg-primary hover:bg-blue-700 px-3"
+                              >
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+
+                            {/* Display Added Tips */}
+                            {maintenanceTips.length > 0 && (
+                              <div className="space-y-2">
+                                {maintenanceTips.map((tip, index) => (
+                                  <motion.div
+                                    key={index}
+                                    {...fadeInUp}
+                                    className="flex items-center justify-between bg-slate-100 rounded-lg px-3 py-2"
+                                  >
+                                    <span className="text-slate-700 flex-1">{tip}</span>
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() => removeMaintenanceTip(index)}
+                                      className="text-red-500 hover:text-red-700 hover:bg-red-50 ml-2"
+                                    >
+                                      <Trash2 className="h-3 w-3" />
+                                    </Button>
+                                  </motion.div>
+                                ))}
+                              </div>
                             )}
-                          />
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
