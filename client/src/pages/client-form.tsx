@@ -133,6 +133,7 @@ export default function ClientForm() {
   const [brands, setBrands] = useState<string[]>([]);
   const [newBrand, setNewBrand] = useState("");
   const [showResponseTimeTooltip, setShowResponseTimeTooltip] = useState(false);
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -1776,6 +1777,19 @@ export default function ClientForm() {
                                         <Info 
                                           className="h-4 w-4 text-slate-500 cursor-pointer hover:text-slate-700" 
                                           onClick={() => setShowResponseTimeTooltip(!showResponseTimeTooltip)}
+                                          onMouseEnter={() => {
+                                            const timeout = setTimeout(() => {
+                                              setShowResponseTimeTooltip(true);
+                                            }, 800);
+                                            setHoverTimeout(timeout);
+                                          }}
+                                          onMouseLeave={() => {
+                                            if (hoverTimeout) {
+                                              clearTimeout(hoverTimeout);
+                                              setHoverTimeout(null);
+                                            }
+                                            setShowResponseTimeTooltip(false);
+                                          }}
                                         />
                                         {showResponseTimeTooltip && (
                                           <div className="absolute left-0 top-6 bg-slate-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg z-50 w-72">
