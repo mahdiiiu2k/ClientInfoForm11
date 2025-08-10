@@ -889,9 +889,9 @@ export default function ClientForm() {
                           ) : (
                             <div>
                               <Label htmlFor="projectPictures">Project Pictures</Label>
-                              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
+                              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 max-w-full">
                                 {/* Add Pictures Button */}
-                                <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[280px] flex-shrink-0">
+                                <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[200px] flex-shrink-0">
                                   <input
                                     id="projectPictures"
                                     type="file"
@@ -930,7 +930,7 @@ export default function ClientForm() {
                                   <motion.div
                                     key={index}
                                     {...fadeInUp}
-                                    className="border border-slate-200 rounded-lg p-4 bg-white min-w-[280px] flex-shrink-0"
+                                    className="border border-slate-200 rounded-lg p-3 bg-white min-w-[200px] flex-shrink-0"
                                   >
                                     <div className="flex justify-between items-center">
                                       <div>
