@@ -2704,7 +2704,7 @@ export default function ClientForm() {
                                                   )}
                                                 </div>
                                                 {editingStepIndex !== index && (
-                                                  <div className="flex items-center gap-1">
+                                                  <div className="flex items-center gap-2">
                                                     {/* Edit Button */}
                                                     <Button
                                                       type="button"
@@ -2714,47 +2714,11 @@ export default function ClientForm() {
                                                         e.stopPropagation();
                                                         startEditingStep(index);
                                                       }}
-                                                      className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-1"
+                                                      className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
                                                       title="Edit step"
                                                     >
-                                                      <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                      </svg>
-                                                    </Button>
-
-                                                    {/* Move to First Button */}
-                                                    <Button
-                                                      type="button"
-                                                      variant="ghost"
-                                                      size="sm"
-                                                      onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        moveStepToFirst(index);
-                                                      }}
-                                                      disabled={index === 0}
-                                                      className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-1 disabled:opacity-30 disabled:cursor-not-allowed"
-                                                      title="Move to first"
-                                                    >
-                                                      <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM4 15a1 1 0 100-2 1 1 0 000 2zM8 15a1 1 0 100-2 1 1 0 000 2zM12 15a1 1 0 100-2 1 1 0 000 2z"/>
-                                                      </svg>
-                                                    </Button>
-                                                    
-                                                    {/* Move to Last Button */}
-                                                    <Button
-                                                      type="button"
-                                                      variant="ghost"
-                                                      size="sm"
-                                                      onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        moveStepToLast(index);
-                                                      }}
-                                                      disabled={index === newServiceStep.steps.filter(s => s.trim()).length - 1}
-                                                      className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-1 disabled:opacity-30 disabled:cursor-not-allowed"
-                                                      title="Move to last"
-                                                    >
-                                                      <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM7 8a1 1 0 100-2 1 1 0 000 2zM11 8a1 1 0 100-2 1 1 0 000 2zM15 8a1 1 0 100-2 1 1 0 000 2zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
                                                       </svg>
                                                     </Button>
                                                     
