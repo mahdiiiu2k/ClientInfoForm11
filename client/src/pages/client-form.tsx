@@ -1338,18 +1338,7 @@ export default function ClientForm() {
                                               className="w-full h-full object-cover"
                                             />
                                           </div>
-                                          {/* File Info */}
-                                          <div>
-                                            <h3 className="text-xs font-medium text-slate-800">
-                                              Before #{index + 1}
-                                            </h3>
-                                            <p className="text-xs text-slate-600 truncate">
-                                              {file.name}
-                                            </p>
-                                            <p className="text-xs text-slate-500">
-                                              {(file.size / 1024 / 1024).toFixed(2)} MB
-                                            </p>
-                                          </div>
+
                                           {/* Delete Button */}
                                           <div className="flex justify-end">
                                             <Button
@@ -1429,18 +1418,7 @@ export default function ClientForm() {
                                               className="w-full h-full object-cover"
                                             />
                                           </div>
-                                          {/* File Info */}
-                                          <div>
-                                            <h3 className="text-xs font-medium text-slate-800">
-                                              After #{index + 1}
-                                            </h3>
-                                            <p className="text-xs text-slate-600 truncate">
-                                              {file.name}
-                                            </p>
-                                            <p className="text-xs text-slate-500">
-                                              {(file.size / 1024 / 1024).toFixed(2)} MB
-                                            </p>
-                                          </div>
+
                                           {/* Delete Button */}
                                           <div className="flex justify-end">
                                             <Button
