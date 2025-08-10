@@ -1551,7 +1551,7 @@ export default function ClientForm() {
                     }}
                   >
                     <div className="flex items-center">
-                      <h3 className="text-base font-medium text-slate-800">Financing Options</h3>
+                      <h3 className="text-xl font-semibold text-slate-800">Financing Options</h3>
                       {form.watch("hasFinancingOptions") ? (
                         <ChevronUp className="h-5 w-5 text-slate-500 ml-2" />
                       ) : (
@@ -1601,7 +1601,7 @@ export default function ClientForm() {
                     }}
                   >
                     <div className="flex items-center">
-                      <h3 className="text-base font-medium text-slate-800">Storm Services</h3>
+                      <h3 className="text-xl font-semibold text-slate-800">Storm Services</h3>
                       {form.watch("hasStormServices") ? (
                         <ChevronUp className="h-5 w-5 text-slate-500 ml-2" />
                       ) : (
@@ -1652,7 +1652,7 @@ export default function ClientForm() {
                     }}
                   >
                     <div className="flex items-center">
-                      <h3 className="text-base font-medium text-slate-800">Brands You Work With</h3>
+                      <h3 className="text-xl font-semibold text-slate-800">Brands You Work With</h3>
                       {form.watch("hasBrandsWorkedWith") ? (
                         <ChevronUp className="h-5 w-5 text-slate-500 ml-2" />
                       ) : (
@@ -1703,7 +1703,7 @@ export default function ClientForm() {
                     }}
                   >
                     <div className="flex items-center">
-                      <h3 className="text-base font-medium text-slate-800">Installation Process</h3>
+                      <h3 className="text-xl font-semibold text-slate-800">Installation Process</h3>
                       {form.watch("hasInstallationProcess") ? (
                         <ChevronUp className="h-5 w-5 text-slate-500 ml-2" />
                       ) : (
@@ -1754,7 +1754,7 @@ export default function ClientForm() {
                     }}
                   >
                     <div className="flex items-center">
-                      <h3 className="text-base font-medium text-slate-800">Roof Maintenance Guide</h3>
+                      <h3 className="text-xl font-semibold text-slate-800">Roof Maintenance Guide</h3>
                       {form.watch("hasMaintenanceGuide") ? (
                         <ChevronUp className="h-5 w-5 text-slate-500 ml-2" />
                       ) : (
@@ -1804,7 +1804,7 @@ export default function ClientForm() {
                     }}
                   >
                     <div className="flex items-center">
-                      <h3 className="text-base font-medium text-slate-800">Roof Materials and Brands</h3>
+                      <h3 className="text-xl font-semibold text-slate-800">Roof Materials and Brands</h3>
                       {form.watch("hasRoofMaterials") ? (
                         <ChevronUp className="h-5 w-5 text-slate-500 ml-2" />
                       ) : (
