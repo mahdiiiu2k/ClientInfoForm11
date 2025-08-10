@@ -2606,7 +2606,7 @@ export default function ClientForm() {
                                           placeholder="e.g., Roof Installation, Repair Process"
                                           value={newServiceStep.serviceName}
                                           onChange={(e) => setNewServiceStep({...newServiceStep, serviceName: e.target.value})}
-                                          className="w-full"
+                                          className="max-w-md"
                                         />
                                       </div>
                                       
@@ -2655,14 +2655,9 @@ export default function ClientForm() {
                                                 title="Double-click to move to first/last position, or drag to reorder"
                                               >
                                                 <div className="flex items-center gap-3 flex-1">
-                                                  <div className="flex flex-col items-center">
-                                                    <span className="text-sm font-medium text-slate-500 bg-slate-200 rounded-full w-6 h-6 flex items-center justify-center">
-                                                      {index + 1}
-                                                    </span>
-                                                    <div className="text-xs text-slate-400 mt-1">
-                                                      ⋮⋮
-                                                    </div>
-                                                  </div>
+                                                  <span className="text-sm font-medium text-slate-500 bg-slate-200 rounded-full w-6 h-6 flex items-center justify-center">
+                                                    {index + 1}
+                                                  </span>
                                                   {editingStepIndex === index ? (
                                                     <div className="flex items-center gap-2 flex-1">
                                                       <Input
