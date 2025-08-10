@@ -1605,7 +1605,7 @@ export default function ClientForm() {
                               name="brandsWorkedWith"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>Additional Description/Notes</FormLabel>
+                                  <FormLabel>Additional Description/Notes (optional)</FormLabel>
                                   <FormControl>
                                     <Textarea 
                                       rows={3}
