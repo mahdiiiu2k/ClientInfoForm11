@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
@@ -134,6 +134,26 @@ export default function ClientForm() {
   const [newBrand, setNewBrand] = useState("");
   const [showResponseTimeTooltip, setShowResponseTimeTooltip] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [tooltipClickedOpen, setTooltipClickedOpen] = useState(false);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+
+  // Handle click outside to close tooltip
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
+        setShowResponseTimeTooltip(false);
+        setTooltipClickedOpen(false);
+      }
+    };
+
+    if (showResponseTimeTooltip) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showResponseTimeTooltip]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -1773,20 +1793,23 @@ export default function ClientForm() {
                                   <div>
                                     <div className="flex items-center gap-2 mb-2">
                                       <Label htmlFor="responseTime">Response Time (Optional)</Label>
-                                      <div className="relative">
+                                      <div className="relative" ref={tooltipRef}>
                                         <div className="flex items-center justify-center w-6 h-6 bg-blue-50 hover:bg-blue-100 rounded-full cursor-pointer transition-colors">
                                           <Info 
                                             className="h-4 w-4 text-blue-600 hover:text-blue-700" 
                                             onClick={(e) => {
                                               e.preventDefault();
+                                              e.stopPropagation();
                                               if (hoverTimeout) {
                                                 clearTimeout(hoverTimeout);
                                                 setHoverTimeout(null);
                                               }
-                                              setShowResponseTimeTooltip(!showResponseTimeTooltip);
+                                              const newState = !showResponseTimeTooltip;
+                                              setShowResponseTimeTooltip(newState);
+                                              setTooltipClickedOpen(newState);
                                             }}
                                             onMouseEnter={() => {
-                                              if (!showResponseTimeTooltip) {
+                                              if (!tooltipClickedOpen && !showResponseTimeTooltip) {
                                                 const timeout = setTimeout(() => {
                                                   setShowResponseTimeTooltip(true);
                                                 }, 800);
@@ -1799,7 +1822,7 @@ export default function ClientForm() {
                                                 setHoverTimeout(null);
                                               }
                                               // Only hide on mouse leave if it was shown by hover, not by click
-                                              if (showResponseTimeTooltip) {
+                                              if (showResponseTimeTooltip && !tooltipClickedOpen) {
                                                 setTimeout(() => setShowResponseTimeTooltip(false), 100);
                                               }
                                             }}
