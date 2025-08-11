@@ -779,7 +779,7 @@ export default function ClientForm() {
                     name="yearsOfExperience"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Years of Experience *</FormLabel>
+                        <FormLabel>Years of Experience</FormLabel>
                         <FormControl>
                           <Input
                             type="number"
@@ -818,7 +818,7 @@ export default function ClientForm() {
                     name="businessEmail"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Business Email Address *</FormLabel>
+                        <FormLabel>Business Email Address</FormLabel>
                         <FormControl>
                           <Input type="email" placeholder="Use personal email if no business email available" {...field} />
                         </FormControl>
@@ -835,7 +835,7 @@ export default function ClientForm() {
                   name="hasLicense"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Do you have a license number? *</FormLabel>
+                      <FormLabel>Do you have a license number?</FormLabel>
                       <FormControl>
                         <RadioGroup
                           value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
@@ -865,7 +865,7 @@ export default function ClientForm() {
                         name="licenseNumber"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>License Number *</FormLabel>
+                            <FormLabel>License Number</FormLabel>
                             <FormControl>
                               <Input placeholder="Enter license number" {...field} value={field.value || ""} />
                             </FormControl>
@@ -957,7 +957,7 @@ export default function ClientForm() {
                   name="hasEmergencyServices"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Do you offer emergency services? *</FormLabel>
+                      <FormLabel>Do you offer emergency services?</FormLabel>
                       <FormControl>
                         <RadioGroup
                           value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
@@ -1017,7 +1017,7 @@ export default function ClientForm() {
                               name="emergencyPhone"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>Emergency Phone Number *</FormLabel>
+                                  <FormLabel>Emergency Phone Number</FormLabel>
                                   <FormControl>
                                     <Input type="tel" placeholder="(555) 123-4567" {...field} value={field.value || ""} />
                                   </FormControl>
