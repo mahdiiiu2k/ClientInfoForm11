@@ -3565,7 +3565,7 @@ export default function ClientForm() {
               <Button
                 type="submit"
                 disabled={submitMutation.isPending}
-                className="bg-primary hover:bg-blue-700 text-white font-semibold py-4 px-12 rounded-xl transition-all duration-200 transform hover:scale-105 focus:ring-4 focus:ring-blue-200 focus:outline-none"
+                className="bg-primary hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 focus:ring-4 focus:ring-blue-200 focus:outline-none"
               >
                 {submitMutation.isPending ? (
                   "Submitting..."
