@@ -2755,27 +2755,40 @@ export default function ClientForm() {
 
                                   {/* Display uploaded pictures */}
                                   {certificationPictures && Array.from(certificationPictures).map((file, index) => (
-                                    <div key={index} className="relative min-w-[200px] flex-shrink-0">
-                                      <img
-                                        src={URL.createObjectURL(file)}
-                                        alt={`Certification ${index + 1}`}
-                                        className="w-full h-32 object-cover rounded-lg border border-slate-200"
-                                      />
-                                      <Button
-                                        type="button"
-                                        size="sm"
-                                        variant="destructive"
-                                        className="absolute top-2 right-2 h-6 w-6 p-0"
-                                        onClick={() => {
-                                          const newFiles = Array.from(certificationPictures).filter((_, i) => i !== index);
-                                          const dataTransfer = new DataTransfer();
-                                          newFiles.forEach(file => dataTransfer.items.add(file));
-                                          setCertificationPictures(newFiles.length > 0 ? dataTransfer.files : null);
-                                        }}
-                                      >
-                                        <X className="h-3 w-3" />
-                                      </Button>
-                                    </div>
+                                    <motion.div
+                                      key={index}
+                                      {...fadeInUp}
+                                      className="border border-slate-200 rounded-lg p-3 bg-white min-w-[200px] flex-shrink-0"
+                                    >
+                                      <div className="space-y-2">
+                                        {/* Image Preview */}
+                                        <div className="w-full h-20 bg-slate-100 rounded border overflow-hidden">
+                                          <img 
+                                            src={URL.createObjectURL(file)} 
+                                            alt={`Certification ${index + 1}`}
+                                            className="w-full h-full object-cover"
+                                          />
+                                        </div>
+
+                                        {/* Delete Button */}
+                                        <div className="flex justify-end">
+                                          <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => {
+                                              const newFiles = Array.from(certificationPictures).filter((_, i) => i !== index);
+                                              const dataTransfer = new DataTransfer();
+                                              newFiles.forEach(file => dataTransfer.items.add(file));
+                                              setCertificationPictures(newFiles.length > 0 ? dataTransfer.files : null);
+                                            }}
+                                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                          >
+                                            <Trash2 className="h-3 w-3" />
+                                          </Button>
+                                        </div>
+                                      </div>
+                                    </motion.div>
                                   ))}
                                 </div>
                               </div>
