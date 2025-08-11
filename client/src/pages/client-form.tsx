@@ -135,6 +135,7 @@ export default function ClientForm() {
   const [newBrand, setNewBrand] = useState("");
   const [certifications, setCertifications] = useState<string[]>([]);
   const [newCertification, setNewCertification] = useState("");
+  const [certificationPictures, setCertificationPictures] = useState<FileList | null>(null);
   const [showResponseTimeTooltip, setShowResponseTimeTooltip] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [tooltipClickedOpen, setTooltipClickedOpen] = useState(false);
@@ -2713,6 +2714,70 @@ export default function ClientForm() {
                                 >
                                   <Plus className="h-4 w-4" />
                                 </Button>
+                              </div>
+                            </div>
+
+                            {/* Certification Pictures */}
+                            <div>
+                              <Label htmlFor="certificationPictures">Pictures (optional)</Label>
+                              <div className="w-full mt-2">
+                                <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300" style={{maxWidth: '100%'}}>
+                                  {/* Add Pictures Button */}
+                                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 cursor-pointer hover:border-primary hover:bg-slate-50 transition-colors min-w-[200px] flex-shrink-0">
+                                    <input
+                                      id="certificationPictures"
+                                      type="file"
+                                      multiple
+                                      accept="image/*"
+                                      className="hidden"
+                                      onChange={(e) => {
+                                        if (e.target.files && e.target.files.length > 0) {
+                                          const newFiles = Array.from(e.target.files);
+                                          const existingFiles = certificationPictures ? Array.from(certificationPictures) : [];
+                                          const allFiles = [...existingFiles, ...newFiles];
+                                          
+                                          const dataTransfer = new DataTransfer();
+                                          allFiles.forEach(file => dataTransfer.items.add(file));
+                                          
+                                          setCertificationPictures(dataTransfer.files);
+                                          e.target.value = '';
+                                        }
+                                      }}
+                                    />
+                                    <label 
+                                      htmlFor="certificationPictures" 
+                                      className="flex flex-col items-center text-center cursor-pointer"
+                                    >
+                                      <span className="text-slate-600 font-medium mb-2">Add Pictures</span>
+                                      <Plus className="h-6 w-6 text-slate-400" />
+                                    </label>
+                                  </div>
+
+                                  {/* Display uploaded pictures */}
+                                  {certificationPictures && Array.from(certificationPictures).map((file, index) => (
+                                    <div key={index} className="relative min-w-[200px] flex-shrink-0">
+                                      <img
+                                        src={URL.createObjectURL(file)}
+                                        alt={`Certification ${index + 1}`}
+                                        className="w-full h-32 object-cover rounded-lg border border-slate-200"
+                                      />
+                                      <Button
+                                        type="button"
+                                        size="sm"
+                                        variant="destructive"
+                                        className="absolute top-2 right-2 h-6 w-6 p-0"
+                                        onClick={() => {
+                                          const newFiles = Array.from(certificationPictures).filter((_, i) => i !== index);
+                                          const dataTransfer = new DataTransfer();
+                                          newFiles.forEach(file => dataTransfer.items.add(file));
+                                          setCertificationPictures(newFiles.length > 0 ? dataTransfer.files : null);
+                                        }}
+                                      >
+                                        <X className="h-3 w-3" />
+                                      </Button>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
 
