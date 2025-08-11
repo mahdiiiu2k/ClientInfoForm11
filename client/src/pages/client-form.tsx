@@ -753,7 +753,6 @@ export default function ClientForm() {
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                  <UserCircle className="text-primary mr-3 h-5 w-5" />
                 </h2>
               </div>
               <div className="space-y-6">
@@ -817,7 +816,6 @@ export default function ClientForm() {
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                  <Tag className="text-primary mr-3 h-5 w-5" />
                 </h2>
               </div>
               <div className="space-y-4">
@@ -873,7 +871,6 @@ export default function ClientForm() {
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                  <Building className="text-primary mr-3 h-5 w-5" />
                 </h2>
               </div>
               <div className="space-y-6">
@@ -953,7 +950,6 @@ export default function ClientForm() {
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                  <TriangleAlert className="text-primary mr-3 h-5 w-5" />
                 </h2>
               </div>
               <div className="space-y-4">
