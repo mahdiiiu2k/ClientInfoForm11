@@ -133,6 +133,8 @@ export default function ClientForm() {
   const [areaDescription, setAreaDescription] = useState("");
   const [brands, setBrands] = useState<string[]>([]);
   const [newBrand, setNewBrand] = useState("");
+  const [websiteFeatures, setWebsiteFeatures] = useState<string[]>([]);
+  const [newWebsiteFeature, setNewWebsiteFeature] = useState("");
   const [showResponseTimeTooltip, setShowResponseTimeTooltip] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [tooltipClickedOpen, setTooltipClickedOpen] = useState(false);
@@ -446,6 +448,25 @@ export default function ClientForm() {
     if (e.key === 'Enter') {
       e.preventDefault();
       addBrand();
+    }
+  };
+
+  // Website Features Handlers
+  const addWebsiteFeature = () => {
+    if (newWebsiteFeature.trim() && !websiteFeatures.includes(newWebsiteFeature.trim())) {
+      setWebsiteFeatures([...websiteFeatures, newWebsiteFeature.trim()]);
+      setNewWebsiteFeature("");
+    }
+  };
+
+  const removeWebsiteFeature = (index: number) => {
+    setWebsiteFeatures(websiteFeatures.filter((_, i) => i !== index));
+  };
+
+  const handleWebsiteFeatureKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addWebsiteFeature();
     }
   };
 
@@ -2628,6 +2649,118 @@ export default function ClientForm() {
                                       {...field} 
                                       value={field.value || ""} 
                                       data-testid="textarea-brands-description"
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* Features for your website */}
+                <div className="mb-6">
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => {
+                        const currentValue = form.getValues("hasWebsiteFeatures");
+                        form.setValue("hasWebsiteFeatures", !currentValue);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="flex items-center text-xl font-semibold text-slate-800">
+                          <ServerCog className="text-primary mr-3 h-5 w-5" />
+                          Features for your website (optional)
+                        </h3>
+                        {form.watch("hasWebsiteFeatures") ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
+                    </div>
+                    
+                    <AnimatePresence>
+                      {form.watch("hasWebsiteFeatures") && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
+                        >
+                          <div className="space-y-4">
+                            {/* Add Feature Input */}
+                            <div>
+                              <Label htmlFor="newWebsiteFeature">Add Website Feature</Label>
+                              <div className="flex gap-2 mt-2">
+                                <Input
+                                  id="newWebsiteFeature"
+                                  value={newWebsiteFeature}
+                                  onChange={(e) => setNewWebsiteFeature(e.target.value)}
+                                  onKeyPress={handleWebsiteFeatureKeyPress}
+                                  placeholder="Enter website feature..."
+                                  className="flex-1"
+                                />
+                                <Button
+                                  type="button"
+                                  onClick={addWebsiteFeature}
+                                  className="px-3"
+                                  disabled={!newWebsiteFeature.trim()}
+                                >
+                                  <Plus className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Features List */}
+                            {websiteFeatures.length > 0 && (
+                              <div className="space-y-2">
+                                <Label>Added Features:</Label>
+                                <div className="space-y-2">
+                                  {websiteFeatures.map((feature, index) => (
+                                    <motion.div
+                                      key={index}
+                                      initial={{ opacity: 0, y: -10 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: -10 }}
+                                      className="flex items-center justify-between bg-white border border-slate-200 rounded-lg p-3"
+                                    >
+                                      <span className="text-slate-800 font-medium">{feature}</span>
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => removeWebsiteFeature(index)}
+                                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                      >
+                                        <Trash2 className="h-4 w-4" />
+                                      </Button>
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Additional Description */}
+                            <FormField
+                              control={form.control}
+                              name="websiteFeaturesDetails"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Additional Description/Notes (optional)</FormLabel>
+                                  <FormControl>
+                                    <Textarea 
+                                      rows={3}
+                                      placeholder="Add any additional notes about website features you'd like..." 
+                                      {...field} 
+                                      value={field.value || ""} 
+                                      data-testid="textarea-website-features-description"
                                     />
                                   </FormControl>
                                   <FormMessage />
