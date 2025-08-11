@@ -136,6 +136,7 @@ export default function ClientForm() {
   const [certifications, setCertifications] = useState<string[]>([]);
   const [newCertification, setNewCertification] = useState("");
   const [certificationPictures, setCertificationPictures] = useState<FileList | null>(null);
+  const [additionalNotes, setAdditionalNotes] = useState("");
   const [showResponseTimeTooltip, setShowResponseTimeTooltip] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [tooltipClickedOpen, setTooltipClickedOpen] = useState(false);
@@ -3789,7 +3790,22 @@ export default function ClientForm() {
               </div>
             </div>
 
-
+            {/* Additional Features/Notes */}
+            <div className="mt-8">
+              <div>
+                <Label htmlFor="additionalNotes" className="text-lg font-medium text-slate-700 mb-3 block">
+                  Additional features you want to add/notes
+                </Label>
+                <Textarea
+                  id="additionalNotes"
+                  rows={4}
+                  placeholder="Please describe any additional features, services, or notes you'd like to include..."
+                  value={additionalNotes}
+                  onChange={(e) => setAdditionalNotes(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+            </div>
 
             {/* Submit Button */}
             <div className="text-center pt-8">
