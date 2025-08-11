@@ -3794,7 +3794,7 @@ export default function ClientForm() {
             <div className="mt-8">
               <div>
                 <Label htmlFor="additionalNotes" className="text-lg font-medium text-slate-700 mb-3 block">
-                  Notes/Additional Features You Want To Add
+                  Notes/Additional features you want to add
                 </Label>
                 <Textarea
                   id="additionalNotes"
