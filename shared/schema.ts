@@ -81,8 +81,6 @@ export const clientSubmissions = pgTable("client_submissions", {
   maintenanceGuide: text("maintenance_guide"),
   hasRoofMaterials: boolean("has_roof_materials").default(false),
   roofMaterialsDetails: text("roof_materials_details"),
-  hasWebsiteFeatures: boolean("has_website_features").default(false),
-  websiteFeaturesDetails: text("website_features_details"),
   
   additionalNotes: text("additional_notes"),
   
@@ -118,7 +116,6 @@ export const insertClientSubmissionSchema = createInsertSchema(clientSubmissions
   installationProcessDetails: z.string().nullable().optional(),
   maintenanceGuide: z.string().nullable().optional(),
   roofMaterialsDetails: z.string().nullable().optional(),
-  websiteFeaturesDetails: z.string().nullable().optional(),
   additionalNotes: z.string().nullable().optional(),
 });
 
