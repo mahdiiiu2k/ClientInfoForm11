@@ -324,10 +324,7 @@ export default function ClientForm() {
         title: "Success!",
         description: "Your client information has been submitted successfully.",
       });
-      form.reset();
-      setServices([]);
-      setProjects([]);
-      setServiceAreas([]);
+      // Keep all form data intact after successful submission
     },
     onError: (error: Error) => {
       toast({
