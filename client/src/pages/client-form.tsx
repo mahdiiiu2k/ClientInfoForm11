@@ -3792,7 +3792,7 @@ export default function ClientForm() {
 
             {/* Additional Features/Notes */}
             <div className="mt-8">
-              <div>
+              <div className="bg-slate-100 border border-slate-200 rounded-lg p-6">
                 <Label htmlFor="additionalNotes" className="text-lg font-medium text-slate-700 mb-3 block">
                   Notes/Additional features you want to add
                 </Label>
