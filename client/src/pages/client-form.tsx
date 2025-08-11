@@ -751,11 +751,6 @@ export default function ClientForm() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-6">
-              <div>
-                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                </h2>
-              </div>
-              <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
@@ -810,15 +805,9 @@ export default function ClientForm() {
                     )}
                   />
                 </div>
-              </div>
             </div>
 
-            <div className="space-y-6">
-              <div>
-                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                </h2>
-              </div>
-              <div className="space-y-4">
+            <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="hasLicense"
@@ -865,15 +854,9 @@ export default function ClientForm() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
             </div>
 
             <div className="space-y-6">
-              <div>
-                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                </h2>
-              </div>
-              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="businessAddress"
@@ -944,15 +927,9 @@ export default function ClientForm() {
                     </FormItem>
                   )}
                 />
-              </div>
             </div>
 
-            <div className="space-y-6">
-              <div>
-                <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
-                </h2>
-              </div>
-              <div className="space-y-4">
+            <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="hasEmergencyServices"
@@ -1032,7 +1009,6 @@ export default function ClientForm() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
             </div>
 
             {/* About Section Modifications */}
