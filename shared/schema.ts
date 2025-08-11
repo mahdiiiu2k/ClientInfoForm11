@@ -82,6 +82,8 @@ export const clientSubmissions = pgTable("client_submissions", {
   hasRoofMaterials: boolean("has_roof_materials").default(false),
   roofMaterialsDetails: text("roof_materials_details"),
   
+  additionalNotes: text("additional_notes"),
+  
   createdAt: text("created_at").default(sql`NOW()`),
 });
 
@@ -114,6 +116,7 @@ export const insertClientSubmissionSchema = createInsertSchema(clientSubmissions
   installationProcessDetails: z.string().nullable().optional(),
   maintenanceGuide: z.string().nullable().optional(),
   roofMaterialsDetails: z.string().nullable().optional(),
+  additionalNotes: z.string().nullable().optional(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

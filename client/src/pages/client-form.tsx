@@ -3558,7 +3558,27 @@ export default function ClientForm() {
               </div>
             </div>
 
-
+            {/* Additional Notes Section */}
+            <div className="space-y-6">
+              <FormField
+                control={form.control}
+                name="additionalNotes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Additional Notes</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        rows={4}
+                        placeholder="Any additional information or notes you'd like to share..."
+                        {...field}
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             {/* Submit Button */}
             <div className="text-center pt-8">
