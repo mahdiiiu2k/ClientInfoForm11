@@ -133,6 +133,8 @@ export default function ClientForm() {
   const [areaDescription, setAreaDescription] = useState("");
   const [brands, setBrands] = useState<string[]>([]);
   const [newBrand, setNewBrand] = useState("");
+  const [certifications, setCertifications] = useState<string[]>([]);
+  const [newCertification, setNewCertification] = useState("");
   const [showResponseTimeTooltip, setShowResponseTimeTooltip] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [tooltipClickedOpen, setTooltipClickedOpen] = useState(false);
@@ -440,6 +442,24 @@ export default function ClientForm() {
 
   const removeBrand = (index: number) => {
     setBrands(brands.filter((_, i) => i !== index));
+  };
+
+  const addCertification = () => {
+    if (newCertification.trim() && !certifications.includes(newCertification.trim())) {
+      setCertifications([...certifications, newCertification.trim()]);
+      setNewCertification("");
+    }
+  };
+
+  const handleCertificationKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addCertification();
+    }
+  };
+
+  const removeCertification = (index: number) => {
+    setCertifications(certifications.filter((_, i) => i !== index));
   };
 
   const handleBrandKeyPress = (e: React.KeyboardEvent) => {
@@ -2628,6 +2648,117 @@ export default function ClientForm() {
                                       {...field} 
                                       value={field.value || ""} 
                                       data-testid="textarea-brands-description"
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* Certifications & Awards */}
+                <div className="mb-6">
+                  <div className="border border-slate-200 rounded-lg bg-slate-100">
+                    <div 
+                      className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
+                      onClick={() => {
+                        const currentValue = form.getValues("hasCertificationsAwards");
+                        form.setValue("hasCertificationsAwards", !currentValue);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="flex items-center text-xl font-semibold text-slate-800">
+                          <Medal className="text-primary mr-3 h-5 w-5" />
+                          Certifications & Awards (optional)
+                        </h3>
+                        {form.watch("hasCertificationsAwards") ? (
+                          <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        ) : (
+                          <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
+                        )}
+                      </div>
+                    </div>
+                    
+                    <AnimatePresence>
+                      {form.watch("hasCertificationsAwards") && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="px-4 pb-4 pt-0 border-t border-slate-300"
+                        >
+                          <div className="space-y-4">
+                            {/* Add Certification Input */}
+                            <div>
+                              <Label htmlFor="newCertification">Add Certification/Award</Label>
+                              <div className="flex gap-2 mt-2">
+                                <Input
+                                  id="newCertification"
+                                  value={newCertification}
+                                  onChange={(e) => setNewCertification(e.target.value)}
+                                  onKeyPress={handleCertificationKeyPress}
+                                  placeholder="Enter certification or award..."
+                                  className="flex-1"
+                                />
+                                <Button
+                                  type="button"
+                                  onClick={addCertification}
+                                  className="px-3"
+                                >
+                                  <Plus className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Certifications List */}
+                            {certifications.length > 0 && (
+                              <div>
+                                <Label>Certifications & Awards</Label>
+                                <div className="space-y-2 mt-2">
+                                  {certifications.map((certification, index) => (
+                                    <motion.div
+                                      key={index}
+                                      initial={{ opacity: 0, y: -10 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: -10 }}
+                                      className="flex items-center justify-between bg-white border border-slate-200 rounded-lg p-3"
+                                    >
+                                      <span className="text-slate-800 font-medium">{certification}</span>
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => removeCertification(index)}
+                                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                      >
+                                        <Trash2 className="h-4 w-4" />
+                                      </Button>
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Additional Description */}
+                            <FormField
+                              control={form.control}
+                              name="certificationsAwards"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Additional Description/Notes (optional)</FormLabel>
+                                  <FormControl>
+                                    <Textarea 
+                                      rows={3}
+                                      placeholder="Add any additional notes about your certifications and awards..." 
+                                      {...field} 
+                                      value={field.value || ""} 
+                                      data-testid="textarea-certifications-description"
                                     />
                                   </FormControl>
                                   <FormMessage />
