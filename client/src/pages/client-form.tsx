@@ -750,12 +750,10 @@ export default function ClientForm() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {/* Basic Information Section */}
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <UserCircle className="text-primary mr-3 h-5 w-5" />
-                  Basic Information
                 </h2>
               </div>
               <div className="space-y-6">
@@ -816,12 +814,10 @@ export default function ClientForm() {
               </div>
             </div>
 
-            {/* License Information Section */}
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <Tag className="text-primary mr-3 h-5 w-5" />
-                  License Information
                 </h2>
               </div>
               <div className="space-y-4">
@@ -874,12 +870,10 @@ export default function ClientForm() {
               </div>
             </div>
 
-            {/* Address and Business Hours */}
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <Building className="text-primary mr-3 h-5 w-5" />
-                  Business Details
                 </h2>
               </div>
               <div className="space-y-6">
@@ -956,12 +950,10 @@ export default function ClientForm() {
               </div>
             </div>
 
-            {/* Emergency Services Section */}
             <div className="space-y-6">
               <div>
                 <h2 className="flex items-center text-xl text-slate-800 font-semibold mb-6">
                   <TriangleAlert className="text-primary mr-3 h-5 w-5" />
-                  Emergency Services
                 </h2>
               </div>
               <div className="space-y-4">

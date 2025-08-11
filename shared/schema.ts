@@ -11,19 +11,15 @@ export const users = pgTable("users", {
 
 export const clientSubmissions = pgTable("client_submissions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  // Basic Information
   yearsOfExperience: integer("years_of_experience").notNull(),
   businessEmail: text("business_email").notNull(),
   
-  // License Information
   hasLicense: boolean("has_license").notNull(),
   licenseNumber: text("license_number"),
   
-  // Business Details
   businessAddress: text("business_address"),
   businessHours: text("business_hours"),
   
-  // Emergency Services
   hasEmergencyServices: boolean("has_emergency_services").notNull(),
   hasEmergencyPhone: boolean("has_emergency_phone"),
   emergencyPhone: text("emergency_phone"),
