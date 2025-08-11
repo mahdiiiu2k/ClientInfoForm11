@@ -22,14 +22,14 @@ import { z } from "zod";
 // Extend schema for form validation
 const formSchema = insertClientSubmissionSchema.extend({
   services: z.array(z.object({
-    name: z.string().min(1, "Service name is required"),
-    description: z.string().min(1, "Service description is required"),
+    name: z.string().optional(),
+    description: z.string().optional(),
     steps: z.string().optional(),
     picture: z.any().optional(),
   })).optional().default([]),
   projects: z.array(z.object({
-    title: z.string().min(1, "Project title is required"),
-    description: z.string().min(1, "Project description is required"),
+    title: z.string().optional(),
+    description: z.string().optional(),
     beforeAfter: z.boolean().default(false),
     beforePictures: z.any().optional(),
     afterPictures: z.any().optional(),
@@ -38,7 +38,7 @@ const formSchema = insertClientSubmissionSchema.extend({
   })).optional().default([]),
   serviceAreas: z.array(z.object({
     type: z.enum(['neighborhoods', 'cities', 'counties', 'radius']),
-    name: z.string().min(1, "Area name is required"),
+    name: z.string().optional(),
     description: z.string().optional(),
   })).optional().default([]),
 });
@@ -1295,7 +1295,6 @@ export default function ClientForm() {
                         <Button 
                           onClick={addServiceFromModal}
                           className="w-full bg-primary hover:bg-blue-700"
-                          disabled={!newService.name || !newService.description}
                         >
                           {editingServiceIndex !== null ? 'Save' : 'Add Service'}
                         </Button>
@@ -1676,7 +1675,6 @@ export default function ClientForm() {
                         <Button 
                           onClick={addProjectFromModal}
                           className="w-full bg-primary hover:bg-blue-700"
-                          disabled={!newProject.title || !newProject.description}
                         >
                           {editingProjectIndex !== null ? 'Save' : 'Add Project'}
                         </Button>

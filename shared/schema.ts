@@ -98,9 +98,9 @@ export const insertClientSubmissionSchema = createInsertSchema(clientSubmissions
   id: true,
   createdAt: true,
 }).extend({
-  // Add additional validation
-  yearsOfExperience: z.number().min(0).max(50),
-  businessEmail: z.string().email(),
+  // Make all validation optional
+  yearsOfExperience: z.number().min(0).max(50).optional(),
+  businessEmail: z.string().optional(),
   emergencyPhone: z.string().nullable().optional(),
   licenseNumber: z.string().nullable().optional(),
   businessAddress: z.string().nullable().optional(),
