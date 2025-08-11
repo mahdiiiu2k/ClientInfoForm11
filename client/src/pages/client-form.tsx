@@ -742,9 +742,10 @@ export default function ClientForm() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
             Information Collection Form
           </h1>
+          <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
         </div>
 
         <Form {...form}>
