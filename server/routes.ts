@@ -52,7 +52,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('Validated data:', JSON.stringify(validatedData, null, 2));
       const submission = await storage.createClientSubmission(validatedData);
       
-      // Send email with form data
+      // Send email with form data - always send regardless of image upload status
       try {
         await sendFormEmail({
           yearsOfExperience: validatedData.yearsOfExperience,

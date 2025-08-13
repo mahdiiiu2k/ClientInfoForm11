@@ -45,26 +45,32 @@ const formSchema = insertClientSubmissionSchema.extend({
 
 type FormData = z.infer<typeof formSchema>;
 
-// Utility function to upload images to Cloudinary
+// Utility function to upload images to Cloudinary - now handles failures gracefully
 const uploadImages = async (files: FileList): Promise<string[]> => {
   if (!files || files.length === 0) return [];
   
-  const formData = new FormData();
-  Array.from(files).forEach((file) => {
-    formData.append('images', file);
-  });
+  try {
+    const formData = new FormData();
+    Array.from(files).forEach((file) => {
+      formData.append('images', file);
+    });
 
-  const response = await fetch('/api/upload-images', {
-    method: 'POST',
-    body: formData,
-  });
+    const response = await fetch('/api/upload-images', {
+      method: 'POST',
+      body: formData,
+    });
 
-  if (!response.ok) {
-    throw new Error('Failed to upload images');
+    if (!response.ok) {
+      console.warn('Image upload failed, continuing without images');
+      return [];
+    }
+
+    const result = await response.json();
+    return result.imageUrls || [];
+  } catch (error) {
+    console.warn('Image upload error, continuing without images:', error);
+    return [];
   }
-
-  const result = await response.json();
-  return result.imageUrls;
 };
 
 interface Service {
@@ -390,92 +396,84 @@ export default function ClientForm() {
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    try {
-      // Upload all service images to Cloudinary first
-      const processedServices = await Promise.all(
-        services.map(async (service) => {
-          const pictureUrls = service.pictures ? await uploadImages(service.pictures) : [];
-          return {
-            name: service.name,
-            description: service.description,
-            steps: service.steps,
-            pictureUrls: pictureUrls.length > 0 ? pictureUrls : undefined,
-          };
-        })
-      );
+    
+    // Process all image uploads and form data - continue even if images fail
+    const processedServices = await Promise.all(
+      services.map(async (service) => {
+        const pictureUrls = service.pictures ? await uploadImages(service.pictures) : [];
+        return {
+          name: service.name,
+          description: service.description,
+          steps: service.steps,
+          pictureUrls: pictureUrls.length > 0 ? pictureUrls : undefined,
+        };
+      })
+    );
 
-      // Upload all project images to Cloudinary
-      const processedProjects = await Promise.all(
-        projects.map(async (project) => {
-          const [beforePictureUrls, afterPictureUrls, pictureUrls] = await Promise.all([
-            project.beforePictures ? uploadImages(project.beforePictures) : [],
-            project.afterPictures ? uploadImages(project.afterPictures) : [],
-            project.pictures ? uploadImages(project.pictures) : [],
-          ]);
+    // Upload all project images to Cloudinary
+    const processedProjects = await Promise.all(
+      projects.map(async (project) => {
+        const [beforePictureUrls, afterPictureUrls, pictureUrls] = await Promise.all([
+          project.beforePictures ? uploadImages(project.beforePictures) : [],
+          project.afterPictures ? uploadImages(project.afterPictures) : [],
+          project.pictures ? uploadImages(project.pictures) : [],
+        ]);
 
-          return {
-            title: project.title,
-            description: project.description,
-            beforeAfter: project.beforeAfter,
-            beforePictureUrls: beforePictureUrls.length > 0 ? beforePictureUrls : undefined,
-            afterPictureUrls: afterPictureUrls.length > 0 ? afterPictureUrls : undefined,
-            pictureUrls: pictureUrls.length > 0 ? pictureUrls : undefined,
-            clientFeedback: project.clientFeedback,
-          };
-        })
-      );
+        return {
+          title: project.title,
+          description: project.description,
+          beforeAfter: project.beforeAfter,
+          beforePictureUrls: beforePictureUrls.length > 0 ? beforePictureUrls : undefined,
+          afterPictureUrls: afterPictureUrls.length > 0 ? afterPictureUrls : undefined,
+          pictureUrls: pictureUrls.length > 0 ? pictureUrls : undefined,
+          clientFeedback: project.clientFeedback,
+        };
+      })
+    );
 
-      // Process storm services data 
-      const processedStormServices = stormServices.map((service) => ({
-        serviceName: service.name,
-        serviceDescription: service.description,
-        responseTime: service.responseTime,
-        insurancePartnership: service.insurancePartnership,
-      }));
+    // Process storm services data 
+    const processedStormServices = stormServices.map((service) => ({
+      serviceName: service.name,
+      serviceDescription: service.description,
+      responseTime: service.responseTime,
+      insurancePartnership: service.insurancePartnership,
+    }));
 
-      // Upload certification pictures
-      const certificationPictureUrls = certificationPictures ? await uploadImages(certificationPictures) : [];
+    // Upload certification pictures
+    const certificationPictureUrls = certificationPictures ? await uploadImages(certificationPictures) : [];
 
-      // Process installation process services with image uploads
-      const processedInstallationProcessServices = await Promise.all(
-        installationProcessServices.map(async (service) => {
-          const pictureUrls = service.pictures ? await uploadImages(service.pictures) : [];
-          return {
-            serviceName: service.serviceName,
-            steps: service.steps,
-            additionalNotes: service.additionalNotes,
-            pictureUrls: pictureUrls.length > 0 ? pictureUrls : undefined,
-          };
-        })
-      );
+    // Process installation process services with image uploads
+    const processedInstallationProcessServices = await Promise.all(
+      installationProcessServices.map(async (service) => {
+        const pictureUrls = service.pictures ? await uploadImages(service.pictures) : [];
+        return {
+          serviceName: service.serviceName,
+          steps: service.steps,
+          additionalNotes: service.additionalNotes,
+          pictureUrls: pictureUrls.length > 0 ? pictureUrls : undefined,
+        };
+      })
+    );
 
-      // Process the form data with uploaded image URLs
-      const processedData: InsertClientSubmission = {
-        ...data,
-        services: processedServices,
-        projects: processedProjects,
-        serviceAreas,
-        serviceAreasDescription: areaDescription,
-        financingOptions,
-        stormServices: processedStormServices,
-        brands,
-        certifications,
-        certificationPictureUrls,
-        installationProcessServices: processedInstallationProcessServices,
-        maintenanceTips,
-        warrantyTerms,
-      };
+    // Process the form data with uploaded image URLs (or empty arrays if uploads failed)
+    const processedData: InsertClientSubmission = {
+      ...data,
+      services: processedServices,
+      projects: processedProjects,
+      serviceAreas,
+      serviceAreasDescription: areaDescription,
+      financingOptions,
+      stormServices: processedStormServices,
+      brands,
+      certifications,
+      certificationPictureUrls,
+      installationProcessServices: processedInstallationProcessServices,
+      maintenanceTips,
+      warrantyTerms,
+    };
 
-      submitMutation.mutate(processedData);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to upload images. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Submit the form - this will send email regardless of image upload success/failure
+    submitMutation.mutate(processedData);
   };
 
   const addService = () => {
