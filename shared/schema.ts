@@ -54,6 +54,8 @@ export const clientSubmissions = pgTable("client_submissions", {
   warrantyDescription: text("warranty_description"),
   warrantyDuration: text("warranty_duration"),
   warrantyType: text("warranty_type"),
+  warrantyCoverageDetails: text("warranty_coverage_details"),
+  warrantyTerms: json("warranty_terms").$type<Array<string>>().default([]),
   warrantyAdditionalNotes: text("warranty_additional_notes"),
   hasInsurance: boolean("has_insurance").default(false),
   generalLiability: text("general_liability"),

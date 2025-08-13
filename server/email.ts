@@ -66,6 +66,12 @@ export interface EmailData {
   maintenanceTips?: Array<string> | null;
   hasRoofMaterials?: boolean | null;
   roofMaterialsSpecialties?: string | null;
+  hasWarranty?: boolean | null;
+  warrantyDuration?: string | null;
+  warrantyType?: string | null;
+  warrantyCoverageDetails?: string | null;
+  warrantyTerms?: Array<string> | null;
+  warrantyAdditionalNotes?: string | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -192,6 +198,16 @@ ${formData.maintenanceTips.map((tip, index) => `  ${index + 1}. ${tip}`).join('\
 Roof Materials and Brands: ${formData.hasRoofMaterials ? 'Yes' : 'No'}${formData.hasRoofMaterials && formData.roofMaterialsSpecialties ? `
 Specific materials and brands you specialize in:
 ${formData.roofMaterialsSpecialties}` : formData.hasRoofMaterials ? '\nNo specialties provided' : ''}
+
+Warranty Coverage: ${formData.hasWarranty ? 'Yes' : 'No'}${formData.hasWarranty ? `${formData.warrantyDuration ? `
+Warranty Duration: ${formData.warrantyDuration}` : ''}${formData.warrantyType ? `
+Warranty Type: ${formData.warrantyType}` : ''}${formData.warrantyCoverageDetails ? `
+Coverage Details:
+${formData.warrantyCoverageDetails}` : ''}${formData.warrantyTerms && formData.warrantyTerms.length > 0 ? `
+Warranty Terms and Conditions:
+${formData.warrantyTerms.map((term, index) => `  ${index + 1}. ${term}`).join('\n')}` : ''}${formData.warrantyAdditionalNotes ? `
+Additional Notes/Description:
+${formData.warrantyAdditionalNotes}` : ''}` : ''}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -393,6 +409,29 @@ This email was sent automatically from the client information form.`;
             <p style="line-height: 1.6; white-space: pre-wrap;">${formData.roofMaterialsSpecialties}</p>
           </div>` : 
           formData.hasRoofMaterials ? '<p>No specialties provided</p>' : ''
+        }
+        
+        <h3>Warranty Coverage:</h3>
+        <p><strong>Has Warranty Coverage:</strong> ${formData.hasWarranty ? 'Yes' : 'No'}</p>
+        ${formData.hasWarranty ? 
+          `<div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            ${formData.warrantyDuration ? `<p><strong>Warranty Duration:</strong> ${formData.warrantyDuration}</p>` : ''}
+            ${formData.warrantyType ? `<p><strong>Warranty Type:</strong> ${formData.warrantyType}</p>` : ''}
+            ${formData.warrantyCoverageDetails ? `
+              <p><strong>Coverage Details:</strong></p>
+              <p style="line-height: 1.6; white-space: pre-wrap;">${formData.warrantyCoverageDetails}</p>
+            ` : ''}
+            ${formData.warrantyTerms && formData.warrantyTerms.length > 0 ? `
+              <p><strong>Warranty Terms and Conditions:</strong></p>
+              <ol>
+                ${formData.warrantyTerms.map((term) => `<li style="margin-bottom: 8px;">${term}</li>`).join('')}
+              </ol>
+            ` : ''}
+            ${formData.warrantyAdditionalNotes ? `
+              <p><strong>Additional Notes/Description:</strong></p>
+              <p style="line-height: 1.6; white-space: pre-wrap;">${formData.warrantyAdditionalNotes}</p>
+            ` : ''}
+          </div>` : ''
         }
         
         <hr style="margin: 20px 0;">

@@ -334,6 +334,10 @@ export default function ClientForm() {
       projects: [],
       hasWarranty: false,
       warrantyDescription: "",
+      warrantyDuration: "",
+      warrantyType: "",
+      warrantyCoverageDetails: "",
+      warrantyAdditionalNotes: "",
       hasInsurance: false,
       generalLiability: "",
       workersCompensation: false,
@@ -455,6 +459,7 @@ export default function ClientForm() {
         certificationPictureUrls,
         installationProcessServices: processedInstallationProcessServices,
         maintenanceTips,
+        warrantyTerms,
       };
 
       submitMutation.mutate(processedData);
