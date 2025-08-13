@@ -115,6 +115,8 @@ export const clientSubmissions = pgTable("client_submissions", {
   roofMaterialsDetails: text("roof_materials_details"),
   roofMaterialsSpecialties: text("roof_materials_specialties"),
   
+  // Notes/Additional Features
+  hasAdditionalNotes: boolean("has_additional_notes").default(false),
   additionalNotes: text("additional_notes"),
   
   createdAt: text("created_at").default(sql`NOW()`),

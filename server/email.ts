@@ -10,7 +10,6 @@ export interface EmailData {
   hasEmergencyServices?: boolean | null;
   hasEmergencyPhone?: boolean | null;
   emergencyPhone?: string | null;
-  additionalNotes?: string | null;
   enableAboutModifications?: boolean | null;
   companyStory?: string | null;
   uniqueSellingPoints?: string | null;
@@ -77,6 +76,8 @@ export interface EmailData {
   workersCompensation?: boolean | null;
   bondedAmount?: string | null;
   additionalCoverage?: string | null;
+  hasAdditionalNotes?: boolean | null;
+  additionalNotes?: string | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -219,6 +220,10 @@ General Liability Amount: ${formData.generalLiability}` : ''}${formData.bondedAm
 Bonded Amount: ${formData.bondedAmount}` : ''}
 Workers' Compensation Insurance: ${formData.workersCompensation !== undefined && formData.workersCompensation !== null ? (formData.workersCompensation ? 'Yes' : 'No') : 'Not provided'}${formData.additionalCoverage ? `
 Additional Coverage: ${formData.additionalCoverage}` : ''}` : ''}
+
+Notes/Additional Features: ${formData.hasAdditionalNotes ? 'Yes' : 'No'}${formData.hasAdditionalNotes && formData.additionalNotes ? `
+
+${formData.additionalNotes}` : formData.hasAdditionalNotes ? '\nNo additional notes provided' : ''}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -453,6 +458,14 @@ This email was sent automatically from the client information form.`;
             ${formData.bondedAmount ? `<p><strong>Bonded Amount:</strong> ${formData.bondedAmount}</p>` : ''}
             <p><strong>Workers' Compensation Insurance:</strong> ${formData.workersCompensation !== undefined && formData.workersCompensation !== null ? (formData.workersCompensation ? 'Yes' : 'No') : 'Not provided'}</p>
             ${formData.additionalCoverage ? `<p><strong>Additional Coverage:</strong> ${formData.additionalCoverage}</p>` : ''}
+          </div>` : ''
+        }
+        
+        <h3>Notes/Additional Features:</h3>
+        <p><strong>Has Additional Notes:</strong> ${formData.hasAdditionalNotes ? 'Yes' : 'No'}</p>
+        ${formData.hasAdditionalNotes ? 
+          `<div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            ${formData.additionalNotes ? `<p style="line-height: 1.6; white-space: pre-wrap;">${formData.additionalNotes}</p>` : '<p>No additional notes provided</p>'}
           </div>` : ''
         }
         

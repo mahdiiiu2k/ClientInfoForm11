@@ -64,7 +64,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
           hasEmergencyServices: validatedData.hasEmergencyServices,
           hasEmergencyPhone: validatedData.hasEmergencyPhone,
           emergencyPhone: validatedData.emergencyPhone,
-          additionalNotes: validatedData.additionalNotes,
           enableAboutModifications: validatedData.enableAboutModifications,
           companyStory: validatedData.companyStory,
           uniqueSellingPoints: validatedData.uniqueSellingPoints,
@@ -131,6 +130,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           workersCompensation: validatedData.workersCompensation,
           bondedAmount: validatedData.bondedAmount,
           additionalCoverage: validatedData.additionalCoverage,
+          hasAdditionalNotes: validatedData.hasAdditionalNotes,
+          additionalNotes: validatedData.additionalNotes,
         });
         console.log('Email sent successfully');
       } catch (emailError) {
