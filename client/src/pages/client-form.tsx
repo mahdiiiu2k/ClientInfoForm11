@@ -3679,14 +3679,18 @@ export default function ClientForm() {
                   <div className="border border-slate-200 rounded-lg bg-slate-100">
                     <div 
                       className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
-                      onClick={() => setShowWarrantySection(!showWarrantySection)}
+                      onClick={() => {
+                        const currentValue = form.getValues("hasWarranty");
+                        form.setValue("hasWarranty", !currentValue);
+                        setShowWarrantySection(!currentValue);
+                      }}
                     >
                       <div className="flex items-center justify-between">
                         <h3 className="flex items-center text-xl font-semibold text-slate-800">
                           <BadgeCheck className="text-primary mr-3 h-5 w-5" />
                           Warranty Coverage (optional)
                         </h3>
-                        {showWarrantySection ? (
+                        {form.watch("hasWarranty") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
                           <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
@@ -3695,7 +3699,7 @@ export default function ClientForm() {
                     </div>
                     
                     <AnimatePresence>
-                      {showWarrantySection && (
+                      {form.watch("hasWarranty") && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
