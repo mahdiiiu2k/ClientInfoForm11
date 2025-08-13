@@ -31,6 +31,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           companyStory: validatedData.companyStory,
           uniqueSellingPoints: validatedData.uniqueSellingPoints,
           specialties: validatedData.specialties,
+          services: validatedData.services,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

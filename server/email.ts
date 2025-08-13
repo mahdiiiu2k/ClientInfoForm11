@@ -15,6 +15,12 @@ export interface EmailData {
   companyStory?: string | null;
   uniqueSellingPoints?: string | null;
   specialties?: string | null;
+  services?: Array<{
+    name?: string;
+    description?: string;
+    steps?: string;
+    picture?: string;
+  }> | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -65,6 +71,14 @@ Company Story/Background: ${formData.companyStory || 'Not provided'}
 What Sets You Apart: ${formData.uniqueSellingPoints || 'Not provided'}
 
 Specific Specialties: ${formData.specialties || 'Not provided'}` : ''}
+
+Services: ${formData.services && formData.services.length > 0 ? `
+${formData.services.map((service, index) => `
+Service ${index + 1}:
+  Name: ${service.name || 'Not provided'}
+  Description: ${service.description || 'Not provided'}
+  Executing Steps: ${service.steps || 'Not provided'}
+  Service Picture: ${service.picture || 'Not provided'}`).join('\n')}` : 'No services added'}
 
 ---
 This email was sent automatically from the client information form.`;
