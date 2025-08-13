@@ -357,6 +357,7 @@ export default function ClientForm() {
       maintenanceGuide: "",
       hasRoofMaterials: false,
       roofMaterialsDetails: "",
+      roofMaterialsSpecialties: "",
     },
   });
 
@@ -3645,17 +3646,17 @@ export default function ClientForm() {
                         >
                           <FormField
                             control={form.control}
-                            name="roofMaterialsDetails"
+                            name="roofMaterialsSpecialties"
                             render={({ field }) => (
                               <FormItem>
                                 <FormLabel>Specific materials and brands you specialize in</FormLabel>
                                 <FormControl>
                                   <Textarea 
                                     rows={3}
-                                    placeholder="List the materials and brands you specialize in..." 
+                                    placeholder="e.g., GAF shingles, CertainTeed roofing, Owens Corning materials, metal roofing specialists..." 
                                     {...field} 
                                     value={field.value || ""} 
-                                    data-testid="textarea-roof-materials"
+                                    data-testid="textarea-roof-materials-specialties"
                                   />
                                 </FormControl>
                                 <FormMessage />

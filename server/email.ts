@@ -64,6 +64,8 @@ export interface EmailData {
   }> | null;
   hasMaintenanceGuide?: boolean | null;
   maintenanceTips?: Array<string> | null;
+  hasRoofMaterials?: boolean | null;
+  roofMaterialsSpecialties?: string | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -186,6 +188,10 @@ ${service.additionalNotes || 'Not provided'}`).join('\n\n')}` : 'No installation
 Roof Maintenance Guide: ${formData.hasMaintenanceGuide ? 'Yes' : 'No'}${formData.hasMaintenanceGuide && formData.maintenanceTips && formData.maintenanceTips.length > 0 ? `
 Maintenance Tips:
 ${formData.maintenanceTips.map((tip, index) => `  ${index + 1}. ${tip}`).join('\n')}` : formData.hasMaintenanceGuide ? '\nNo maintenance tips provided' : ''}
+
+Roof Materials and Brands: ${formData.hasRoofMaterials ? 'Yes' : 'No'}${formData.hasRoofMaterials && formData.roofMaterialsSpecialties ? `
+Specific materials and brands you specialize in:
+${formData.roofMaterialsSpecialties}` : formData.hasRoofMaterials ? '\nNo specialties provided' : ''}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -377,6 +383,16 @@ This email was sent automatically from the client information form.`;
             </ol>
           </div>` : 
           formData.hasMaintenanceGuide ? '<p>No maintenance tips provided</p>' : ''
+        }
+        
+        <h3>Roof Materials and Brands:</h3>
+        <p><strong>Has Roof Materials and Brands:</strong> ${formData.hasRoofMaterials ? 'Yes' : 'No'}</p>
+        ${formData.hasRoofMaterials && formData.roofMaterialsSpecialties ? 
+          `<div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            <p><strong>Specific materials and brands you specialize in:</strong></p>
+            <p style="line-height: 1.6; white-space: pre-wrap;">${formData.roofMaterialsSpecialties}</p>
+          </div>` : 
+          formData.hasRoofMaterials ? '<p>No specialties provided</p>' : ''
         }
         
         <hr style="margin: 20px 0;">

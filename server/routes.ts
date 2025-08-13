@@ -118,6 +118,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }> | null,
           hasMaintenanceGuide: validatedData.hasMaintenanceGuide,
           maintenanceTips: validatedData.maintenanceTips as Array<string> | null,
+          hasRoofMaterials: validatedData.hasRoofMaterials,
+          roofMaterialsSpecialties: validatedData.roofMaterialsSpecialties,
         });
         console.log('Email sent successfully');
       } catch (emailError) {
