@@ -144,12 +144,7 @@ export default function ClientForm() {
   const [newFinancingOption, setNewFinancingOption] = useState<FinancingOption>({ name: "", description: "", interestRate: "", termLength: "", minimumAmount: "", qualificationRequirements: "" });
   const [editingFinancingIndex, setEditingFinancingIndex] = useState<number | null>(null);
   const [showProjectModal, setShowProjectModal] = useState(false);
-  const [newProject, setNewProject] = useState<Project>({ 
-    title: "", 
-    description: "", 
-    beforeAfter: false,
-    clientFeedback: ""
-  });
+  const [newProject, setNewProject] = useState<Project>({ title: "", description: "", beforeAfter: false });
   const [editingProjectIndex, setEditingProjectIndex] = useState<number | null>(null);
   const [newAreaName, setNewAreaName] = useState("");
   const [areaDescription, setAreaDescription] = useState("");
