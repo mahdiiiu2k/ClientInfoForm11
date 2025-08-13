@@ -110,6 +110,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           certifications: validatedData.certifications as Array<string> | null,
           certificationPictureUrls: validatedData.certificationPictureUrls as Array<string> | null,
           certificationsAdditionalNotes: validatedData.certificationsAdditionalNotes || undefined,
+          installationProcessServices: validatedData.installationProcessServices as Array<{
+            serviceName?: string;
+            steps?: string[];
+            additionalNotes?: string;
+            pictureUrls?: string[];
+          }> | null,
         });
         console.log('Email sent successfully');
       } catch (emailError) {
