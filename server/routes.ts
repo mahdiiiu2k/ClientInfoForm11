@@ -23,6 +23,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           licenseNumber: validatedData.licenseNumber,
           businessAddress: validatedData.businessAddress,
           businessHours: validatedData.businessHours,
+          hasEmergencyServices: validatedData.hasEmergencyServices,
+          hasEmergencyPhone: validatedData.hasEmergencyPhone,
+          emergencyPhone: validatedData.emergencyPhone,
         });
         console.log('Email sent successfully');
       } catch (emailError) {
