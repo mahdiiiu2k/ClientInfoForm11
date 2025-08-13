@@ -56,6 +56,12 @@ export interface EmailData {
   certifications?: Array<string> | null;
   certificationPictureUrls?: Array<string> | null;
   certificationsAdditionalNotes?: string | null;
+  installationProcessServices?: Array<{
+    serviceName?: string;
+    steps?: Array<string>;
+    additionalNotes?: string;
+    pictureUrls?: Array<string>;
+  }> | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -163,6 +169,17 @@ Certification Pictures: ${formData.certificationPictureUrls && formData.certific
 
 Additional Notes About Certifications & Awards:
 ${formData.certificationsAdditionalNotes || 'Not provided'}` : 'No certifications added'}
+
+Installation Process: ${formData.installationProcessServices && formData.installationProcessServices.length > 0 ? `
+${formData.installationProcessServices.map((service, index) => `
+Service ${index + 1}: ${service.serviceName || 'Untitled Service'}
+Steps:
+${service.steps && service.steps.length > 0 ? service.steps.map((step, stepIndex) => `  ${stepIndex + 1}. ${step}`).join('\n') : '  No steps provided'}
+
+Installation Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ? service.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n') : 'No pictures provided'}
+
+Additional Notes About Installation Process:
+${service.additionalNotes || 'Not provided'}`).join('\n\n')}` : 'No installation process services added'}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -320,6 +337,28 @@ This email was sent automatically from the client information form.`;
             <p>${formData.certificationsAdditionalNotes || 'Not provided'}</p>
           </div>` : 
           '<p>No certifications added</p>'
+        }
+        
+        <h3>Installation Process:</h3>
+        ${formData.installationProcessServices && formData.installationProcessServices.length > 0 ? 
+          formData.installationProcessServices.map((service, index) => `
+            <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+              <h4>Service ${index + 1}: ${service.serviceName || 'Untitled Service'}</h4>
+              <p><strong>Installation Steps:</strong></p>
+              ${service.steps && service.steps.length > 0 ? 
+                `<ol>${service.steps.map((step) => `<li>${step}</li>`).join('')}</ol>` : 
+                '<p>No steps provided</p>'
+              }
+              <p><strong>Installation Pictures:</strong></p>
+              ${service.pictureUrls && service.pictureUrls.length > 0 ? 
+                `<ul>${service.pictureUrls.map((url, i) => `<li><a href="${url}" target="_blank" style="color: #2563eb; text-decoration: none;">Installation Picture ${i + 1} - View Image</a></li>`).join('')}</ul>` : 
+                '<p>No pictures provided</p>'
+              }
+              <p><strong>Additional Notes About Installation Process:</strong></p>
+              <p>${service.additionalNotes || 'Not provided'}</p>
+            </div>
+          `).join('') : 
+          '<p>No installation process services added</p>'
         }
         
         <hr style="margin: 20px 0;">

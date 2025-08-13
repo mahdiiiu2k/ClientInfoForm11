@@ -100,7 +100,12 @@ export const clientSubmissions = pgTable("client_submissions", {
   certificationPictureUrls: json("certification_picture_urls").$type<Array<string>>().default([]),
   certificationsAdditionalNotes: text("certifications_additional_notes"),
   hasInstallationProcess: boolean("has_installation_process").default(false),
-  installationProcessDetails: text("installation_process_details"),
+  installationProcessServices: json("installation_process_services").$type<Array<{
+    serviceName: string;
+    steps: Array<string>;
+    additionalNotes?: string;
+    pictureUrls?: Array<string>;
+  }>>().default([]),
   hasMaintenanceGuide: boolean("has_maintenance_guide").default(false),
   maintenanceGuide: text("maintenance_guide"),
   hasRoofMaterials: boolean("has_roof_materials").default(false),
@@ -138,7 +143,6 @@ export const insertClientSubmissionSchema = createInsertSchema(clientSubmissions
   stormServiceDetails: z.string().nullable().optional(),
   brandsAdditionalNotes: z.string().nullable().optional(),
   certificationsAdditionalNotes: z.string().nullable().optional(),
-  installationProcessDetails: z.string().nullable().optional(),
   maintenanceGuide: z.string().nullable().optional(),
   roofMaterialsDetails: z.string().nullable().optional(),
   additionalNotes: z.string().nullable().optional(),
