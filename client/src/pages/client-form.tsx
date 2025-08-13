@@ -45,6 +45,28 @@ const formSchema = insertClientSubmissionSchema.extend({
 
 type FormData = z.infer<typeof formSchema>;
 
+// Utility function to upload images to Cloudinary
+const uploadImages = async (files: FileList): Promise<string[]> => {
+  if (!files || files.length === 0) return [];
+  
+  const formData = new FormData();
+  Array.from(files).forEach((file) => {
+    formData.append('images', file);
+  });
+
+  const response = await fetch('/api/upload-images', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to upload images');
+  }
+
+  const result = await response.json();
+  return result.imageUrls;
+};
+
 interface Service {
   name: string;
   description: string;
@@ -179,7 +201,7 @@ export default function ClientForm() {
   const businessHoursTooltipRef = useRef<HTMLDivElement>(null);
 
   // Service Steps state
-  const [serviceSteps, setServiceSteps] = useState<Array<{serviceName: string; steps: string[]; additionalNotes: string; pictures?: FileList | null}>>([]);
+  const [serviceSteps, setServiceSteps] = useState<Array<{serviceName: string; steps: string[]; additionalNotes: string; pictures: FileList | null}>>([]);
   const [isServiceStepsModalOpen, setIsServiceStepsModalOpen] = useState(false);
   const [newServiceStep, setNewServiceStep] = useState({
     serviceName: "",
@@ -335,29 +357,58 @@ export default function ClientForm() {
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    // Process file uploads and convert to the expected format
-    const processedData: InsertClientSubmission = {
-      ...data,
-      services: services.map(service => ({
-        name: service.name,
-        description: service.description,
-        steps: service.steps,
-        pictureUrls: service.pictures ? Array.from(service.pictures).map(f => f.name) : undefined
-      })),
-      projects: projects.map(project => ({
-        title: project.title,
-        description: project.description,
-        beforeAfter: project.beforeAfter,
-        beforePictureUrls: project.beforePictures ? Array.from(project.beforePictures).map(f => f.name) : undefined,
-        afterPictureUrls: project.afterPictures ? Array.from(project.afterPictures).map(f => f.name) : undefined,
-        pictureUrls: project.pictures ? Array.from(project.pictures).map(f => f.name) : undefined,
-        clientFeedback: project.clientFeedback,
-      })),
-      serviceAreas,
-    };
+  const onSubmit = async (data: FormData) => {
+    try {
+      // Upload all service images to Cloudinary first
+      const processedServices = await Promise.all(
+        services.map(async (service) => {
+          const pictureUrls = service.pictures ? await uploadImages(service.pictures) : [];
+          return {
+            name: service.name,
+            description: service.description,
+            steps: service.steps,
+            pictureUrls: pictureUrls.length > 0 ? pictureUrls : undefined,
+          };
+        })
+      );
 
-    submitMutation.mutate(processedData);
+      // Upload all project images to Cloudinary
+      const processedProjects = await Promise.all(
+        projects.map(async (project) => {
+          const [beforePictureUrls, afterPictureUrls, pictureUrls] = await Promise.all([
+            project.beforePictures ? uploadImages(project.beforePictures) : [],
+            project.afterPictures ? uploadImages(project.afterPictures) : [],
+            project.pictures ? uploadImages(project.pictures) : [],
+          ]);
+
+          return {
+            title: project.title,
+            description: project.description,
+            beforeAfter: project.beforeAfter,
+            beforePictureUrls: beforePictureUrls.length > 0 ? beforePictureUrls : undefined,
+            afterPictureUrls: afterPictureUrls.length > 0 ? afterPictureUrls : undefined,
+            pictureUrls: pictureUrls.length > 0 ? pictureUrls : undefined,
+            clientFeedback: project.clientFeedback,
+          };
+        })
+      );
+
+      // Process the form data with uploaded image URLs
+      const processedData: InsertClientSubmission = {
+        ...data,
+        services: processedServices,
+        projects: processedProjects,
+        serviceAreas,
+      };
+
+      submitMutation.mutate(processedData);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to upload images. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const addService = () => {

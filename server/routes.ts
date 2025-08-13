@@ -4,8 +4,46 @@ import { storage } from "./storage";
 import { insertClientSubmissionSchema } from "@shared/schema";
 import { z } from "zod";
 import { sendFormEmail } from "./email";
+import { uploadImage } from "./cloudinary";
+import multer from "multer";
+
+// Configure multer for file uploads
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'));
+    }
+  },
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Image upload endpoint
+  app.post("/api/upload-images", upload.array('images', 10), async (req, res) => {
+    try {
+      if (!req.files || !Array.isArray(req.files)) {
+        return res.status(400).json({ message: "No files uploaded" });
+      }
+
+      const uploadPromises = req.files.map(async (file) => {
+        const fileName = `${Date.now()}-${file.originalname}`;
+        const cloudinaryUrl = await uploadImage(file.buffer, fileName);
+        return cloudinaryUrl;
+      });
+
+      const imageUrls = await Promise.all(uploadPromises);
+      res.json({ success: true, imageUrls });
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      res.status(500).json({ message: "Failed to upload images" });
+    }
+  });
+
   // Client submission endpoint
   app.post("/api/client-submissions", async (req, res) => {
     try {
@@ -31,7 +69,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           companyStory: validatedData.companyStory,
           uniqueSellingPoints: validatedData.uniqueSellingPoints,
           specialties: validatedData.specialties,
-          services: validatedData.services,
+          services: validatedData.services as Array<{
+            name?: string;
+            description?: string;
+            steps?: string;
+            picture?: string;
+            pictureUrls?: string[];
+          }> | null,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

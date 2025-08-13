@@ -79,7 +79,7 @@ Service ${index + 1}:
   Name: ${service.name || 'Not provided'}
   Description: ${service.description || 'Not provided'}
   Executing Steps: ${service.steps || 'Not provided'}
-  Service Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ? service.pictureUrls.join(', ') : (service.picture || 'Not provided')}`).join('\n')}` : 'No services added'}
+  Service Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ? service.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n    ') : 'No pictures provided'}`).join('\n')}` : 'No services added'}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -87,12 +87,64 @@ This email was sent automatically from the client information form.`;
     // Also log the email content to verify what's being sent
     console.log('Email content being sent:', emailContent);
 
+    // Create HTML version with clickable links
+    const htmlContent = `<html>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <h2 style="color: #2563eb;">New Client Information Submission</h2>
+        
+        <h3>FORM SUBMISSION DATA:</h3>
+        
+        <p><strong>Years of Experience:</strong> ${formData.yearsOfExperience || 'Not provided'} ${formData.yearsOfExperience ? 'years' : ''}</p>
+        
+        <p><strong>Business Email Address:</strong> ${formData.businessEmail || 'Not provided'}</p>
+        
+        <p><strong>Do you have a license number?:</strong> ${formData.hasLicense !== undefined && formData.hasLicense !== null ? (formData.hasLicense ? 'Yes' : 'No') : 'Not provided'}${formData.hasLicense && formData.licenseNumber ? `<br><strong>License Number:</strong> ${formData.licenseNumber}` : ''}</p>
+        
+        <p><strong>Office/Business Address:</strong> ${formData.businessAddress || 'Not provided'}</p>
+        
+        <p><strong>Business Hours:</strong> ${formData.businessHours || 'Not provided'}</p>
+        
+        <p><strong>Do you offer emergency services?:</strong> ${formData.hasEmergencyServices !== undefined && formData.hasEmergencyServices !== null ? (formData.hasEmergencyServices ? 'Yes' : 'No') : 'Not provided'}${formData.hasEmergencyServices ? `<br><strong>Do you have a specific phone number for emergencies?:</strong> ${formData.hasEmergencyPhone !== undefined && formData.hasEmergencyPhone !== null ? (formData.hasEmergencyPhone ? 'Yes' : 'No') : 'Not provided'}${formData.hasEmergencyPhone && formData.emergencyPhone ? `<br><strong>Emergency Phone Number:</strong> ${formData.emergencyPhone}` : ''}` : ''}</p>
+        
+        <p><strong>Additional Notes:</strong> ${formData.additionalNotes || 'Not provided'}</p>
+        
+        <p><strong>About Us Section Customization:</strong> ${formData.enableAboutModifications !== undefined && formData.enableAboutModifications !== null ? (formData.enableAboutModifications ? 'Yes' : 'No') : 'Not provided'}${formData.enableAboutModifications ? `
+        
+        <br><strong>Company Story/Background:</strong> ${formData.companyStory || 'Not provided'}
+        
+        <br><strong>What Sets You Apart:</strong> ${formData.uniqueSellingPoints || 'Not provided'}
+        
+        <br><strong>Specific Specialties:</strong> ${formData.specialties || 'Not provided'}` : ''}</p>
+        
+        <h3>Services:</h3>
+        ${formData.services && formData.services.length > 0 ? 
+          formData.services.map((service, index) => `
+            <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+              <h4>Service ${index + 1}:</h4>
+              <p><strong>Name:</strong> ${service.name || 'Not provided'}</p>
+              <p><strong>Description:</strong> ${service.description || 'Not provided'}</p>
+              <p><strong>Executing Steps:</strong> ${service.steps || 'Not provided'}</p>
+              <p><strong>Service Pictures:</strong></p>
+              ${service.pictureUrls && service.pictureUrls.length > 0 ? 
+                `<ul>${service.pictureUrls.map((url, i) => `<li><a href="${url}" target="_blank" style="color: #2563eb; text-decoration: none;">Picture ${i + 1} - View Image</a></li>`).join('')}</ul>` : 
+                '<p>No pictures provided</p>'
+              }
+            </div>
+          `).join('') : 
+          '<p>No services added</p>'
+        }
+        
+        <hr style="margin: 20px 0;">
+        <p style="font-style: italic; color: #666;">This email was sent automatically from the client information form.</p>
+      </body>
+    </html>`;
+
     const mailOptions = {
       from: 'chouikimahdiabderrahmane@gmail.com',
       to: 'mahdiabd731@gmail.com',
       subject: 'New Client Information Form Submission',
       text: emailContent,
-      html: `<html><body><pre>${emailContent}</pre></body></html>`,
+      html: htmlContent,
     };
 
     await transporter.sendMail(mailOptions);
