@@ -199,6 +199,7 @@ export default function ClientForm() {
   const [newInstallationStepInput, setNewInstallationStepInput] = useState("");
   const [isInstallationProcessModalOpen, setIsInstallationProcessModalOpen] = useState(false);
   const [serviceSteps, setServiceSteps] = useState<any[]>([]);
+  const [editingStepValue, setEditingStepValue] = useState("");
   const [showServiceDescTooltip, setShowServiceDescTooltip] = useState(false);
   const [serviceDescHoverTimeout, setServiceDescHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [serviceDescTooltipClickedOpen, setServiceDescTooltipClickedOpen] = useState(false);
@@ -231,9 +232,6 @@ export default function ClientForm() {
   const [businessHoursHoverTimeout, setBusinessHoursHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [businessHoursTooltipClickedOpen, setBusinessHoursTooltipClickedOpen] = useState(false);
   const businessHoursTooltipRef = useRef<HTMLDivElement>(null);
-
-
-  const [editingStepValue, setEditingStepValue] = useState("");
   
   // Maintenance Tips state
   const [maintenanceTips, setMaintenanceTips] = useState<string[]>([]);
@@ -599,9 +597,9 @@ export default function ClientForm() {
   // Function to add step from input
   const addStepFromInput = () => {
     if (newStepInput.trim()) {
-      setNewInstallationProcessService({
-        ...newInstallationProcessService,
-        steps: [...newInstallationProcessService.steps, newStepInput.trim()]
+      setNewServiceStep({
+        ...newServiceStep,
+        steps: [...newServiceStep.steps, newStepInput.trim()]
       });
       setNewStepInput("");
     }
@@ -717,18 +715,25 @@ export default function ClientForm() {
   };
 
   const addServiceStepFromModal = () => {
-    if (newInstallationProcessService.serviceName && newInstallationProcessService.steps.length > 0) {
-      if (editingInstallationProcessIndex !== null) {
-        // Update existing installation process service
-        const updatedServices = [...installationProcessServices];
-        updatedServices[editingInstallationProcessIndex] = { ...newInstallationProcessService };
-        setInstallationProcessServices(updatedServices);
-        setEditingInstallationProcessIndex(null);
+    if (newServiceStep.serviceName && newServiceStep.steps.length > 0) {
+      if (editingServiceStepIndex !== null) {
+        // Update existing service step
+        const updatedServices = [...serviceSteps];
+        updatedServices[editingServiceStepIndex] = { ...newServiceStep };
+        setServiceSteps(updatedServices);
+        setEditingServiceStepIndex(null);
       } else {
-        // Add new installation process service
-        setInstallationProcessServices([...installationProcessServices, { ...newInstallationProcessService }]);
+        // Add new service step
+        setServiceSteps([...serviceSteps, { ...newServiceStep }]);
       }
-      setNewInstallationProcessService({ serviceName: "", steps: [], additionalNotes: "" });
+      setNewServiceStep({ 
+        description: "", 
+        images: [] as string[], 
+        serviceName: "", 
+        steps: [] as string[], 
+        additionalNotes: "", 
+        pictures: undefined as FileList | undefined 
+      });
       setNewStepInput("");
       setIsServiceStepsModalOpen(false);
     }
@@ -755,14 +760,14 @@ export default function ClientForm() {
   // Edit step inline
   const startEditingStep = (index: number) => {
     setEditingStepIndex(index);
-    setEditingStepValue(newInstallationProcessService.steps[index]);
+    setEditingStepValue(newServiceStep.steps[index]);
   };
 
   const saveEditingStep = (index: number) => {
     if (editingStepValue.trim()) {
-      const updatedSteps = [...newInstallationProcessService.steps];
+      const updatedSteps = [...newServiceStep.steps];
       updatedSteps[index] = editingStepValue.trim();
-      setNewInstallationProcessService({...newInstallationProcessService, steps: updatedSteps});
+      setNewServiceStep({...newServiceStep, steps: updatedSteps});
     }
     setEditingStepIndex(null);
     setEditingStepValue("");
@@ -771,6 +776,12 @@ export default function ClientForm() {
   const cancelEditingStep = () => {
     setEditingStepIndex(null);
     setEditingStepValue("");
+  };
+
+  // Remove step from newServiceStep
+  const removeStepFromNewService = (index: number) => {
+    const updatedSteps = newServiceStep.steps.filter((_, i) => i !== index);
+    setNewServiceStep({...newServiceStep, steps: updatedSteps});
   };
 
   // Move step to first position
@@ -3087,9 +3098,9 @@ export default function ClientForm() {
                                 <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-hidden flex flex-col">
                                   <DialogHeader className="flex-shrink-0">
                                     <DialogTitle>
-                                      {editingInstallationProcessIndex !== null 
-                                        ? `Service Steps #${editingInstallationProcessIndex + 1}` 
-                                        : `Service Steps #${installationProcessServices.length + 1}`
+                                      {editingServiceStepIndex !== null 
+                                        ? `Service Steps #${editingServiceStepIndex + 1}` 
+                                        : `Service Steps #${serviceSteps.length + 1}`
                                       }
                                     </DialogTitle>
                                   </DialogHeader>
@@ -3102,8 +3113,8 @@ export default function ClientForm() {
                                         <Input
                                           id="serviceName"
                                           placeholder="e.g., Roof Installation, Repair Process"
-                                          value={newInstallationProcessService.serviceName}
-                                          onChange={(e) => setNewInstallationProcessService({...newInstallationProcessService, serviceName: e.target.value})}
+                                          value={newServiceStep.serviceName}
+                                          onChange={(e) => setNewServiceStep({...newServiceStep, serviceName: e.target.value})}
                                         />
                                       </div>
                                       
@@ -3131,10 +3142,10 @@ export default function ClientForm() {
                                       </div>
 
                                       {/* Display Added Steps */}
-                                      {newInstallationProcessService.steps.length > 0 && (
+                                      {newServiceStep.steps.length > 0 && (
                                         <div className="space-y-2 mb-4">
                                           <Label>Added Steps</Label>
-                                          {newInstallationProcessService.steps.map((step, index) => (
+                                          {newServiceStep.steps.map((step, index) => (
                                               <motion.div
                                                 key={index}
                                                 initial={{ opacity: 0, y: -10 }}
@@ -3225,7 +3236,7 @@ export default function ClientForm() {
                                                       size="sm"
                                                       onClick={(e) => {
                                                         e.stopPropagation();
-                                                        removeStepFromService(index);
+                                                        removeStepFromNewService(index);
                                                       }}
                                                       className="text-red-500 hover:text-red-700 hover:bg-red-50"
                                                       title="Delete step"
