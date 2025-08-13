@@ -108,6 +108,7 @@ export const clientSubmissions = pgTable("client_submissions", {
   }>>().default([]),
   hasMaintenanceGuide: boolean("has_maintenance_guide").default(false),
   maintenanceGuide: text("maintenance_guide"),
+  maintenanceTips: json("maintenance_tips").$type<Array<string>>().default([]),
   hasRoofMaterials: boolean("has_roof_materials").default(false),
   roofMaterialsDetails: text("roof_materials_details"),
   

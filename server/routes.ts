@@ -116,6 +116,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             additionalNotes?: string;
             pictureUrls?: string[];
           }> | null,
+          hasMaintenanceGuide: validatedData.hasMaintenanceGuide,
+          maintenanceTips: validatedData.maintenanceTips as Array<string> | null,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

@@ -453,6 +453,7 @@ export default function ClientForm() {
         certifications,
         certificationPictureUrls,
         installationProcessServices: processedInstallationProcessServices,
+        maintenanceTips,
       };
 
       submitMutation.mutate(processedData);

@@ -62,6 +62,8 @@ export interface EmailData {
     additionalNotes?: string;
     pictureUrls?: Array<string>;
   }> | null;
+  hasMaintenanceGuide?: boolean | null;
+  maintenanceTips?: Array<string> | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -180,6 +182,10 @@ Installation Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ?
 
 Additional Notes About Installation Process:
 ${service.additionalNotes || 'Not provided'}`).join('\n\n')}` : 'No installation process services added'}
+
+Roof Maintenance Guide: ${formData.hasMaintenanceGuide ? 'Yes' : 'No'}${formData.hasMaintenanceGuide && formData.maintenanceTips && formData.maintenanceTips.length > 0 ? `
+Maintenance Tips:
+${formData.maintenanceTips.map((tip, index) => `  ${index + 1}. ${tip}`).join('\n')}` : formData.hasMaintenanceGuide ? '\nNo maintenance tips provided' : ''}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -359,6 +365,18 @@ This email was sent automatically from the client information form.`;
             </div>
           `).join('') : 
           '<p>No installation process services added</p>'
+        }
+        
+        <h3>Roof Maintenance Guide:</h3>
+        <p><strong>Has Maintenance Guide:</strong> ${formData.hasMaintenanceGuide ? 'Yes' : 'No'}</p>
+        ${formData.hasMaintenanceGuide && formData.maintenanceTips && formData.maintenanceTips.length > 0 ? 
+          `<div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            <p><strong>Maintenance Tips:</strong></p>
+            <ol>
+              ${formData.maintenanceTips.map((tip) => `<li style="margin-bottom: 8px;">${tip}</li>`).join('')}
+            </ol>
+          </div>` : 
+          formData.hasMaintenanceGuide ? '<p>No maintenance tips provided</p>' : ''
         }
         
         <hr style="margin: 20px 0;">
