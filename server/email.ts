@@ -51,6 +51,8 @@ export interface EmailData {
     responseTime?: string;
     insurancePartnership?: string;
   }> | null;
+  brands?: Array<string> | null;
+  brandsAdditionalNotes?: string | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -144,6 +146,12 @@ Service ${index + 1}:
   Service Description: ${service.serviceDescription || 'Not provided'}
   Response Time: ${service.responseTime || 'Not provided'}
   Insurance Partnership: ${service.insurancePartnership || 'Not provided'}`).join('\n')}` : 'No storm services added'}
+
+Brands You Work With: ${formData.brands && formData.brands.length > 0 ? `
+${formData.brands.map((brand, index) => `- ${brand}`).join('\n')}
+
+Additional Notes About Brand Partnerships:
+${formData.brandsAdditionalNotes || 'Not provided'}` : 'No brands added'}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -270,6 +278,19 @@ This email was sent automatically from the client information form.`;
             </div>
           `).join('') : 
           '<p>No storm services added</p>'
+        }
+        
+        <h3>Brands You Work With:</h3>
+        ${formData.brands && formData.brands.length > 0 ? 
+          `<div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            <h4>Brand List:</h4>
+            <ul>
+              ${formData.brands.map((brand) => `<li>${brand}</li>`).join('')}
+            </ul>
+            <p><strong>Additional Notes About Brand Partnerships:</strong></p>
+            <p>${formData.brandsAdditionalNotes || 'Not provided'}</p>
+          </div>` : 
+          '<p>No brands added</p>'
         }
         
         <hr style="margin: 20px 0;">

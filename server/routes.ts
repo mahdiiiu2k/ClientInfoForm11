@@ -105,6 +105,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             responseTime?: string;
             insurancePartnership?: string;
           }> | null,
+          brands: validatedData.brands as Array<string> | null,
+          brandsAdditionalNotes: validatedData.brandsAdditionalNotes || undefined,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

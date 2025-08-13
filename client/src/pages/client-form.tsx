@@ -327,7 +327,8 @@ export default function ClientForm() {
       hasStormServices: false,
       stormServiceDetails: "",
       hasBrandsWorkedWith: false,
-      brandsWorkedWith: "",
+      brands: [],
+      brandsAdditionalNotes: "",
       hasInstallationProcess: false,
       installationProcessDetails: "",
       hasMaintenanceGuide: false,
@@ -410,6 +411,7 @@ export default function ClientForm() {
         serviceAreasDescription: areaDescription,
         financingOptions,
         stormServices: processedStormServices,
+        brands,
       };
 
       submitMutation.mutate(processedData);
@@ -2703,7 +2705,7 @@ export default function ClientForm() {
                             {/* Additional Description */}
                             <FormField
                               control={form.control}
-                              name="brandsWorkedWith"
+                              name="brandsAdditionalNotes"
                               render={({ field }) => (
                                 <FormItem>
                                   <FormLabel>Additional Description/Notes (optional)</FormLabel>
