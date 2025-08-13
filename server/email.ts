@@ -53,6 +53,9 @@ export interface EmailData {
   }> | null;
   brands?: Array<string> | null;
   brandsAdditionalNotes?: string | null;
+  certifications?: Array<string> | null;
+  certificationPictureUrls?: Array<string> | null;
+  certificationsAdditionalNotes?: string | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -152,6 +155,14 @@ ${formData.brands.map((brand, index) => `- ${brand}`).join('\n')}
 
 Additional Notes About Brand Partnerships:
 ${formData.brandsAdditionalNotes || 'Not provided'}` : 'No brands added'}
+
+Certifications & Awards: ${formData.certifications && formData.certifications.length > 0 ? `
+${formData.certifications.map((cert, index) => `- ${cert}`).join('\n')}
+
+Certification Pictures: ${formData.certificationPictureUrls && formData.certificationPictureUrls.length > 0 ? formData.certificationPictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n') : 'No pictures provided'}
+
+Additional Notes About Certifications & Awards:
+${formData.certificationsAdditionalNotes || 'Not provided'}` : 'No certifications added'}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -291,6 +302,24 @@ This email was sent automatically from the client information form.`;
             <p>${formData.brandsAdditionalNotes || 'Not provided'}</p>
           </div>` : 
           '<p>No brands added</p>'
+        }
+        
+        <h3>Certifications & Awards:</h3>
+        ${formData.certifications && formData.certifications.length > 0 ? 
+          `<div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            <h4>Certifications & Awards List:</h4>
+            <ul>
+              ${formData.certifications.map((cert) => `<li>${cert}</li>`).join('')}
+            </ul>
+            <p><strong>Certification Pictures:</strong></p>
+            ${formData.certificationPictureUrls && formData.certificationPictureUrls.length > 0 ? 
+              `<ul>${formData.certificationPictureUrls.map((url, i) => `<li><a href="${url}" target="_blank" style="color: #2563eb; text-decoration: none;">Certificate Picture ${i + 1} - View Image</a></li>`).join('')}</ul>` : 
+              '<p>No pictures provided</p>'
+            }
+            <p><strong>Additional Notes About Certifications & Awards:</strong></p>
+            <p>${formData.certificationsAdditionalNotes || 'Not provided'}</p>
+          </div>` : 
+          '<p>No certifications added</p>'
         }
         
         <hr style="margin: 20px 0;">

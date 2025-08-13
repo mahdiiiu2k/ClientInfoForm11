@@ -329,6 +329,10 @@ export default function ClientForm() {
       hasBrandsWorkedWith: false,
       brands: [],
       brandsAdditionalNotes: "",
+      hasCertificationsAwards: false,
+      certifications: [],
+      certificationPictureUrls: [],
+      certificationsAdditionalNotes: "",
       hasInstallationProcess: false,
       installationProcessDetails: "",
       hasMaintenanceGuide: false,
@@ -402,6 +406,9 @@ export default function ClientForm() {
         insurancePartnership: service.insurancePartnership,
       }));
 
+      // Upload certification pictures
+      const certificationPictureUrls = certificationPictures ? await uploadImages(certificationPictures) : [];
+
       // Process the form data with uploaded image URLs
       const processedData: InsertClientSubmission = {
         ...data,
@@ -412,6 +419,8 @@ export default function ClientForm() {
         financingOptions,
         stormServices: processedStormServices,
         brands,
+        certifications,
+        certificationPictureUrls,
       };
 
       submitMutation.mutate(processedData);
@@ -2893,7 +2902,7 @@ export default function ClientForm() {
                             {/* Additional Description */}
                             <FormField
                               control={form.control}
-                              name="certificationsAwards"
+                              name="certificationsAdditionalNotes"
                               render={({ field }) => (
                                 <FormItem>
                                   <FormLabel>Additional Description/Notes (optional)</FormLabel>

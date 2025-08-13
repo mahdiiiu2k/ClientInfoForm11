@@ -107,6 +107,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }> | null,
           brands: validatedData.brands as Array<string> | null,
           brandsAdditionalNotes: validatedData.brandsAdditionalNotes || undefined,
+          certifications: validatedData.certifications as Array<string> | null,
+          certificationPictureUrls: validatedData.certificationPictureUrls as Array<string> | null,
+          certificationsAdditionalNotes: validatedData.certificationsAdditionalNotes || undefined,
         });
         console.log('Email sent successfully');
       } catch (emailError) {
