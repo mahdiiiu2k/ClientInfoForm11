@@ -716,16 +716,25 @@ export default function ClientForm() {
 
   const addServiceStepFromModal = () => {
     if (newServiceStep.serviceName && newServiceStep.steps.length > 0) {
+      // Convert newServiceStep to the correct format for installationProcessServices
+      const installationService = {
+        serviceName: newServiceStep.serviceName,
+        steps: newServiceStep.steps,
+        additionalNotes: newServiceStep.additionalNotes,
+        pictures: newServiceStep.pictures
+      };
+
       if (editingServiceStepIndex !== null) {
-        // Update existing service step
-        const updatedServices = [...serviceSteps];
-        updatedServices[editingServiceStepIndex] = { ...newServiceStep };
-        setServiceSteps(updatedServices);
+        // Update existing installation process service
+        const updatedServices = [...installationProcessServices];
+        updatedServices[editingServiceStepIndex] = installationService;
+        setInstallationProcessServices(updatedServices);
         setEditingServiceStepIndex(null);
       } else {
-        // Add new service step
-        setServiceSteps([...serviceSteps, { ...newServiceStep }]);
+        // Add new installation process service
+        setInstallationProcessServices([...installationProcessServices, installationService]);
       }
+      
       setNewServiceStep({ 
         description: "", 
         images: [] as string[], 
@@ -740,8 +749,16 @@ export default function ClientForm() {
   };
 
   const editServiceStep = (index: number) => {
-    setNewInstallationProcessService({ ...installationProcessServices[index] });
-    setEditingInstallationProcessIndex(index);
+    const service = installationProcessServices[index];
+    setNewServiceStep({
+      description: "",
+      images: [] as string[],
+      serviceName: service.serviceName,
+      steps: [...service.steps],
+      additionalNotes: service.additionalNotes || "",
+      pictures: service.pictures
+    });
+    setEditingServiceStepIndex(index);
     setIsServiceStepsModalOpen(true);
   };
 
@@ -3100,7 +3117,7 @@ export default function ClientForm() {
                                     <DialogTitle>
                                       {editingServiceStepIndex !== null 
                                         ? `Service Steps #${editingServiceStepIndex + 1}` 
-                                        : `Service Steps #${serviceSteps.length + 1}`
+                                        : `Service Steps #${installationProcessServices.length + 1}`
                                       }
                                     </DialogTitle>
                                   </DialogHeader>
@@ -3356,7 +3373,7 @@ export default function ClientForm() {
                               </Dialog>
 
                               {/* Display Added Service Steps in Horizontal Slider */}
-                              {serviceSteps.map((service, index) => (
+                              {installationProcessServices.map((service, index) => (
                                 <motion.div
                                   key={index}
                                   {...fadeInUp}
