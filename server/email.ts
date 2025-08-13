@@ -24,29 +24,17 @@ export const sendFormEmail = async (formData: EmailData): Promise<boolean> => {
     // Log the form data to debug what's being received
     console.log('Form data received for email:', JSON.stringify(formData, null, 2));
     
-    // Build email content starting with years of experience
+    // Build email content with better formatting to prevent truncation
     let emailContent = `New Client Information Submission
 
-=== FORM DATA ===
+FORM SUBMISSION DATA:
 
-`;
+Years of Experience: ${formData.yearsOfExperience || 'Not provided'} ${formData.yearsOfExperience ? 'years' : ''}
 
-    if (formData.yearsOfExperience !== undefined) {
-      emailContent += `Years of Experience: ${formData.yearsOfExperience} years\n`;
-    } else {
-      emailContent += `Years of Experience: Not provided\n`;
-    }
+Business Email Address: ${formData.businessEmail || 'Not provided'}
 
-    if (formData.businessEmail) {
-      emailContent += `Business Email Address: ${formData.businessEmail}\n`;
-    } else {
-      emailContent += `Business Email Address: Not provided\n`;
-    }
-
-    emailContent += `
-=== END OF FORM DATA ===
-
-This email was automatically generated from the client information form.`;
+---
+This email was sent automatically from the client information form.`;
     
     // Also log the email content to verify what's being sent
     console.log('Email content being sent:', emailContent);
@@ -56,6 +44,7 @@ This email was automatically generated from the client information form.`;
       to: 'mahdiabd731@gmail.com',
       subject: 'New Client Information Form Submission',
       text: emailContent,
+      html: `<html><body><pre>${emailContent}</pre></body></html>`,
     };
 
     await transporter.sendMail(mailOptions);
