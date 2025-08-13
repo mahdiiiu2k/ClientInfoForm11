@@ -85,6 +85,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
             pictureUrls?: string[];
             clientFeedback?: string;
           }> | null,
+          serviceAreas: validatedData.serviceAreas as Array<{
+            type?: string;
+            name?: string;
+            description?: string;
+          }> | null,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

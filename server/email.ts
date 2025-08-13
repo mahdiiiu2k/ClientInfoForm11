@@ -31,6 +31,11 @@ export interface EmailData {
     pictureUrls?: string[];
     clientFeedback?: string;
   }> | null;
+  serviceAreas?: Array<{
+    type?: string;
+    name?: string;
+    description?: string;
+  }> | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -100,6 +105,13 @@ Project ${index + 1}:
   After Pictures: ${project.afterPictureUrls && project.afterPictureUrls.length > 0 ? project.afterPictureUrls.map((url, i) => `After Picture ${i + 1}: ${url}`).join('\n    ') : 'No after pictures provided'}` : `
   Project Pictures: ${project.pictureUrls && project.pictureUrls.length > 0 ? project.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n    ') : 'No pictures provided'}`}
   Client Feedback: ${project.clientFeedback || 'Not provided'}`).join('\n')}` : 'No projects added'}
+
+Service Areas: ${formData.serviceAreas && formData.serviceAreas.length > 0 ? `
+${formData.serviceAreas.map((area, index) => `
+Area ${index + 1}:
+  Type: ${area.type || 'Not specified'}
+  Name: ${area.name || 'Not provided'}
+  Description/Notes: ${area.description || 'Not provided'}`).join('\n')}` : 'No service areas added'}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -184,6 +196,19 @@ This email was sent automatically from the client information form.`;
             </div>
           `).join('') : 
           '<p>No projects added</p>'
+        }
+        
+        <h3>Service Areas:</h3>
+        ${formData.serviceAreas && formData.serviceAreas.length > 0 ? 
+          formData.serviceAreas.map((area, index) => `
+            <div style="margin-bottom: 15px; padding: 12px; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f9f9f9;">
+              <h4 style="margin: 0 0 8px 0; color: #2563eb;">Area ${index + 1}:</h4>
+              <p style="margin: 4px 0;"><strong>Type:</strong> ${area.type || 'Not specified'}</p>
+              <p style="margin: 4px 0;"><strong>Name:</strong> ${area.name || 'Not provided'}</p>
+              <p style="margin: 4px 0;"><strong>Description/Notes:</strong> ${area.description || 'Not provided'}</p>
+            </div>
+          `).join('') : 
+          '<p>No service areas added</p>'
         }
         
         <hr style="margin: 20px 0;">
