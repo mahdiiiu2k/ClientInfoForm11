@@ -9,7 +9,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Client submission endpoint
   app.post("/api/client-submissions", async (req, res) => {
     try {
+      console.log('Raw request body received:', JSON.stringify(req.body, null, 2));
       const validatedData = insertClientSubmissionSchema.parse(req.body);
+      console.log('Validated data:', JSON.stringify(validatedData, null, 2));
       const submission = await storage.createClientSubmission(validatedData);
       
       // Send email with form data
@@ -17,6 +19,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         await sendFormEmail({
           yearsOfExperience: validatedData.yearsOfExperience,
           businessEmail: validatedData.businessEmail,
+          hasLicense: validatedData.hasLicense,
+          licenseNumber: validatedData.licenseNumber,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

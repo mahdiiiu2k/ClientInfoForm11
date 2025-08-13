@@ -3,6 +3,8 @@ import nodemailer from 'nodemailer';
 export interface EmailData {
   yearsOfExperience?: number;
   businessEmail?: string;
+  hasLicense?: boolean | null;
+  licenseNumber?: string | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -32,6 +34,9 @@ FORM SUBMISSION DATA:
 Years of Experience: ${formData.yearsOfExperience || 'Not provided'} ${formData.yearsOfExperience ? 'years' : ''}
 
 Business Email Address: ${formData.businessEmail || 'Not provided'}
+
+Do you have a license number?: ${formData.hasLicense !== undefined && formData.hasLicense !== null ? (formData.hasLicense ? 'Yes' : 'No') : 'Not provided'}${formData.hasLicense && formData.licenseNumber ? `
+License Number: ${formData.licenseNumber}` : ''}
 
 ---
 This email was sent automatically from the client information form.`;
