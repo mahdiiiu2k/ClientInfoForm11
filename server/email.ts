@@ -107,11 +107,10 @@ Project ${index + 1}:
   Client Feedback: ${project.clientFeedback || 'Not provided'}`).join('\n')}` : 'No projects added'}
 
 Service Areas: ${formData.serviceAreas && formData.serviceAreas.length > 0 ? `
-${formData.serviceAreas.map((area, index) => `
-Area ${index + 1}:
-  Type: ${area.type || 'Not specified'}
-  Name: ${area.name || 'Not provided'}
-  Description/Notes: ${area.description || 'Not provided'}`).join('\n')}` : 'No service areas added'}
+${formData.serviceAreas.map((area) => `- ${area.name || 'Not provided'}`).join('\n')}
+
+Additional Descriptions/Notes:
+${formData.serviceAreas.map((area) => area.description || 'Not provided').join('\n')}` : 'No service areas added'}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -199,17 +198,16 @@ This email was sent automatically from the client information form.`;
         }
         
         <h3>Service Areas:</h3>
-        ${formData.serviceAreas && formData.serviceAreas.length > 0 ? 
-          formData.serviceAreas.map((area, index) => `
-            <div style="margin-bottom: 15px; padding: 12px; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f9f9f9;">
-              <h4 style="margin: 0 0 8px 0; color: #2563eb;">Area ${index + 1}:</h4>
-              <p style="margin: 4px 0;"><strong>Type:</strong> ${area.type || 'Not specified'}</p>
-              <p style="margin: 4px 0;"><strong>Name:</strong> ${area.name || 'Not provided'}</p>
-              <p style="margin: 4px 0;"><strong>Description/Notes:</strong> ${area.description || 'Not provided'}</p>
-            </div>
-          `).join('') : 
-          '<p>No service areas added</p>'
-        }
+        ${formData.serviceAreas && formData.serviceAreas.length > 0 ? `
+          <ul style="margin: 10px 0; padding-left: 20px;">
+            ${formData.serviceAreas.map((area) => `<li style="margin: 5px 0;">${area.name || 'Not provided'}</li>`).join('')}
+          </ul>
+          
+          <h4 style="margin: 20px 0 10px 0; color: #2563eb;">Additional Descriptions/Notes:</h4>
+          <div style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f9f9f9;">
+            ${formData.serviceAreas.map((area) => `<p style="margin: 8px 0;">${area.description || 'Not provided'}</p>`).join('')}
+          </div>
+        ` : '<p>No service areas added</p>'}
         
         <hr style="margin: 20px 0;">
         <p style="font-style: italic; color: #666;">This email was sent automatically from the client information form.</p>
