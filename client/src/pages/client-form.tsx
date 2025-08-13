@@ -4015,65 +4015,37 @@ export default function ClientForm() {
               </div>
             </div>
 
-            {/* Additional Features/Notes */}
-            {/* Notes/Additional Features (optional) */}
-            <div>
-              <div className="border border-slate-200 rounded-lg bg-slate-100">
-                <div 
-                  className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
-                  onClick={() => {
-                    const currentValue = form.getValues("hasAdditionalNotes");
-                    form.setValue("hasAdditionalNotes", !currentValue);
-                    setShowAdditionalNotesSection(!currentValue);
-                  }}
-                >
-                  <div className="flex items-center justify-between">
-                    <h3 className="flex items-center text-xl font-semibold text-slate-800">
-                      <FileText className="text-primary mr-3 h-5 w-5" />
-                      Notes/Additional Features (optional)
-                    </h3>
-                    {form.watch("hasAdditionalNotes") ? (
-                      <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                    ) : (
-                      <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
-                    )}
-                  </div>
-                </div>
-                
-                <AnimatePresence>
-                  {form.watch("hasAdditionalNotes") && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="p-6 border-t border-slate-200 bg-white space-y-4">
-                        <FormField
-                          control={form.control}
-                          name="additionalNotes"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-base font-medium">
-                                Notes/Additional features you want to add
-                              </FormLabel>
-                              <FormControl>
-                                <Textarea
-                                  placeholder="Please describe any additional features, services, or notes you'd like to include..."
-                                  rows={4}
-                                  {...field}
-                                  value={field.value || ""}
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+            {/* Notes/Additional Features */}
+            <div className="mt-8">
+              <FormField
+                control={form.control}
+                name="additionalNotes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg font-medium text-slate-700 mb-3 block">
+                      Notes/Additional features you want to add
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Please describe any additional features, services, or notes you'd like to include..."
+                        rows={4}
+                        {...field}
+                        value={field.value || ""}
+                        className="w-full"
+                        onChange={(e) => {
+                          field.onChange(e);
+                          // Set hasAdditionalNotes to true when user starts typing
+                          if (e.target.value.trim()) {
+                            form.setValue("hasAdditionalNotes", true);
+                          } else {
+                            form.setValue("hasAdditionalNotes", false);
+                          }
+                        }}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
             </div>
 
             {/* Submit Button */}
