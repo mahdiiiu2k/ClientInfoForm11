@@ -27,6 +27,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           hasEmergencyPhone: validatedData.hasEmergencyPhone,
           emergencyPhone: validatedData.emergencyPhone,
           additionalNotes: validatedData.additionalNotes,
+          enableAboutModifications: validatedData.enableAboutModifications,
+          companyStory: validatedData.companyStory,
+          uniqueSellingPoints: validatedData.uniqueSellingPoints,
+          specialties: validatedData.specialties,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

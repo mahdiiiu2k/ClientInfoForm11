@@ -11,6 +11,10 @@ export interface EmailData {
   hasEmergencyPhone?: boolean | null;
   emergencyPhone?: string | null;
   additionalNotes?: string | null;
+  enableAboutModifications?: boolean | null;
+  companyStory?: string | null;
+  uniqueSellingPoints?: string | null;
+  specialties?: string | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -53,6 +57,14 @@ Do you have a specific phone number for emergencies?: ${formData.hasEmergencyPho
 Emergency Phone Number: ${formData.emergencyPhone}` : ''}` : ''}
 
 Additional Notes: ${formData.additionalNotes || 'Not provided'}
+
+About Us Section Customization: ${formData.enableAboutModifications !== undefined && formData.enableAboutModifications !== null ? (formData.enableAboutModifications ? 'Yes' : 'No') : 'Not provided'}${formData.enableAboutModifications ? `
+
+Company Story/Background: ${formData.companyStory || 'Not provided'}
+
+What Sets You Apart: ${formData.uniqueSellingPoints || 'Not provided'}
+
+Specific Specialties: ${formData.specialties || 'Not provided'}` : ''}
 
 ---
 This email was sent automatically from the client information form.`;
