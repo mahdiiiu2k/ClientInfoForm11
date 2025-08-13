@@ -142,6 +142,7 @@ export default function ClientForm() {
   const [showInsuranceSection, setShowInsuranceSection] = useState(false);
   const [showAdditionalNotesSection, setShowAdditionalNotesSection] = useState(false);
   const [showServiceAreasSection, setShowServiceAreasSection] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [newService, setNewService] = useState<Service>({ name: "", description: "", steps: "" });
   const [editingServiceIndex, setEditingServiceIndex] = useState<number | null>(null);
@@ -370,6 +371,7 @@ export default function ClientForm() {
       return apiRequest("POST", "/api/client-submissions", data);
     },
     onSuccess: () => {
+      setIsSubmitting(false);
       toast({
         title: "Success!",
         description: "Your client information has been submitted successfully.",
@@ -377,6 +379,7 @@ export default function ClientForm() {
       // Keep all form data intact after successful submission
     },
     onError: (error: Error) => {
+      setIsSubmitting(false);
       toast({
         title: "Error",
         description: error.message || "Failed to submit form. Please try again.",
@@ -386,6 +389,7 @@ export default function ClientForm() {
   });
 
   const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
     try {
       // Upload all service images to Cloudinary first
       const processedServices = await Promise.all(
@@ -469,6 +473,8 @@ export default function ClientForm() {
         description: "Failed to upload images. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -4052,10 +4058,10 @@ export default function ClientForm() {
             <div className="text-center pt-8">
               <Button
                 type="submit"
-                disabled={submitMutation.isPending}
+                disabled={isSubmitting || submitMutation.isPending}
                 className="bg-primary hover:bg-blue-700 text-white font-semibold py-5 px-10 rounded-xl transition-all duration-200 transform hover:scale-105 focus:ring-4 focus:ring-blue-200 focus:outline-none"
               >
-                {submitMutation.isPending ? (
+                {isSubmitting || submitMutation.isPending ? (
                   "Submitting..."
                 ) : (
                   <>
