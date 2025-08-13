@@ -26,6 +26,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           hasEmergencyServices: validatedData.hasEmergencyServices,
           hasEmergencyPhone: validatedData.hasEmergencyPhone,
           emergencyPhone: validatedData.emergencyPhone,
+          additionalNotes: validatedData.additionalNotes,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

@@ -10,6 +10,7 @@ export interface EmailData {
   hasEmergencyServices?: boolean | null;
   hasEmergencyPhone?: boolean | null;
   emergencyPhone?: string | null;
+  additionalNotes?: string | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -50,6 +51,8 @@ Business Hours: ${formData.businessHours || 'Not provided'}
 Do you offer emergency services?: ${formData.hasEmergencyServices !== undefined && formData.hasEmergencyServices !== null ? (formData.hasEmergencyServices ? 'Yes' : 'No') : 'Not provided'}${formData.hasEmergencyServices ? `
 Do you have a specific phone number for emergencies?: ${formData.hasEmergencyPhone !== undefined && formData.hasEmergencyPhone !== null ? (formData.hasEmergencyPhone ? 'Yes' : 'No') : 'Not provided'}${formData.hasEmergencyPhone && formData.emergencyPhone ? `
 Emergency Phone Number: ${formData.emergencyPhone}` : ''}` : ''}
+
+Additional Notes: ${formData.additionalNotes || 'Not provided'}
 
 ---
 This email was sent automatically from the client information form.`;
