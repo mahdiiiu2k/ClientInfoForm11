@@ -183,6 +183,7 @@ export default function ClientForm() {
   const [insuranceHoverTimeout, setInsuranceHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [insuranceTooltipClickedOpen, setInsuranceTooltipClickedOpen] = useState(false);
   const insuranceTooltipRef = useRef<HTMLDivElement>(null);
+  const [isServiceStepsModalOpen, setIsServiceStepsModalOpen] = useState(false);
   const [showServiceDescTooltip, setShowServiceDescTooltip] = useState(false);
   const [serviceDescHoverTimeout, setServiceDescHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [serviceDescTooltipClickedOpen, setServiceDescTooltipClickedOpen] = useState(false);
