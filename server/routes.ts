@@ -16,6 +16,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       try {
         await sendFormEmail({
           yearsOfExperience: validatedData.yearsOfExperience,
+          businessEmail: validatedData.businessEmail,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 
 export interface EmailData {
   yearsOfExperience?: number;
+  businessEmail?: string;
   // We'll add more fields here progressively as requested
 }
 
@@ -30,6 +31,10 @@ New Client Information Submission
 
     if (formData.yearsOfExperience !== undefined) {
       emailContent += `Years of Experience: ${formData.yearsOfExperience} years\n`;
+    }
+
+    if (formData.businessEmail) {
+      emailContent += `Business Email Address: ${formData.businessEmail}\n`;
     }
 
     emailContent += `
