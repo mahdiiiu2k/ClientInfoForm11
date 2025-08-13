@@ -79,6 +79,14 @@ export const clientSubmissions = pgTable("client_submissions", {
     qualificationRequirements?: string;
   }>>().default([]),
   
+  // Storm Services (JSON array)
+  stormServices: json("storm_services").$type<Array<{
+    serviceName: string;
+    serviceDescription: string;
+    responseTime?: string;
+    insurancePartnership?: string;
+  }>>().default([]),
+  
   // Additional Optional Sections
   hasFinancingOptions: boolean("has_financing_options").default(false),
   financingDetails: text("financing_details"),

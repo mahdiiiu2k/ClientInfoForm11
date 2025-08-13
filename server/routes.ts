@@ -99,6 +99,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
             minimumAmount?: string;
             qualificationRequirements?: string;
           }> | null,
+          stormServices: validatedData.stormServices as Array<{
+            serviceName?: string;
+            serviceDescription?: string;
+            responseTime?: string;
+            insurancePartnership?: string;
+          }> | null,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

@@ -45,6 +45,12 @@ export interface EmailData {
     minimumAmount?: string;
     qualificationRequirements?: string;
   }> | null;
+  stormServices?: Array<{
+    serviceName?: string;
+    serviceDescription?: string;
+    responseTime?: string;
+    insurancePartnership?: string;
+  }> | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -130,6 +136,14 @@ Plan ${index + 1}:
   Term Length: ${option.termLength || 'Not provided'}
   Minimum Amount: ${option.minimumAmount || 'Not provided'}
   Qualification Requirements: ${option.qualificationRequirements || 'Not provided'}`).join('\n')}` : 'No financing options added'}
+
+Storm Services: ${formData.stormServices && formData.stormServices.length > 0 ? `
+${formData.stormServices.map((service, index) => `
+Service ${index + 1}:
+  Service Name: ${service.serviceName || 'Not provided'}
+  Service Description: ${service.serviceDescription || 'Not provided'}
+  Response Time: ${service.responseTime || 'Not provided'}
+  Insurance Partnership: ${service.insurancePartnership || 'Not provided'}`).join('\n')}` : 'No storm services added'}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -242,6 +256,20 @@ This email was sent automatically from the client information form.`;
             </div>
           `).join('') : 
           '<p>No financing options added</p>'
+        }
+        
+        <h3>Storm Services:</h3>
+        ${formData.stormServices && formData.stormServices.length > 0 ? 
+          formData.stormServices.map((service, index) => `
+            <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+              <h4>Service ${index + 1}:</h4>
+              <p><strong>Service Name:</strong> ${service.serviceName || 'Not provided'}</p>
+              <p><strong>Service Description:</strong> ${service.serviceDescription || 'Not provided'}</p>
+              <p><strong>Response Time:</strong> ${service.responseTime || 'Not provided'}</p>
+              <p><strong>Insurance Partnership:</strong> ${service.insurancePartnership || 'Not provided'}</p>
+            </div>
+          `).join('') : 
+          '<p>No storm services added</p>'
         }
         
         <hr style="margin: 20px 0;">

@@ -393,6 +393,14 @@ export default function ClientForm() {
         })
       );
 
+      // Process storm services data 
+      const processedStormServices = stormServices.map((service) => ({
+        serviceName: service.name,
+        serviceDescription: service.description,
+        responseTime: service.responseTime,
+        insurancePartnership: service.insurancePartnership,
+      }));
+
       // Process the form data with uploaded image URLs
       const processedData: InsertClientSubmission = {
         ...data,
@@ -401,6 +409,7 @@ export default function ClientForm() {
         serviceAreas,
         serviceAreasDescription: areaDescription,
         financingOptions,
+        stormServices: processedStormServices,
       };
 
       submitMutation.mutate(processedData);
