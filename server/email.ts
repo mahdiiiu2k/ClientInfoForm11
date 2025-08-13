@@ -22,6 +22,15 @@ export interface EmailData {
     picture?: string;
     pictureUrls?: string[];
   }> | null;
+  projects?: Array<{
+    title?: string;
+    description?: string;
+    beforeAfter?: boolean;
+    beforePictureUrls?: string[];
+    afterPictureUrls?: string[];
+    pictureUrls?: string[];
+    clientFeedback?: string;
+  }> | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -81,6 +90,17 @@ Service ${index + 1}:
   Executing Steps: ${service.steps || 'Not provided'}
   Service Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ? service.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n    ') : 'No pictures provided'}`).join('\n')}` : 'No services added'}
 
+Previous Projects: ${formData.projects && formData.projects.length > 0 ? `
+${formData.projects.map((project, index) => `
+Project ${index + 1}:
+  Title: ${project.title || 'Not provided'}
+  Description: ${project.description || 'Not provided'}
+  Before/After Photos: ${project.beforeAfter ? 'Yes' : 'No'}${project.beforeAfter ? `
+  Before Pictures: ${project.beforePictureUrls && project.beforePictureUrls.length > 0 ? project.beforePictureUrls.map((url, i) => `Before Picture ${i + 1}: ${url}`).join('\n    ') : 'No before pictures provided'}
+  After Pictures: ${project.afterPictureUrls && project.afterPictureUrls.length > 0 ? project.afterPictureUrls.map((url, i) => `After Picture ${i + 1}: ${url}`).join('\n    ') : 'No after pictures provided'}` : `
+  Project Pictures: ${project.pictureUrls && project.pictureUrls.length > 0 ? project.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n    ') : 'No pictures provided'}`}
+  Client Feedback: ${project.clientFeedback || 'Not provided'}`).join('\n')}` : 'No projects added'}
+
 ---
 This email was sent automatically from the client information form.`;
     
@@ -132,6 +152,38 @@ This email was sent automatically from the client information form.`;
             </div>
           `).join('') : 
           '<p>No services added</p>'
+        }
+        
+        <h3>Previous Projects:</h3>
+        ${formData.projects && formData.projects.length > 0 ? 
+          formData.projects.map((project, index) => `
+            <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+              <h4>Project ${index + 1}:</h4>
+              <p><strong>Title:</strong> ${project.title || 'Not provided'}</p>
+              <p><strong>Description:</strong> ${project.description || 'Not provided'}</p>
+              <p><strong>Before/After Photos:</strong> ${project.beforeAfter ? 'Yes' : 'No'}</p>
+              ${project.beforeAfter ? `
+                <p><strong>Before Pictures:</strong></p>
+                ${project.beforePictureUrls && project.beforePictureUrls.length > 0 ? 
+                  `<ul>${project.beforePictureUrls.map((url, i) => `<li><a href="${url}" target="_blank" style="color: #2563eb; text-decoration: none;">Before Picture ${i + 1} - View Image</a></li>`).join('')}</ul>` : 
+                  '<p>No before pictures provided</p>'
+                }
+                <p><strong>After Pictures:</strong></p>
+                ${project.afterPictureUrls && project.afterPictureUrls.length > 0 ? 
+                  `<ul>${project.afterPictureUrls.map((url, i) => `<li><a href="${url}" target="_blank" style="color: #2563eb; text-decoration: none;">After Picture ${i + 1} - View Image</a></li>`).join('')}</ul>` : 
+                  '<p>No after pictures provided</p>'
+                }
+              ` : `
+                <p><strong>Project Pictures:</strong></p>
+                ${project.pictureUrls && project.pictureUrls.length > 0 ? 
+                  `<ul>${project.pictureUrls.map((url, i) => `<li><a href="${url}" target="_blank" style="color: #2563eb; text-decoration: none;">Picture ${i + 1} - View Image</a></li>`).join('')}</ul>` : 
+                  '<p>No pictures provided</p>'
+                }
+              `}
+              <p><strong>Client Feedback:</strong> ${project.clientFeedback || 'Not provided'}</p>
+            </div>
+          `).join('') : 
+          '<p>No projects added</p>'
         }
         
         <hr style="margin: 20px 0;">

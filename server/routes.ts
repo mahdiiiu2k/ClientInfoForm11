@@ -76,6 +76,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
             picture?: string;
             pictureUrls?: string[];
           }> | null,
+          projects: validatedData.projects as Array<{
+            title?: string;
+            description?: string;
+            beforeAfter?: boolean;
+            beforePictureUrls?: string[];
+            afterPictureUrls?: string[];
+            pictureUrls?: string[];
+            clientFeedback?: string;
+          }> | null,
         });
         console.log('Email sent successfully');
       } catch (emailError) {
