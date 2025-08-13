@@ -200,14 +200,14 @@ This email was sent automatically from the client information form.`;
         
         <h3>Service Areas:</h3>
         ${formData.serviceAreas && formData.serviceAreas.length > 0 ? `
-          <ul style="margin: 10px 0; padding-left: 20px;">
-            ${formData.serviceAreas.map((area) => `<li style="margin: 5px 0;">${area.name || 'Not provided'}</li>`).join('')}
-          </ul>
+          <div style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f9f9f9;">
+            <ul style="margin: 0; padding-left: 20px;">
+              ${formData.serviceAreas.map((area) => `<li style="margin: 5px 0;">${area.name || 'Not provided'}</li>`).join('')}
+            </ul>
+          </div>
           
           <h4 style="margin: 20px 0 10px 0; color: #2563eb;">Additional Descriptions/Notes:</h4>
-          <div style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f9f9f9;">
-            <p style="margin: 8px 0;">${formData.serviceAreasDescription || 'Not provided'}</p>
-          </div>
+          <p style="margin: 8px 0;">${formData.serviceAreasDescription || 'Not provided'}</p>
         ` : '<p>No service areas added</p>'}
         
         <hr style="margin: 20px 0;">
