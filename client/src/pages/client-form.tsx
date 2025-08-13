@@ -184,6 +184,21 @@ export default function ClientForm() {
   const [insuranceTooltipClickedOpen, setInsuranceTooltipClickedOpen] = useState(false);
   const insuranceTooltipRef = useRef<HTMLDivElement>(null);
   const [isServiceStepsModalOpen, setIsServiceStepsModalOpen] = useState(false);
+  const [newStepInput, setNewStepInput] = useState("");
+  const [draggedStepIndex, setDraggedStepIndex] = useState<number | null>(null);
+  const [editingStepIndex, setEditingStepIndex] = useState<number | null>(null);
+  const [newServiceStep, setNewServiceStep] = useState({ 
+    description: "", 
+    images: [] as string[], 
+    serviceName: "", 
+    steps: [] as string[], 
+    additionalNotes: "", 
+    pictures: undefined as FileList | undefined 
+  });
+  const [editingServiceStepIndex, setEditingServiceStepIndex] = useState<number | null>(null);
+  const [newInstallationStepInput, setNewInstallationStepInput] = useState("");
+  const [isInstallationProcessModalOpen, setIsInstallationProcessModalOpen] = useState(false);
+  const [serviceSteps, setServiceSteps] = useState<any[]>([]);
   const [showServiceDescTooltip, setShowServiceDescTooltip] = useState(false);
   const [serviceDescHoverTimeout, setServiceDescHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [serviceDescTooltipClickedOpen, setServiceDescTooltipClickedOpen] = useState(false);
@@ -581,6 +596,19 @@ export default function ClientForm() {
     setInstallationProcessServices(installationProcessServices.filter((_, i) => i !== index));
   };
 
+  // Function to add step from input
+  const addStepFromInput = () => {
+    if (newStepInput.trim()) {
+      setNewInstallationProcessService({
+        ...newInstallationProcessService,
+        steps: [...newInstallationProcessService.steps, newStepInput.trim()]
+      });
+      setNewStepInput("");
+    }
+  };
+
+
+
   // Simple handler for adding installation process service
   const handleAddInstallationProcessService = async () => {
     if (newInstallationProcessService.serviceName.trim() && newInstallationProcessService.steps.length > 0) {
@@ -588,8 +616,7 @@ export default function ClientForm() {
       
       // Upload pictures to Cloudinary if any
       if (newInstallationProcessService.pictures && newInstallationProcessService.pictures.length > 0) {
-        const uploadPromises = Array.from(newInstallationProcessService.pictures).map(uploadToCloudinary);
-        pictureUrls = await Promise.all(uploadPromises);
+        pictureUrls = await uploadImages(newInstallationProcessService.pictures);
       }
 
       const serviceData = {
@@ -606,7 +633,7 @@ export default function ClientForm() {
         serviceName: "",
         steps: [],
         additionalNotes: "",
-        pictures: null
+        pictures: undefined
       });
       setNewInstallationStepInput("");
       setIsInstallationProcessModalOpen(false);
@@ -717,16 +744,7 @@ export default function ClientForm() {
     setInstallationProcessServices(installationProcessServices.filter((_, i) => i !== index));
   };
 
-  // Add step from input (similar to Service Areas pattern)
-  const addStepFromInput = () => {
-    if (newStepInput.trim()) {
-      setNewInstallationProcessService({
-        ...newInstallationProcessService,
-        steps: [...newInstallationProcessService.steps, newStepInput.trim()]
-      });
-      setNewStepInput("");
-    }
-  };
+
 
   // Remove step from service (similar to Service Areas pattern)
   const removeStepFromService = (index: number) => {
@@ -3317,7 +3335,7 @@ export default function ClientForm() {
                                       <Button 
                                         onClick={addServiceStepFromModal}
                                         className="w-full bg-primary hover:bg-blue-700"
-                                        disabled={!newServiceStep.serviceName || !newServiceStep.steps.some(step => step.trim())}
+                                        disabled={!newServiceStep.serviceName || !newServiceStep.steps.some((step: string) => step.trim())}
                                       >
                                         {editingServiceStepIndex !== null ? 'Save Service Steps' : 'Add Service Steps'}
                                       </Button>
