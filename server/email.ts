@@ -20,6 +20,7 @@ export interface EmailData {
     description?: string;
     steps?: string;
     picture?: string;
+    pictureUrls?: string[];
   }> | null;
   // We'll add more fields here progressively as requested
 }
@@ -78,7 +79,7 @@ Service ${index + 1}:
   Name: ${service.name || 'Not provided'}
   Description: ${service.description || 'Not provided'}
   Executing Steps: ${service.steps || 'Not provided'}
-  Service Picture: ${service.picture || 'Not provided'}`).join('\n')}` : 'No services added'}
+  Service Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ? service.pictureUrls.join(', ') : (service.picture || 'Not provided')}`).join('\n')}` : 'No services added'}
 
 ---
 This email was sent automatically from the client information form.`;
