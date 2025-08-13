@@ -9,6 +9,7 @@ This is a modern, responsive web application that provides a comprehensive clien
 Preferred communication style: Simple, everyday language.
 Form styling preference: Avoid rectangular card designs for form sections - prefer clean, minimal appearance with subtle visual separation.
 Email functionality: Send emails from chouikimahdiabderrahmane@gmail.com to mahdiabd731@gmail.com when form is submitted, starting with years of experience field.
+Deployment preference: Netlify deployment with full email functionality maintained in serverless environment.
 
 ## System Architecture
 
@@ -22,12 +23,13 @@ Email functionality: Send emails from chouikimahdiabderrahmane@gmail.com to mahd
 - **State Management**: TanStack Query for server state management and data fetching
 
 ### Backend Architecture
-- **Runtime**: Node.js with Express.js framework for RESTful API endpoints
-- **Language**: TypeScript throughout the stack for consistency and type safety
+- **Runtime**: Node.js with Express.js framework for development; Netlify Functions for production deployment
+- **Language**: TypeScript for development, JavaScript for Netlify Functions
 - **Data Validation**: Zod schemas shared between frontend and backend for consistent validation
 - **Storage**: In-memory storage implementation with interface for easy database integration
 - **Email Service**: Nodemailer with Gmail integration for automated form submission emails
 - **Build System**: Vite for fast development and optimized production builds
+- **Deployment**: Netlify serverless functions with CORS configuration and environment variable handling
 
 ### Database Design
 - **ORM**: Drizzle ORM configured for PostgreSQL with type-safe database operations
