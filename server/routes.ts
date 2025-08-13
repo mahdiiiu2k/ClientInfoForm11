@@ -126,6 +126,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           warrantyCoverageDetails: validatedData.warrantyCoverageDetails,
           warrantyTerms: validatedData.warrantyTerms as Array<string> | null,
           warrantyAdditionalNotes: validatedData.warrantyAdditionalNotes,
+          hasInsurance: validatedData.hasInsurance,
+          generalLiability: validatedData.generalLiability,
+          workersCompensation: validatedData.workersCompensation,
+          bondedAmount: validatedData.bondedAmount,
+          additionalCoverage: validatedData.additionalCoverage,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

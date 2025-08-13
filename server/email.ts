@@ -72,6 +72,11 @@ export interface EmailData {
   warrantyCoverageDetails?: string | null;
   warrantyTerms?: Array<string> | null;
   warrantyAdditionalNotes?: string | null;
+  hasInsurance?: boolean | null;
+  generalLiability?: string | null;
+  workersCompensation?: boolean | null;
+  bondedAmount?: string | null;
+  additionalCoverage?: string | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -208,6 +213,12 @@ Warranty Terms and Conditions:
 ${formData.warrantyTerms.map((term, index) => `  ${index + 1}. ${term}`).join('\n')}` : ''}${formData.warrantyAdditionalNotes ? `
 Additional Notes/Description:
 ${formData.warrantyAdditionalNotes}` : ''}` : ''}
+
+Insurance Coverage: ${formData.hasInsurance ? 'Yes' : 'No'}${formData.hasInsurance ? `${formData.generalLiability ? `
+General Liability Amount: ${formData.generalLiability}` : ''}${formData.bondedAmount ? `
+Bonded Amount: ${formData.bondedAmount}` : ''}
+Workers' Compensation Insurance: ${formData.workersCompensation !== undefined && formData.workersCompensation !== null ? (formData.workersCompensation ? 'Yes' : 'No') : 'Not provided'}${formData.additionalCoverage ? `
+Additional Coverage: ${formData.additionalCoverage}` : ''}` : ''}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -431,6 +442,17 @@ This email was sent automatically from the client information form.`;
               <p><strong>Additional Notes/Description:</strong></p>
               <p style="line-height: 1.6; white-space: pre-wrap;">${formData.warrantyAdditionalNotes}</p>
             ` : ''}
+          </div>` : ''
+        }
+        
+        <h3>Insurance Coverage:</h3>
+        <p><strong>Has Insurance Coverage:</strong> ${formData.hasInsurance ? 'Yes' : 'No'}</p>
+        ${formData.hasInsurance ? 
+          `<div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            ${formData.generalLiability ? `<p><strong>General Liability Amount:</strong> ${formData.generalLiability}</p>` : ''}
+            ${formData.bondedAmount ? `<p><strong>Bonded Amount:</strong> ${formData.bondedAmount}</p>` : ''}
+            <p><strong>Workers' Compensation Insurance:</strong> ${formData.workersCompensation !== undefined && formData.workersCompensation !== null ? (formData.workersCompensation ? 'Yes' : 'No') : 'Not provided'}</p>
+            ${formData.additionalCoverage ? `<p><strong>Additional Coverage:</strong> ${formData.additionalCoverage}</p>` : ''}
           </div>` : ''
         }
         

@@ -3912,14 +3912,18 @@ export default function ClientForm() {
                   <div className="border border-slate-200 rounded-lg bg-slate-100">
                     <div 
                       className="p-4 cursor-pointer hover:bg-slate-200 transition-colors rounded-t-lg"
-                      onClick={() => setShowInsuranceSection(!showInsuranceSection)}
+                      onClick={() => {
+                        const currentValue = form.getValues("hasInsurance");
+                        form.setValue("hasInsurance", !currentValue);
+                        setShowInsuranceSection(!currentValue);
+                      }}
                     >
                       <div className="flex items-center justify-between">
                         <h3 className="flex items-center text-xl font-semibold text-slate-800">
                           <Shield className="text-primary mr-3 h-5 w-5" />
                           Insurance (optional)
                         </h3>
-                        {showInsuranceSection ? (
+                        {form.watch("hasInsurance") ? (
                           <Minus className="h-5 w-5 text-slate-500" strokeWidth={3} />
                         ) : (
                           <Plus className="h-5 w-5 text-slate-500" strokeWidth={3} />
@@ -3928,7 +3932,7 @@ export default function ClientForm() {
                     </div>
                     
                     <AnimatePresence>
-                      {showInsuranceSection && (
+                      {form.watch("hasInsurance") && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
