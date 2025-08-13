@@ -90,7 +90,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
             name?: string;
             description?: string;
           }> | null,
-          serviceAreasDescription: validatedData.serviceAreasDescription,
+          serviceAreasDescription: validatedData.serviceAreasDescription || undefined,
+          financingOptions: validatedData.financingOptions as Array<{
+            name?: string;
+            description?: string;
+            interestRate?: string;
+            termLength?: string;
+            minimumAmount?: string;
+            qualificationRequirements?: string;
+          }> | null,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

@@ -400,6 +400,7 @@ export default function ClientForm() {
         projects: processedProjects,
         serviceAreas,
         serviceAreasDescription: areaDescription,
+        financingOptions,
       };
 
       submitMutation.mutate(processedData);

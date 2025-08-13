@@ -69,6 +69,16 @@ export const clientSubmissions = pgTable("client_submissions", {
   }>>().default([]),
   serviceAreasDescription: text("service_areas_description"),
   
+  // Financing Options (JSON array)
+  financingOptions: json("financing_options").$type<Array<{
+    name: string;
+    description: string;
+    interestRate?: string;
+    termLength?: string;
+    minimumAmount?: string;
+    qualificationRequirements?: string;
+  }>>().default([]),
+  
   // Additional Optional Sections
   hasFinancingOptions: boolean("has_financing_options").default(false),
   financingDetails: text("financing_details"),

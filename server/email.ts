@@ -37,6 +37,14 @@ export interface EmailData {
     description?: string;
   }> | null;
   serviceAreasDescription?: string;
+  financingOptions?: Array<{
+    name?: string;
+    description?: string;
+    interestRate?: string;
+    termLength?: string;
+    minimumAmount?: string;
+    qualificationRequirements?: string;
+  }> | null;
   // We'll add more fields here progressively as requested
 }
 
@@ -112,6 +120,16 @@ ${formData.serviceAreas.map((area) => `- ${area.name || 'Not provided'}`).join('
 
 Additional Descriptions/Notes:
 ${formData.serviceAreasDescription || 'Not provided'}` : 'No service areas added'}
+
+Financing Options: ${formData.financingOptions && formData.financingOptions.length > 0 ? `
+${formData.financingOptions.map((option, index) => `
+Plan ${index + 1}:
+  Plan Title: ${option.name || 'Not provided'}
+  Full Plan Description: ${option.description || 'Not provided'}
+  Interest Rate: ${option.interestRate || 'Not provided'}
+  Term Length: ${option.termLength || 'Not provided'}
+  Minimum Amount: ${option.minimumAmount || 'Not provided'}
+  Qualification Requirements: ${option.qualificationRequirements || 'Not provided'}`).join('\n')}` : 'No financing options added'}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -209,6 +227,22 @@ This email was sent automatically from the client information form.`;
           <h4 style="margin: 20px 0 10px 0; color: #2563eb;">Additional Descriptions/Notes:</h4>
           <p style="margin: 8px 0;">${formData.serviceAreasDescription || 'Not provided'}</p>
         ` : '<p>No service areas added</p>'}
+        
+        <h3>Financing Options:</h3>
+        ${formData.financingOptions && formData.financingOptions.length > 0 ? 
+          formData.financingOptions.map((option, index) => `
+            <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+              <h4>Plan ${index + 1}:</h4>
+              <p><strong>Plan Title:</strong> ${option.name || 'Not provided'}</p>
+              <p><strong>Full Plan Description:</strong> ${option.description || 'Not provided'}</p>
+              <p><strong>Interest Rate:</strong> ${option.interestRate || 'Not provided'}</p>
+              <p><strong>Term Length:</strong> ${option.termLength || 'Not provided'}</p>
+              <p><strong>Minimum Amount:</strong> ${option.minimumAmount || 'Not provided'}</p>
+              <p><strong>Qualification Requirements:</strong> ${option.qualificationRequirements || 'Not provided'}</p>
+            </div>
+          `).join('') : 
+          '<p>No financing options added</p>'
+        }
         
         <hr style="margin: 20px 0;">
         <p style="font-style: italic; color: #666;">This email was sent automatically from the client information form.</p>
