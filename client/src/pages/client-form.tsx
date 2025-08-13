@@ -1063,7 +1063,14 @@ export default function ClientForm() {
               >
                 <div
                   className={showAboutSection ? '' : 'cursor-pointer'}
-                  onClick={() => setShowAboutSection(!showAboutSection)}
+                  onClick={() => {
+                    const newShowState = !showAboutSection;
+                    setShowAboutSection(newShowState);
+                    // Automatically set enableAboutModifications to true when section is opened
+                    if (newShowState) {
+                      form.setValue('enableAboutModifications', true);
+                    }
+                  }}
                   data-testid="button-toggle-about-section"
                 >
                   <h2 className="flex items-center text-xl text-slate-800 font-semibold">
