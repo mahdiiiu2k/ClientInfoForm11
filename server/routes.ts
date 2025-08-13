@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertClientSubmissionSchema } from "@shared/schema";
 import { z } from "zod";
+import { sendFormEmail } from "./email";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Client submission endpoint
@@ -10,6 +11,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertClientSubmissionSchema.parse(req.body);
       const submission = await storage.createClientSubmission(validatedData);
+      
+      // Send email with form data
+      try {
+        await sendFormEmail({
+          yearsOfExperience: validatedData.yearsOfExperience,
+        });
+        console.log('Email sent successfully');
+      } catch (emailError) {
+        console.error('Failed to send email:', emailError);
+        // Continue with response even if email fails
+      }
+      
       res.json({ success: true, id: submission.id });
     } catch (error) {
       if (error instanceof z.ZodError) {

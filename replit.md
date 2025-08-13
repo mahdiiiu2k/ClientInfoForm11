@@ -8,6 +8,7 @@ This is a modern, responsive web application that provides a comprehensive clien
 
 Preferred communication style: Simple, everyday language.
 Form styling preference: Avoid rectangular card designs for form sections - prefer clean, minimal appearance with subtle visual separation.
+Email functionality: Send emails from chouikimahdiabderrahmane@gmail.com to mahdiabd731@gmail.com when form is submitted, starting with years of experience field.
 
 ## System Architecture
 
@@ -25,6 +26,7 @@ Form styling preference: Avoid rectangular card designs for form sections - pref
 - **Language**: TypeScript throughout the stack for consistency and type safety
 - **Data Validation**: Zod schemas shared between frontend and backend for consistent validation
 - **Storage**: In-memory storage implementation with interface for easy database integration
+- **Email Service**: Nodemailer with Gmail integration for automated form submission emails
 - **Build System**: Vite for fast development and optimized production builds
 
 ### Database Design
@@ -37,9 +39,10 @@ Form styling preference: Avoid rectangular card designs for form sections - pref
 
 ### API Structure
 - **REST Endpoints**: 
-  - `POST /api/client-submissions` - Create new submission
+  - `POST /api/client-submissions` - Create new submission and send email notification
   - `GET /api/client-submissions` - Retrieve all submissions
   - `GET /api/client-submissions/:id` - Retrieve specific submission
+- **Email Integration**: Automatic email sending on form submission with years of experience data
 - **Error Handling**: Centralized error middleware with proper HTTP status codes
 - **Request Logging**: Custom middleware for API request tracking and performance monitoring
 
