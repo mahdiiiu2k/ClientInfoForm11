@@ -90,6 +90,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             name?: string;
             description?: string;
           }> | null,
+          serviceAreasDescription: validatedData.serviceAreasDescription,
         });
         console.log('Email sent successfully');
       } catch (emailError) {

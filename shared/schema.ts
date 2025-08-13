@@ -67,6 +67,7 @@ export const clientSubmissions = pgTable("client_submissions", {
     name: string;
     description?: string;
   }>>().default([]),
+  serviceAreasDescription: text("service_areas_description"),
   
   // Additional Optional Sections
   hasFinancingOptions: boolean("has_financing_options").default(false),

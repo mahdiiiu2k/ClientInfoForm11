@@ -36,6 +36,7 @@ export interface EmailData {
     name?: string;
     description?: string;
   }> | null;
+  serviceAreasDescription?: string;
   // We'll add more fields here progressively as requested
 }
 
@@ -110,7 +111,7 @@ Service Areas: ${formData.serviceAreas && formData.serviceAreas.length > 0 ? `
 ${formData.serviceAreas.map((area) => `- ${area.name || 'Not provided'}`).join('\n')}
 
 Additional Descriptions/Notes:
-${formData.serviceAreas.map((area) => area.description || 'Not provided').join('\n')}` : 'No service areas added'}
+${formData.serviceAreasDescription || 'Not provided'}` : 'No service areas added'}
 
 ---
 This email was sent automatically from the client information form.`;
@@ -205,7 +206,7 @@ This email was sent automatically from the client information form.`;
           
           <h4 style="margin: 20px 0 10px 0; color: #2563eb;">Additional Descriptions/Notes:</h4>
           <div style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f9f9f9;">
-            ${formData.serviceAreas.map((area) => `<p style="margin: 8px 0;">${area.description || 'Not provided'}</p>`).join('')}
+            <p style="margin: 8px 0;">${formData.serviceAreasDescription || 'Not provided'}</p>
           </div>
         ` : '<p>No service areas added</p>'}
         

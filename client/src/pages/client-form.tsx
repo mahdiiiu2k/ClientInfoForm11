@@ -399,6 +399,7 @@ export default function ClientForm() {
         services: processedServices,
         projects: processedProjects,
         serviceAreas,
+        serviceAreasDescription: areaDescription,
       };
 
       submitMutation.mutate(processedData);
