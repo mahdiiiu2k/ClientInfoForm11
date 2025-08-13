@@ -21,6 +21,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           businessEmail: validatedData.businessEmail,
           hasLicense: validatedData.hasLicense,
           licenseNumber: validatedData.licenseNumber,
+          businessAddress: validatedData.businessAddress,
+          businessHours: validatedData.businessHours,
         });
         console.log('Email sent successfully');
       } catch (emailError) {
