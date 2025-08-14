@@ -123,6 +123,11 @@ const sendFormEmail = async (formData) => {
     log('Starting email sending process');
     log('Environment check - GMAIL_APP_PASSWORD exists:', !!process.env.GMAIL_APP_PASSWORD);
     
+    // Check if Gmail app password is configured
+    if (!process.env.GMAIL_APP_PASSWORD) {
+      throw new Error('GMAIL_APP_PASSWORD environment variable is not configured in Netlify');
+    }
+    
     const transporter = createTransporter();
     
     // Use shared email content builder
