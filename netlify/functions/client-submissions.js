@@ -62,12 +62,22 @@ What Sets You Apart: ${formData.uniqueSellingPoints || 'Not provided'}
 Specific Specialties: ${formData.specialties || 'Not provided'}` : ''}
 
 Services: ${formData.services && formData.services.length > 0 ? `
-${formData.services.map((service, index) => `
+${formData.services.map((service, index) => {
+  // Debug logging for each service
+  console.log(`[EMAIL-DEBUG] Service ${index + 1}:`, {
+    name: service.name,
+    pictureUrls: service.pictureUrls,
+    pictureUrlsType: typeof service.pictureUrls,
+    pictureUrlsLength: service.pictureUrls ? service.pictureUrls.length : 'N/A'
+  });
+  
+  return `
 Service ${index + 1}:
   Name: ${service.name || 'Not provided'}
   Description: ${service.description || 'Not provided'}
   Executing Steps: ${service.steps || 'Not provided'}
-  Service Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ? service.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n    ') : 'No pictures provided'}`).join('\n')}` : 'No services added'}
+  Service Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ? service.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n    ') : 'No pictures provided'}`;
+}).join('\n')}` : 'No services added'}
 
 Previous Projects: ${formData.projects && formData.projects.length > 0 ? `
 ${formData.projects.map((project, index) => `
@@ -249,6 +259,17 @@ exports.handler = async (event, context) => {
     
     // Debug: Check specifically for image URLs in the data
     log('Services data received:', body.services);
+    if (body.services && body.services.length > 0) {
+      body.services.forEach((service, index) => {
+        log(`Service ${index + 1} details:`, {
+          name: service.name,
+          description: service.description,
+          steps: service.steps,
+          pictureUrls: service.pictureUrls,
+          pictureUrlsLength: service.pictureUrls ? service.pictureUrls.length : 0
+        });
+      });
+    }
     log('Projects data received:', body.projects);
     log('Certification pictures:', body.certificationPictureUrls);
     log('Installation process services:', body.installationProcessServices);
