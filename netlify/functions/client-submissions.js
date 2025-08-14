@@ -30,7 +30,7 @@ const sendWithSendGrid = async (formData) => {
   }
 };
 
-// Build email content function to avoid duplication
+// Build email content function - using the same template as the local server
 const buildEmailContent = (formData) => {
   return `New Client Information Submission
 
@@ -59,49 +59,102 @@ Company Story/Background: ${formData.companyStory || 'Not provided'}
 
 What Sets You Apart: ${formData.uniqueSellingPoints || 'Not provided'}
 
-Specialties: ${formData.specialties || 'Not provided'}` : ''}
+Specific Specialties: ${formData.specialties || 'Not provided'}` : ''}
 
-Services: ${formData.services && formData.services.length > 0 ? formData.services.map(service => `
-- ${service.name}: ${service.description}${service.imageUrl ? ' (Image attached)' : ''}`).join('') : 'No services added'}
+Services: ${formData.services && formData.services.length > 0 ? `
+${formData.services.map((service, index) => `
+Service ${index + 1}:
+  Name: ${service.name || 'Not provided'}
+  Description: ${service.description || 'Not provided'}
+  Executing Steps: ${service.steps || 'Not provided'}
+  Service Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ? service.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n    ') : 'No pictures provided'}`).join('\n')}` : 'No services added'}
 
-Previous Projects: ${formData.projects && formData.projects.length > 0 ? formData.projects.map(project => `
-- ${project.name}: ${project.description}${project.beforeImageUrl || project.afterImageUrl ? ' (Images attached)' : ''}`).join('') : 'No projects added'}
+Previous Projects: ${formData.projects && formData.projects.length > 0 ? `
+${formData.projects.map((project, index) => `
+Project ${index + 1}:
+  Title: ${project.title || 'Not provided'}
+  Description: ${project.description || 'Not provided'}
+  Before/After Photos: ${project.beforeAfter ? 'Yes' : 'No'}${project.beforeAfter ? `
+  Before Pictures: ${project.beforePictureUrls && project.beforePictureUrls.length > 0 ? project.beforePictureUrls.map((url, i) => `Before Picture ${i + 1}: ${url}`).join('\n    ') : 'No before pictures provided'}
+  After Pictures: ${project.afterPictureUrls && project.afterPictureUrls.length > 0 ? project.afterPictureUrls.map((url, i) => `After Picture ${i + 1}: ${url}`).join('\n    ') : 'No after pictures provided'}` : `
+  Project Pictures: ${project.pictureUrls && project.pictureUrls.length > 0 ? project.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n    ') : 'No pictures provided'}`}
+  Client Feedback: ${project.clientFeedback || 'Not provided'}`).join('\n')}` : 'No projects added'}
 
-Service Areas: ${formData.serviceAreas && formData.serviceAreas.length > 0 ? formData.serviceAreas.map(area => `
-- ${area.name}: ${area.description}`).join('') : 'No service areas added'}
+Service Areas: ${formData.serviceAreas && formData.serviceAreas.length > 0 ? `
+${formData.serviceAreas.map((area) => `- ${area.name || 'Not provided'}`).join('\n')}
 
-Financing Options: ${formData.financingOptions && formData.financingOptions.length > 0 ? formData.financingOptions.map(option => `
-- ${option.name}: ${option.description}`).join('') : 'No financing options added'}
+Additional Descriptions/Notes:
+${formData.serviceAreasDescription || 'Not provided'}` : 'No service areas added'}
 
-Storm Services: ${formData.stormServices && formData.stormServices.length > 0 ? formData.stormServices.map(service => `
-- ${service.name}: ${service.description}`).join('') : 'No storm services added'}
+Financing Options: ${formData.financingOptions && formData.financingOptions.length > 0 ? `
+${formData.financingOptions.map((option, index) => `
+Plan ${index + 1}:
+  Plan Title: ${option.name || 'Not provided'}
+  Full Plan Description: ${option.description || 'Not provided'}
+  Interest Rate: ${option.interestRate || 'Not provided'}
+  Term Length: ${option.termLength || 'Not provided'}
+  Minimum Amount: ${option.minimumAmount || 'Not provided'}
+  Qualification Requirements: ${option.qualificationRequirements || 'Not provided'}`).join('\n')}` : 'No financing options added'}
 
-Brands You Work With: ${formData.brands && formData.brands.length > 0 ? formData.brands.map(brand => `
-- ${brand.name}: ${brand.description}`).join('') : 'No brands added'}
+Storm Services: ${formData.stormServices && formData.stormServices.length > 0 ? `
+${formData.stormServices.map((service, index) => `
+Service ${index + 1}:
+  Service Name: ${service.serviceName || 'Not provided'}
+  Service Description: ${service.serviceDescription || 'Not provided'}
+  Response Time: ${service.responseTime || 'Not provided'}
+  Insurance Partnership: ${service.insurancePartnership || 'Not provided'}`).join('\n')}` : 'No storm services added'}
 
-Certifications & Awards: ${formData.certifications && formData.certifications.length > 0 ? formData.certifications.map(cert => `
-- ${cert.name}: ${cert.description}${cert.imageUrl ? ' (Image attached)' : ''}`).join('') : 'No certifications added'}
+Brands You Work With: ${formData.brands && formData.brands.length > 0 ? `
+${formData.brands.map((brand, index) => `- ${brand}`).join('\n')}
 
-Installation Process: ${formData.installationProcessServices && formData.installationProcessServices.length > 0 ? formData.installationProcessServices.map(process => `
-- ${process.name}: ${process.description}`).join('') : 'No installation process services added'}
+Additional Notes About Brand Partnerships:
+${formData.brandsAdditionalNotes || 'Not provided'}` : 'No brands added'}
 
-Roof Maintenance Guide: ${formData.hasMaintenanceGuide ? 'Yes' : 'No'}${formData.maintenanceGuide ? `
-Guide: ${formData.maintenanceGuide}` : ''}
+Certifications & Awards: ${formData.certifications && formData.certifications.length > 0 ? `
+${formData.certifications.map((cert, index) => `- ${cert}`).join('\n')}
 
-Roof Materials and Brands: ${formData.hasRoofMaterials ? 'Yes' : 'No'}${formData.roofMaterialsDetails ? `
-Details: ${formData.roofMaterialsDetails}` : ''}${formData.roofMaterialsSpecialties ? `
-Specialties: ${formData.roofMaterialsSpecialties}` : ''}
+Certification Pictures: ${formData.certificationPictureUrls && formData.certificationPictureUrls.length > 0 ? formData.certificationPictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n') : 'No pictures provided'}
 
-Warranty Coverage: ${formData.hasWarranty ? 'Yes' : 'No'}${formData.warrantyDescription ? `
-Description: ${formData.warrantyDescription}` : ''}${formData.warrantyDuration ? `
-Duration: ${formData.warrantyDuration}` : ''}
+Additional Notes About Certifications & Awards:
+${formData.certificationsAdditionalNotes || 'Not provided'}` : 'No certifications added'}
 
-Insurance Coverage: ${formData.hasInsurance ? 'Yes' : 'No'}${formData.generalLiability ? `
-General Liability: ${formData.generalLiability}` : ''}${formData.workersCompensation ? `
-Workers Compensation: Yes` : ''}
+Installation Process: ${formData.installationProcessServices && formData.installationProcessServices.length > 0 ? `
+${formData.installationProcessServices.map((service, index) => `
+Service ${index + 1}: ${service.serviceName || 'Untitled Service'}
+Steps:
+${service.steps && service.steps.length > 0 ? service.steps.map((step, stepIndex) => `  ${stepIndex + 1}. ${step}`).join('\n') : '  No steps provided'}
 
-Notes/Additional Features: ${formData.warrantyTerms && formData.warrantyTerms.length > 0 ? formData.warrantyTerms.map(term => `
-- ${term.name}: ${term.description}`).join('') : 'No'}
+Installation Pictures: ${service.pictureUrls && service.pictureUrls.length > 0 ? service.pictureUrls.map((url, i) => `Picture ${i + 1}: ${url}`).join('\n') : 'No pictures provided'}
+
+Additional Notes About Installation Process:
+${service.additionalNotes || 'Not provided'}`).join('\n\n')}` : 'No installation process services added'}
+
+Roof Maintenance Guide: ${formData.hasMaintenanceGuide ? 'Yes' : 'No'}${formData.hasMaintenanceGuide && formData.maintenanceTips && formData.maintenanceTips.length > 0 ? `
+Maintenance Tips:
+${formData.maintenanceTips.map((tip, index) => `  ${index + 1}. ${tip}`).join('\n')}` : formData.hasMaintenanceGuide ? '\nNo maintenance tips provided' : ''}
+
+Roof Materials and Brands: ${formData.hasRoofMaterials ? 'Yes' : 'No'}${formData.hasRoofMaterials && formData.roofMaterialsSpecialties ? `
+Specific materials and brands you specialize in:
+${formData.roofMaterialsSpecialties}` : formData.hasRoofMaterials ? '\nNo specialties provided' : ''}
+
+Warranty Coverage: ${formData.hasWarranty ? 'Yes' : 'No'}${formData.hasWarranty ? `${formData.warrantyDuration ? `
+Warranty Duration: ${formData.warrantyDuration}` : ''}${formData.warrantyType ? `
+Warranty Type: ${formData.warrantyType}` : ''}${formData.warrantyCoverageDetails ? `
+Coverage Details:
+${formData.warrantyCoverageDetails}` : ''}${formData.warrantyTerms && formData.warrantyTerms.length > 0 ? `
+Warranty Terms and Conditions:
+${formData.warrantyTerms.map((term, index) => `  ${index + 1}. ${term}`).join('\n')}` : ''}${formData.warrantyAdditionalNotes ? `
+Additional Notes/Description:
+${formData.warrantyAdditionalNotes}` : ''}` : ''}
+
+Insurance Coverage: ${formData.hasInsurance ? 'Yes' : 'No'}${formData.hasInsurance ? `${formData.generalLiability ? `
+General Liability Amount: ${formData.generalLiability}` : ''}${formData.bondedAmount ? `
+Bonded Amount: ${formData.bondedAmount}` : ''}
+Workers' Compensation Insurance: ${formData.workersCompensation !== undefined && formData.workersCompensation !== null ? (formData.workersCompensation ? 'Yes' : 'No') : 'Not provided'}${formData.additionalCoverage ? `
+Additional Coverage: ${formData.additionalCoverage}` : ''}` : ''}
+
+Notes/Additional Features: ${formData.hasAdditionalNotes ? 'Yes' : 'No'}${formData.hasAdditionalNotes && formData.additionalNotes ? `
+${formData.additionalNotes}` : ''}
 
 ---
 This email was sent automatically from the client information form.`;
