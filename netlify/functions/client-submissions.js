@@ -110,7 +110,7 @@ This email was sent automatically from the client information form.`;
 // Email sending function
 const sendFormEmail = async (formData) => {
   const createTransporter = () => {
-    return nodemailer.createTransporter({
+    return nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: 'chouikimahdiabderrahmane@gmail.com',

@@ -374,7 +374,11 @@ export default function ClientForm() {
 
   const submitMutation = useMutation({
     mutationFn: async (data: InsertClientSubmission) => {
-      return apiRequest("POST", "/api/client-submissions", data);
+      // Use Netlify function endpoint when deployed, local API when in development
+      const endpoint = window.location.hostname.includes('netlify') || window.location.hostname.includes('app') 
+        ? "/.netlify/functions/client-submissions" 
+        : "/api/client-submissions";
+      return apiRequest("POST", endpoint, data);
     },
     onSuccess: () => {
       setIsSubmitting(false);
