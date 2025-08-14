@@ -1,5 +1,10 @@
 const nodemailer = require('nodemailer');
 
+// Add debug logging for Netlify
+const log = (message, data = null) => {
+  console.log(`[CLIENT-SUBMISSIONS] ${message}`, data ? JSON.stringify(data, null, 2) : '');
+};
+
 // Email sending function
 const sendFormEmail = async (formData) => {
   const createTransporter = () => {
@@ -13,6 +18,9 @@ const sendFormEmail = async (formData) => {
   };
 
   try {
+    log('Starting email sending process');
+    log('Environment check - GMAIL_APP_PASSWORD exists:', !!process.env.GMAIL_APP_PASSWORD);
+    
     const transporter = createTransporter();
     
     // Build email content with better formatting to prevent truncation
@@ -137,7 +145,7 @@ ${formData.additionalNotes}` : ''}
 ---
 This email was sent automatically from the client information form.`;
 
-    console.log('Email content being sent:', emailContent);
+    log('Email content being sent:', emailContent);
 
     const mailOptions = {
       from: 'chouikimahdiabderrahmane@gmail.com',
@@ -146,17 +154,24 @@ This email was sent automatically from the client information form.`;
       text: emailContent,
     };
 
-    await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully');
+    log('Attempting to send email with nodemailer...');
+    const result = await transporter.sendMail(mailOptions);
+    log('Email sent successfully', { messageId: result.messageId });
     return true;
   } catch (error) {
-    console.error('Error sending email:', error);
+    log('Error sending email:', error);
     throw error;
   }
 };
 
 // Main Netlify Function handler
 exports.handler = async (event, context) => {
+  log('Function invoked', { 
+    method: event.httpMethod, 
+    path: event.path,
+    hasBody: !!event.body 
+  });
+
   // Handle CORS for preflight requests
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -171,6 +186,7 @@ exports.handler = async (event, context) => {
   }
 
   if (event.httpMethod !== 'POST') {
+    log('Method not allowed:', event.httpMethod);
     return {
       statusCode: 405,
       headers: {
@@ -183,10 +199,11 @@ exports.handler = async (event, context) => {
 
   try {
     const body = JSON.parse(event.body);
-    console.log('Raw request body received:', JSON.stringify(body, null, 2));
+    log('Raw request body received:', body);
 
     // Basic validation - just check for required field
     if (!body.yearsOfExperience) {
+      log('Validation failed: missing yearsOfExperience');
       return {
         statusCode: 400,
         headers: {
@@ -198,13 +215,25 @@ exports.handler = async (event, context) => {
     }
 
     // Send email with form data - always send regardless of image upload status
+    let emailError = null;
     try {
+      log('Attempting to send email...');
       await sendFormEmail(body);
-      console.log('Email sent successfully');
-    } catch (emailError) {
-      console.error('Error sending email:', emailError);
-      // Continue with success response even if email fails
+      log('Email function completed successfully');
+    } catch (error) {
+      emailError = error;
+      log('Email sending failed:', error);
     }
+
+    // Return response with email status
+    const response = {
+      success: true,
+      id: Math.random().toString(36).substr(2, 9),
+      message: emailError ? 'Form submitted but email failed to send' : 'Form submitted and email sent successfully',
+      emailSent: !emailError
+    };
+
+    log('Returning response:', response);
 
     return {
       statusCode: 200,
@@ -212,15 +241,11 @@ exports.handler = async (event, context) => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({
-        success: true,
-        id: Math.random().toString(36).substr(2, 9),
-        message: 'Form submitted successfully'
-      })
+      body: JSON.stringify(response)
     };
 
   } catch (error) {
-    console.error('Error processing submission:', error);
+    log('Function error:', error);
     return {
       statusCode: 500,
       headers: {

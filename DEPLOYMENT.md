@@ -9,7 +9,8 @@ This project has been configured for deployment on Netlify with full email funct
 - Push all your code to a Git repository (GitHub, GitLab, or Bitbucket)
 - Make sure all the Netlify configuration files are included:
   - `netlify.toml` (build configuration)
-  - `netlify/functions/` (serverless functions)
+  - `netlify/functions/` (serverless functions with package.json)
+  - `client/public/_redirects` (routing configuration)
   - `.env.example` (environment variables template)
 
 ### 2. Set Up Netlify
@@ -40,12 +41,29 @@ To get a Gmail App Password:
 4. Generate a new app password for "Mail"
 5. Use this 16-character password as your `GMAIL_APP_PASSWORD`
 
-### 5. Test Your Deployment
+### 5. Troubleshoot Email Issues
+If emails aren't being sent after deployment:
+
+1. **Check Netlify Function Logs:**
+   - Go to your Netlify dashboard → Functions tab
+   - Click on `client-submissions` function
+   - Check the logs for errors
+
+2. **Verify Environment Variables:**
+   - Ensure `GMAIL_APP_PASSWORD` is correctly set in Netlify
+   - The password should be a 16-character Gmail App Password
+
+3. **Test the Function:**
+   - Visit your site and submit the form
+   - Check the function logs for detailed error messages
+
+### 6. Test Your Deployment
 After deployment:
 1. Visit your Netlify site URL
 2. Fill out the form with test data
 3. Submit the form
 4. Check that the email is sent to mahdiabd731@gmail.com
+5. If not working, check the function logs in Netlify dashboard
 
 ## Features Included
 ✅ **Full email functionality** - Forms send emails from chouikimahdiabderrahmane@gmail.com to mahdiabd731@gmail.com  
