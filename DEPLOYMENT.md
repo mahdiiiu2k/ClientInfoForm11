@@ -73,9 +73,28 @@ After deployment:
 ✅ **Environment variables** - Secure handling of sensitive credentials  
 
 ## Troubleshooting
-- If emails aren't sending, check that `GMAIL_APP_PASSWORD` is correctly set
-- If the form submission fails, check the Netlify Functions logs
+
+### Email Not Sending - Quick Diagnosis
+After submitting a form, check Netlify function logs for these messages:
+
+**✅ SUCCESS PATTERN:**
+```
+[CLIENT-SUBMISSIONS] Function invoked
+[CLIENT-SUBMISSIONS] Environment check - GMAIL_APP_PASSWORD exists: true
+[CLIENT-SUBMISSIONS] Attempting to send email with nodemailer...
+[CLIENT-SUBMISSIONS] Email sent successfully
+```
+
+**❌ COMMON ERRORS:**
+1. `GMAIL_APP_PASSWORD exists: false` → Add the environment variable
+2. `Error: Invalid login` → Wrong Gmail password (need 16-char app password)
+3. `Error: getaddrinfo ENOTFOUND smtp.gmail.com` → Network/DNS issue
+4. `Module not found: nodemailer` → Dependency not installed (check netlify/functions/package.json)
+
+### Other Issues
+- If form submission fails completely, check the Netlify Functions logs
 - Image uploads are optional - form will work without Cloudinary configuration
+- Function timeout issues: contact support if functions take >10 seconds
 
 ## Technical Details
 - Frontend: React + Vite (static build)

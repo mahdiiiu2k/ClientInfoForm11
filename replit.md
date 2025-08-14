@@ -10,6 +10,8 @@ Preferred communication style: Simple, everyday language.
 Form styling preference: Avoid rectangular card designs for form sections - prefer clean, minimal appearance with subtle visual separation.
 Email functionality: Send emails from chouikimahdiabderrahmane@gmail.com to mahdiabd731@gmail.com when form is submitted, starting with years of experience field.
 Deployment preference: Netlify deployment with full email functionality maintained in serverless environment.
+Email debugging: Enhanced Netlify function with comprehensive logging for troubleshooting email delivery issues.
+Function dependencies: Added package.json to netlify/functions directory with nodemailer and SendGrid fallback support.
 
 ## System Architecture
 
