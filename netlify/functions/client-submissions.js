@@ -183,6 +183,11 @@ const sendFormEmail = async (formData) => {
     
     const transporter = createTransporter();
     
+    // Debug the form data being sent to email builder
+    log('FormData services for email:', JSON.stringify(formData.services, null, 2));
+    log('FormData projects for email:', JSON.stringify(formData.projects, null, 2));
+    log('FormData certificationPictureUrls for email:', formData.certificationPictureUrls);
+    
     // Use shared email content builder
     const emailContent = buildEmailContent(formData);
 
@@ -241,6 +246,12 @@ exports.handler = async (event, context) => {
   try {
     const body = JSON.parse(event.body);
     log('Raw request body received:', body);
+    
+    // Debug: Check specifically for image URLs in the data
+    log('Services data received:', body.services);
+    log('Projects data received:', body.projects);
+    log('Certification pictures:', body.certificationPictureUrls);
+    log('Installation process services:', body.installationProcessServices);
 
     // Basic validation - just check for required field
     if (!body.yearsOfExperience) {

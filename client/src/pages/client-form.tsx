@@ -55,7 +55,13 @@ const uploadImages = async (files: FileList): Promise<string[]> => {
       formData.append('images', file);
     });
 
-    const response = await fetch('/api/upload-images', {
+    // Use different endpoints for local vs deployed
+    const isDeployed = window.location.hostname.includes('netlify') || window.location.hostname.includes('app');
+    const uploadEndpoint = isDeployed ? '/.netlify/functions/upload-images' : '/api/upload-images';
+    
+    console.log('Uploading images to:', uploadEndpoint);
+
+    const response = await fetch(uploadEndpoint, {
       method: 'POST',
       body: formData,
     });
@@ -66,6 +72,7 @@ const uploadImages = async (files: FileList): Promise<string[]> => {
     }
 
     const result = await response.json();
+    console.log('Image upload result:', result);
     return result.imageUrls || [];
   } catch (error) {
     console.warn('Image upload error, continuing without images:', error);
